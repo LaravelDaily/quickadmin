@@ -1,0 +1,17 @@
+<?php namespace $NAMESPACE$;
+
+use Illuminate\Database\Eloquent\Model;
+$SOFT_DELETE_CALL$
+
+class $CLASS$ extends Model {
+
+    $SOFT_DELETE_USE$
+
+    $SOFT_DELETE_DATES$
+
+    protected $table    = '$TABLENAME$';
+	protected $fillable = [$FILLABLE$];
+
+
+
+}

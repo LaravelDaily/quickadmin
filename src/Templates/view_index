@@ -1,0 +1,41 @@
+@extends('admin.layouts.master')
+
+@section('content')
+
+<p>{!! link_to_route('admin.$ROUTE$.create', 'Add new', null, array('class' => 'btn btn-success')) !!}</p>
+
+@if ($$RESOURCE$->count())
+    <div class="portlet box green">
+        <div class="portlet-title">
+            <div class="caption">List</div>
+        </div>
+        <div class="portlet-body">
+            <table class="table table-striped table-hover table-responsive">
+                <thead>
+                    <tr>
+                        $HEADINGS$
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach ($$RESOURCE$ as $row)
+                        <tr>
+                            $FIELDS$
+                            <td>
+                                {!! link_to_route('admin.$ROUTE$.edit', 'Edit', array($row->id), array('class' => 'btn btn-xs btn-info')) !!}
+                                {!! Form::open(array('style' => 'display: inline-block;', 'method' => 'DELETE', 'onsubmit' => 'return confirm(\'Confirm deletion\');',  'route' => array('admin.$ROUTE$.destroy', $row->id))) !!}
+                                    {!! Form::submit('Delete', array('class' => 'btn btn-xs btn-danger')) !!}
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+	</div>
+@else
+    No entries found.
+@endif
+
+@endsection

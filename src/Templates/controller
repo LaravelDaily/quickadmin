@@ -1,0 +1,89 @@
+<?php namespace $NAMESPACE$;
+
+use Redirect;
+use Schema;
+use App\$MODEL$;
+use App\Http\Requests\$REQUESTNAME$;
+use Illuminate\Http\Request;
+
+
+
+class $CLASS$ extends Controller {
+
+	/**
+	 * Display a listing of $COLLECTION$
+	 *
+     * @param Request $request
+     *
+     * @return \Illuminate\View\View
+	 */
+	public function index(Request $request)
+    {
+		$$COLLECTION$ = $MODEL$::all();
+
+		return view('admin.$COLLECTION$.index', compact('$COLLECTION$'));
+	}
+
+	/**
+	 * Show the form for creating a new $RESOURCE$
+	 *
+     * @return \Illuminate\View\View
+	 */
+	public function create()
+	{
+		return view('admin.$COLLECTION$.create');
+	}
+
+	/**
+	 * Store a newly created $RESOURCE$ in storage.
+	 *
+     * @param $REQUESTNAME$|Request $request
+	 */
+	public function store($REQUESTNAME$ $request)
+	{
+		$MODEL$::create($request->all());
+
+		return redirect()->route('admin.$COLLECTION$.index');
+	}
+
+	/**
+	 * Show the form for editing the specified $RESOURCE$.
+	 *
+	 * @param  int  $id
+     * @return \Illuminate\View\View
+	 */
+	public function edit($id)
+	{
+		$$RESOURCE$ = $MODEL$::find($id);
+
+		return view('admin.$COLLECTION$.edit', compact('$RESOURCE$'));
+	}
+
+	/**
+	 * Update the specified $RESOURCE$ in storage.
+     * @param $REQUESTNAME$|Request $request
+     *
+	 * @param  int  $id
+	 */
+	public function update($id, $REQUESTNAME$ $request)
+	{
+		$$RESOURCE$ = $MODEL$::findOrFail($id);
+
+		$$RESOURCE$->update($request->all());
+
+		return redirect()->route('admin.$COLLECTION$.index');
+	}
+
+	/**
+	 * Remove the specified $RESOURCE$ from storage.
+	 *
+	 * @param  int  $id
+	 */
+	public function destroy($id)
+	{
+		$MODEL$::destroy($id);
+
+		return redirect()->route('admin.$COLLECTION$.index');
+	}
+
+}
