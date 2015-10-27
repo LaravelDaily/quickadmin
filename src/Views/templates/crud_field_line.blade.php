@@ -8,12 +8,12 @@
         </select>
     <td>
         <input type="text" name="f_title[]" value="{{ old('f_title.'.$index) }}" class="form-control"
-               required="required" placeholder="Key">
+               required="required" placeholder="Field DB name">
         <input type="text" name="f_value[]" value="{{ old('f_value.'.$index) }}" class="form-control value"
                placeholder="Value" style="display: none;">
     </td>
     <td><input type="text" name="f_label[]" value="{{ old('f_label.'.$index) }}" class="form-control"
-               required="required" placeholder="Label"></td>
+               required="required" placeholder="Field visual title"></td>
     <td>
         <select name="f_validation[]" class="form-control" required="required">
             @foreach($fieldValidation as $key => $option)

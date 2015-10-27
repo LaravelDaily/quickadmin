@@ -3,8 +3,8 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-11 col-md-offset-1">
-            <h1>Create new CRUD</h1>
+        <div class="col-md-10 col-md-offset-2">
+            <h1>Create new CRUD menu item</h1>
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -22,34 +22,37 @@
 
 
     <div class="form-group">
-        {!! Form::label('name', 'Crud name', ['class'=>'col-md-1 control-label']) !!}
-        <div class="col-sm-11">
-            {!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=> 'Plural']) !!}
+        {!! Form::label('name', 'CRUD name', ['class'=>'col-md-2 control-label']) !!}
+        <div class="col-sm-10">
+            {!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=> 'Plural, ex. Books or Products (used to generate DB table and all back-end files)']) !!}
         </div>
     </div>
 
     <div class="form-group">
-        {!! Form::label('title', 'Crud title', ['class'=>'col-md-1 control-label']) !!}
-        <div class="col-sm-11">
-            {!! Form::text('title', old('title'), ['class'=>'form-control', 'placeholder'=> 'Crud title']) !!}
+        {!! Form::label('title', 'CRUD title', ['class'=>'col-md-2 control-label']) !!}
+        <div class="col-sm-10">
+            {!! Form::text('title', old('title'), ['class'=>'form-control', 'placeholder'=> 'Crud title (used for menu item)']) !!}
         </div>
     </div>
 
 
     <div class="form-group">
-        {!! Form::label('soft', 'Use soft delete?', ['class'=>'col-md-1 control-label']) !!}
-        <div class="col-sm-11">
-            {!! Form::select('soft', [1 => 'Yes', 0 => 'No'], old('soft'), ['class' => 'form-control',]) !!}
+        {!! Form::label('soft', 'Use soft delete?', ['class'=>'col-md-2 control-label']) !!}
+        <div class="col-sm-10">
+            {!! Form::select('soft', [1 => 'Yes', 0 => 'No'], old('soft'), ['class' => 'form-control']) !!}
         </div>
     </div>
 
     <div class="form-group">
-        {!! Form::label('icon', 'Icon?', ['class'=>'col-md-1 control-label']) !!}
-        <div class="col-sm-11">
+        {!! Form::label('icon', 'Icon (font-awesome)', ['class'=>'col-md-2 control-label']) !!}
+        <div class="col-sm-10">
             {!! Form::text('icon', old('icon','fa-database'), ['class'=>'form-control', 'placeholder'=> 'Font awesome']) !!}
         </div>
     </div>
 
+    <hr />
+
+    <h3>Add fields</h3>
 
     <table class="table">
         <tbody id="generator">
@@ -64,17 +67,16 @@
     </table>
 
     <div class="form-group">
-        <div class="col-md-11 col-md-offset-1">
-            <button type="button" id="addField" class="btn btn-success"><i class="fa fa-plus"></i></button>
+        <div class="col-md-12">
+            <button type="button" id="addField" class="btn btn-success"><i class="fa fa-plus"></i> Add one more field</button>
         </div>
     </div>
 
+    <hr />
 
     <div class="form-group">
-        <label class="col-sm-1 control-label">&nbsp;</label>
-
-        <div class="col-sm-11">
-            {!! Form::submit('Create', ['class' => 'btn btn-primary']) !!}
+        <div class="col-md-12">
+            {!! Form::submit('Create CRUD', ['class' => 'btn btn-primary']) !!}
         </div>
     </div>
 
