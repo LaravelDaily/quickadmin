@@ -27,6 +27,8 @@
           href="{{ url('quickadmin/css') }}/quickadmin-layout.css"/>
     <link rel="stylesheet"
           href="{{ url('quickadmin/css') }}/quickadmin-theme-default.css"/>
+    <link rel="stylesheet"
+          href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css"/>
 </head>
 
 <body class="page-header-fixed">

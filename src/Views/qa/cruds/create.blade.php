@@ -24,7 +24,7 @@
     <div class="form-group">
         {!! Form::label('name', 'CRUD name', ['class'=>'col-md-2 control-label']) !!}
         <div class="col-sm-10">
-            {!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=> 'Plural, ex. Books or Products (used to generate DB table and all back-end files)']) !!}
+            {!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=> 'ex. Books or Products (used to generate DB table and all back-end files)']) !!}
         </div>
     </div>
 
