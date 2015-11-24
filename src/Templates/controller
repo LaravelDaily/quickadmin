@@ -1,12 +1,14 @@
 <?php namespace $NAMESPACE$;
 
+use App\Http\Controllers\Controller;
 use Redirect;
 use Schema;
 use App\$MODEL$;
-use App\Http\Requests\$REQUESTNAME$;
+use App\Http\Requests\$CREATEREQUESTNAME$;
+use App\Http\Requests\$UPDATEREQUESTNAME$;
 use Illuminate\Http\Request;
-
-
+$FILETRAIT$
+$RELATIONSHIP_NAMESPACES$
 
 class $CLASS$ extends Controller {
 
@@ -19,7 +21,7 @@ class $CLASS$ extends Controller {
 	 */
 	public function index(Request $request)
     {
-		$$COLLECTION$ = $MODEL$::all();
+        $INDEXGET$
 
 		return view('admin.$COLLECTION$.index', compact('$COLLECTION$'));
 	}
@@ -31,16 +33,18 @@ class $CLASS$ extends Controller {
 	 */
 	public function create()
 	{
-		return view('admin.$COLLECTION$.create');
+	    $RELATIONSHIPS$
+	    return view('admin.$COLLECTION$.create'$RELATIONSHIP_COMPACT$);
 	}
 
 	/**
 	 * Store a newly created $RESOURCE$ in storage.
 	 *
-     * @param $REQUESTNAME$|Request $request
+     * @param $CREATEREQUESTNAME$|Request $request
 	 */
-	public function store($REQUESTNAME$ $request)
+	public function store($CREATEREQUESTNAME$ $request)
 	{
+	    $FILESAVING$
 		$MODEL$::create($request->all());
 
 		return redirect()->route('admin.$COLLECTION$.index');
@@ -55,19 +59,21 @@ class $CLASS$ extends Controller {
 	public function edit($id)
 	{
 		$$RESOURCE$ = $MODEL$::find($id);
-
-		return view('admin.$COLLECTION$.edit', compact('$RESOURCE$'));
+	    $RELATIONSHIPS$
+		return view('admin.$COLLECTION$.edit', compact('$RESOURCE$'$RELATIONSHIP_COMPACT_EDIT$));
 	}
 
 	/**
 	 * Update the specified $RESOURCE$ in storage.
-     * @param $REQUESTNAME$|Request $request
+     * @param $UPDATEREQUESTNAME$|Request $request
      *
 	 * @param  int  $id
 	 */
-	public function update($id, $REQUESTNAME$ $request)
+	public function update($id, $UPDATEREQUESTNAME$ $request)
 	{
 		$$RESOURCE$ = $MODEL$::findOrFail($id);
+
+        $FILESAVING$
 
 		$$RESOURCE$->update($request->all());
 

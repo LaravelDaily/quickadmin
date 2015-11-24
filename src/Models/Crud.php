@@ -8,6 +8,7 @@ class Crud extends Model
 {
     protected $fillable = [
         'position',
+        'is_crud',
         'icon',
         'name',
         'title',
@@ -17,6 +18,7 @@ class Crud extends Model
 
     /**
      * Convert name to ucfirst() and camelCase
+     *
      * @param $input
      */
     public function setNameAttribute($input)

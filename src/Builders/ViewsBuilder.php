@@ -18,6 +18,7 @@ class ViewsBuilder
     private $model;
     private $path;
     private $formFieldsCreate;
+    private $files;
     // @todo Move into FieldsDescriber for usage in fields extension
     private $starred = [
         'required',
@@ -39,7 +40,7 @@ class ViewsBuilder
         ];
         $this->name     = $cached['name'];
         $this->fields   = $cached['fields'];
-        $this->soft     = $cached['soft_delete'];
+        $this->files    = $cached['files'];
         $this->names();
         $template = (array) $this->loadTemplate();
         $template = $this->buildParts($template);
@@ -70,6 +71,7 @@ class ViewsBuilder
         $this->buildTable();
         $this->buildCreateForm();
         $this->buildEditForm();
+
         // Index template
         $template[0] = str_replace([
             '$ROUTE$',
@@ -82,28 +84,33 @@ class ViewsBuilder
             $this->headings,
             $this->columns
         ], $template[0]);
+
         // Edit template
         $template[1] = str_replace([
             '$ROUTE$',
             '$RESOURCE$',
             '$FORMFIELDS$',
             '$MODEL$',
+            '$FILES$'
         ], [
             $this->route,
             $this->resource,
             $this->formFieldsEdit,
-            $this->model
-
+            $this->model,
+            $this->files != 0 ? "'files' => true, " : ''
         ], $template[1]);
+
         // Create template
         $template[2] = str_replace([
             '$ROUTE$',
             '$RESOURCE$',
             '$FORMFIELDS$',
+            '$FILES$'
         ], [
             $this->route,
             $this->resource,
-            $this->formFieldsCreate
+            $this->formFieldsCreate,
+            $this->files != 0 ? "'files' => true, " : ''
         ], $template[2]);
 
         return $template;
@@ -118,11 +125,21 @@ class ViewsBuilder
         $headings = '';
         $columns  = '';
         foreach ($this->fields as $field) {
-            // Check if there is no duplication for radio and checkbox
-            if (!in_array($field->title, $used)) {
+            // Check if there is no duplication for radio and checkbox.
+            // Password fields are excluded from the table too.
+            if (!in_array($field->title, $used) && $field->type != 'password' && $field->show == 1) {
                 $headings .= "<th>$field->label</th>\r\n";
-                $columns .= '<td>{{ $row->' . $field->title . " }}</td>\r\n";
-                $used[$field->title] = $field->title;
+                // Format our table column by field type
+                if ($field->type == 'relationship') {
+                    $columns .= '<td>{{ $row->' . $field->relationship_name . '->' . $field->relationship_field . " }}</td>\r\n";
+                    $used[$field->relationship_field] = $field->relationship_field;
+                } elseif ($field->type == 'textarea') {
+                    $columns .= '<td>{!! $row->' . $field->title . " !!}</td>\r\n";
+                    $used[$field->title] = $field->title;
+                } else {
+                    $columns .= '<td>{{ $row->' . $field->title . " }}</td>\r\n";
+                    $used[$field->title] = $field->title;
+                }
             }
         }
         $this->headings = $headings;
@@ -136,21 +153,31 @@ class ViewsBuilder
     {
         $form = '';
         foreach ($this->fields as $field) {
-            $label = $field->label;
-            if(in_array($field->validation,$this->starred)) {
-                $label .= '*';
+            $title = $field->label;
+            $label = $field->title;
+            if (in_array($field->validation, $this->starred) && $field->type != 'password') {
+                $title .= '*';
+            }
+            if ($field->type == 'relationship') {
+                $label = $field->relationship_name . '_id';
             }
             $temp = file_get_contents(__DIR__ . '/../Templates/fields/' . $field->type);
             $temp = str_replace([
                 'old(\'$LABEL$\')',
                 '$LABEL$',
                 '$TITLE$',
-                '$VALUE$'
+                '$VALUE$',
+                '$STATE$',
+                '$SELECT$',
+                '$TEXTEDITOR$'
             ], [
-                'old(\'$LABEL$\',$' . $this->resource . '->' . $field->title . ')',
-                $field->title,
+                'old(\'$LABEL$\',$' . $this->resource . '->' . $label . ')',
                 $label,
-                $field->value != '' ? ', "' . $field->value . '"' : ''
+                $title,
+                $field->value != '' ? ', "' . $field->value . '"' : '',
+                $field->default,
+                '$' . $field->relationship_name,
+                $field->texteditor == 1 ? ' ckeditor' : ''
             ], $temp);
             $form .= $temp;
         }
@@ -164,19 +191,29 @@ class ViewsBuilder
     {
         $form = '';
         foreach ($this->fields as $field) {
-            $label = $field->label;
-            if(in_array($field->validation,$this->starred)) {
-                $label .= '*';
+            $title = $field->label;
+            $key   = $field->title;
+            if (in_array($field->validation, $this->starred)) {
+                $title .= '*';
+            }
+            if ($field->type == 'relationship') {
+                $key = $field->relationship_name . '_id';
             }
             $temp = file_get_contents(__DIR__ . '/../Templates/fields/' . $field->type);
             $temp = str_replace([
                 '$LABEL$',
                 '$TITLE$',
-                '$VALUE$'
+                '$VALUE$',
+                '$STATE$',
+                '$SELECT$',
+                '$TEXTEDITOR$'
             ], [
-                $field->title,
-                $label,
-                $field->value != '' ? ', ' . $field->value : ''
+                $key,
+                $title,
+                $field->value != '' ? ', ' . $field->value : '',
+                $field->default,
+                '$' . $field->relationship_name,
+                $field->texteditor == 1 ? ' ckeditor' : ''
             ], $temp);
             $form .= $temp;
         }

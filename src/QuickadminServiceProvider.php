@@ -21,10 +21,13 @@ class QuickadminServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/Views/templates', 'tpl');
         /* Publish master templates */
         $this->publishes([
+            __DIR__ . '/Config/quickadmin.php'               => config_path('quickadmin.php'),
             __DIR__ . '/Views/admin'                         => base_path('resources/views/admin'),
             __DIR__ . '/Views/auth'                          => base_path('resources/views/auth'),
             __DIR__ . '/Public/quickadmin'                   => base_path('public/quickadmin'),
             __DIR__ . '/Controllers/publish/UsersController' => app_path('Http/Controllers/UsersController.php'),
+            __DIR__ . '/Controllers/publish/Controller'      => app_path('Http/Controllers/Controller.php'),
+            __DIR__ . '/Controllers/publish/FileUploadTrait' => app_path('Http/Controllers/Traits/FileUploadTrait.php'),
             __DIR__ . '/Models/publish/Role'                 => app_path('Role.php'),
         ], 'quickadmin');
 

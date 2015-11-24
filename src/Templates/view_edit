@@ -16,7 +16,7 @@
     </div>
 </div>
 
-{!! Form::model($$MODEL$, array('class' => 'form-horizontal', 'id' => 'form-with-validation', 'method' => 'PATCH', 'route' => array('admin.$ROUTE$.update', $$RESOURCE$->id))) !!}
+{!! Form::model($$MODEL$, array($FILES$'class' => 'form-horizontal', 'id' => 'form-with-validation', 'method' => 'PATCH', 'route' => array('admin.$ROUTE$.update', $$RESOURCE$->id))) !!}
 
 $FORMFIELDS$
 

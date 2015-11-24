@@ -15,6 +15,7 @@ class CreateCrudsTable extends Migration
         Schema::create('cruds', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('position');
+            $table->integer('is_crud')->default(1);
             $table->string('icon')->nullable();
             $table->string('name')->unique();
             $table->string('title');

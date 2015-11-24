@@ -2,6 +2,6 @@
     {!! Form::label('$LABEL$', '$TITLE$', array('class'=>'col-md-2 control-label')) !!}
     <div class="col-sm-10">
         {!! Form::hidden('$LABEL$','') !!}
-        {!! Form::checkbox('$LABEL$'$VALUE$, old('$LABEL$'), false, array('class'=>'form-control')) !!}
+        {!! Form::checkbox('$LABEL$', 1, $STATE$) !!}
     </div>
 </div>

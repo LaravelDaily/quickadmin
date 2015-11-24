@@ -1,6 +1,8 @@
 <?php namespace $NAMESPACE$;
 
 use Illuminate\Database\Eloquent\Model;
+$PASSWORDHASH_CALL$
+$DATEPICKERS_CALL$
 $SOFT_DELETE_CALL$
 
 class $CLASS$ extends Model {
@@ -10,8 +12,9 @@ class $CLASS$ extends Model {
     $SOFT_DELETE_DATES$
 
     protected $table    = '$TABLENAME$';
-	protected $fillable = [$FILLABLE$];
-
-
-
+    
+    protected $fillable = [$FILLABLE$];
+    $RELATIONSHIPS$
+    $PASSWORDHASH$
+    $DATEPICKERS$
 }

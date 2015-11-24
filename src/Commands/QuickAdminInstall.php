@@ -4,6 +4,7 @@ namespace Laraveldaily\Quickadmin\Commands;
 
 use App\User;
 use Illuminate\Console\Command;
+use Laraveldaily\Quickadmin\Models\Crud;
 use Laraveldaily\Quickadmin\Models\Role;
 
 class QuickAdminInstall extends Command
@@ -84,7 +85,7 @@ class QuickAdminInstall extends Command
         $data['name']     = $this->ask('Administrator name');
         $data['email']    = $this->ask('Administrator email');
         $data['password'] = $this->secret('Administrator password');
-        $data['role_id']     = 1;
+        $data['role_id']  = 1;
         User::create($data);
         $this->info('User has been created');
     }
@@ -94,8 +95,14 @@ class QuickAdminInstall extends Command
      */
     public function copyMasterTemplate()
     {
+        Crud::create([
+            'name'    => 'Users',
+            'title'   => 'Users',
+            'is_crud' => 0
+        ]);
         $this->callSilent('vendor:publish', [
-            '--tag' => ['quickadmin']
+            '--tag'   => ['quickadmin'],
+            '--force' => true
         ]);
         $this->info('Master template was transferred successfully');
     }

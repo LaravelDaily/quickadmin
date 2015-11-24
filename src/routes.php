@@ -8,15 +8,16 @@ use Illuminate\Support\Facades\View;
 use Laraveldaily\Quickadmin\Models\Crud;
 
 if (Schema::hasTable('cruds')) {
-    $cruds = Crud::orderBy('position')->get();
+    $cruds = Crud::where('is_crud', 1)->orderBy('position')->get();
     View::share('cruds', $cruds);
     if (!empty($cruds)) {
         Route::group([
-            'prefix'    => 'admin',
-            'namespace' => 'App\Http\Controllers',
+            'middleware' => ['auth', 'role'],
+            'prefix'     => 'admin',
+            'namespace'  => 'App\Http\Controllers',
         ], function () use ($cruds) {
             foreach ($cruds as $crud) {
-                resource(strtolower($crud->name), ucfirst(camel_case($crud->name)) . 'Controller');
+                resource(strtolower($crud->name), 'Admin\\' . ucfirst(camel_case($crud->name)) . 'Controller');
             }
         });
     }

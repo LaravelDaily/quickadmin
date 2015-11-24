@@ -3,6 +3,7 @@ namespace Laraveldaily\Quickadmin\Builders;
 
 use Illuminate\Support\Str;
 use Laraveldaily\Quickadmin\Cache\QuickCache;
+use Laraveldaily\Quickadmin\Fields\FieldsDescriber;
 
 class MigrationBuilder
 {
@@ -53,7 +54,6 @@ class MigrationBuilder
     {
         $camelName = Str::camel($this->name);
         $tableName = strtolower($camelName);
-        $fields    = $this->buildFields();
         $template  = str_replace([
             '$TABLENAME$',
             '$CLASS$',
@@ -61,7 +61,7 @@ class MigrationBuilder
         ], [
             $tableName,
             $this->className,
-            $fields
+            $this->buildFields()
         ], $template);
 
         return $template;
@@ -73,19 +73,38 @@ class MigrationBuilder
      */
     private function buildFields()
     {
-        $used   = [];
-        $fields = '$table->increments("id");' . "\r\n";
+        $migrationTypes = FieldsDescriber::migration();
+        $used           = [];
+        $fields         = '$table->increments("id");' . "\r\n";
         foreach ($this->fields as $field) {
             // Check if there is no duplication for radio and checkbox
             if (!in_array($field->title, $used)) {
-                $fields .= '$table->string("' . $field->title . '");' . "\r\n";
-                $used[$field->title] = $field->title;
+                // Generate our migration line
+                $migrationLine = str_replace([
+                    '$FIELDNAME$',
+                    '$STATE$',
+                    '$RELATIONSHIP$',
+                ], [
+                    $field->title,
+                    $field->default == 'true' ? 1 : 0,
+                    $field->relationship_name
+                ], $migrationTypes[$field->type]);
+                $fields .= '            '; // Add formatting space to the migration
+                $fields .= '$table->' . $migrationLine . ";\r\n";
+                if ($field->type == 'relationship') {
+                    $used[$field->relationship_name] = $field->relationship_name;
+                } else {
+                    $used[$field->title] = $field->title;
+                }
             }
         }
+        $fields .= '            '; // Add formatting space to the migration
+        $fields .= '$table->timestamps();';
         if ($this->soft == 1) {
+            $fields .= "\r\n";
+            $fields .= '            '; // Add formatting space to the migration
             $fields .= '$table->softDeletes();';
         }
-        $fields .= '$table->timestamps();';
 
         return $fields;
     }

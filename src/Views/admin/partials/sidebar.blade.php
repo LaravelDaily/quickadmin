@@ -4,25 +4,27 @@
             data-keep-expanded="false"
             data-auto-scroll="true"
             data-slide-speed="200">
-            <li>
+            <li @if(Request::path() == 'crud') class="active" @endif>
                 <a href="{{ url('crud') }}">
                     <i class="fa fa-plus"></i>
                     <span class="title">Crud</span>
                 </a>
             </li>
-            <li>
+            <li @if(Request::path() == 'users') class="active" @endif>
                 <a href="{{ url('users') }}">
                     <i class="fa fa-users"></i>
                     <span class="title">Users</span>
                 </a>
             </li>
             @foreach($cruds as $crud)
-                <li>
-                    <a href="{{ route('admin.'.strtolower($crud->name).'.index') }}">
-                        <i class="fa {{ $crud->icon }}"></i>
-                        <span class="title">{{ $crud->title }}</span>
-                    </a>
-                </li>
+                @if(in_array(Auth::user()->role_id, explode(',',$crud->roles)))
+                    <li @if(isset(explode('/',Request::path())[1]) && explode('/',Request::path())[1] == strtolower($crud->name)) class="active" @endif>
+                        <a href="{{ route('admin.'.strtolower($crud->name).'.index') }}">
+                            <i class="fa {{ $crud->icon }}"></i>
+                            <span class="title">{{ $crud->title }}</span>
+                        </a>
+                    </li>
+                @endif
             @endforeach
             <li>
                 <a href="{{ url('auth/logout') }}">

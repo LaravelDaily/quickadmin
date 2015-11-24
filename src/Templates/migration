@@ -4,33 +4,29 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Eloquent\Model;
 
-
 class $CLASS$ extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-	    Model::unguard();
-	    Schema::create('$TABLENAME$',function(Blueprint $table){
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Model::unguard();
+        Schema::create('$TABLENAME$',function(Blueprint $table){
             $FIELDS$
-	    });
-	}
+        });
+    }
 
-
-
-
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-	    Schema::drop('$TABLENAME$');
-	}
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('$TABLENAME$');
+    }
 
 }

@@ -30,7 +30,10 @@ class RequestBuilder
         $this->fields   = $cached['fields'];
         $this->soft     = $cached['soft_delete'];
         $this->names();
-        $template = (string) $this->loadTemplate();
+        $template = [
+            $this->loadTemplate(),
+            $this->loadTemplate()
+        ];
         $template = $this->buildParts($template);
         $this->publish($template);
     }
@@ -52,16 +55,25 @@ class RequestBuilder
      */
     private function buildParts($template)
     {
-        $rules    = $this->buildRules();
-        $template = str_replace([
+        $template[0] = str_replace([
             '$NAMESPACE$',
             '$CLASS$',
             '$RULES$'
         ], [
             $this->namespace,
-            $this->className,
-            $rules
-        ], $template);
+            'Create' . $this->className,
+            $this->buildRules(0),
+        ], $template[0]);
+
+        $template[1] = str_replace([
+            '$NAMESPACE$',
+            '$CLASS$',
+            '$RULES$'
+        ], [
+            $this->namespace,
+            'Update' . $this->className,
+            $this->buildRules(1),
+        ], $template[1]);
 
         return $template;
     }
@@ -70,29 +82,50 @@ class RequestBuilder
      * Build request rules
      * @return string
      */
-    private function buildRules()
+    private function buildRules($type)
     {
-        $used      = [];
-        $fillables = '';
+        $used  = [];
+        $rules = '';
         foreach ($this->fields as $field) {
             // Check if there is no duplication for radio and checkbox
             if (!in_array($field->title, $used)) {
-                switch ($field->validation) {
-                    case 'required':
-                        $fillables .= "'$field->title' => '$field->validation', \r\n";
-                        break;
-                    case 'required|unique':
-                        $camelName = Str::camel($this->name);
-                        // Insert table names
-                        $tableName = strtolower($camelName);
-                        $fillables .= "'$field->title' => '$field->validation:$tableName,$field->title,'." . '$this->' . $this->request . ", \r\n";
-                        break;
+                if ($field->type != 'file') {
+                    if ($type == 0 || $field->type != 'password') {
+                        switch ($field->validation) {
+                            case 'required':
+                                $rules .= "'$field->title' => '$field->validation', \r\n            ";
+                                break;
+                            case 'required|unique':
+                                $camelName = Str::camel($this->name);
+                                // Insert table names
+                                $tableName = strtolower($camelName);
+                                $rules .= "'$field->title' => '$field->validation:$tableName,$field->title,'." . '$this->' . $this->request . ", \r\n            ";
+                                break;
+                        }
+                    }
+                } else {
+                    switch ($field->validation) {
+                        case 'required':
+                            $rules .= "'$field->title' => 'max:$field->size|$field->validation', \r\n            ";
+                            break;
+                        case 'required|unique':
+                            $camelName = Str::camel($this->name);
+                            // Insert table names
+                            $tableName = strtolower($camelName);
+                            $rules .= "'$field->title' => 'max:$field->size|$field->validation:$tableName,$field->title,'." . '$this->' . $this->request . ", \r\n            ";
+                            break;
+                        default:
+                            // We got a file field which has a bit different validation
+                            $rules .= "'$field->title' => 'max:$field->size', \r\n            ";
+                            break;
+                    }
+
                 }
                 $used[$field->title] = $field->title;
             }
         }
 
-        return $fillables;
+        return $rules;
     }
 
     /**
@@ -113,7 +146,8 @@ class RequestBuilder
      */
     private function publish($template)
     {
-        file_put_contents(app_path('Http/Requests/' . $this->fileName), $template);
+        file_put_contents(app_path('Http/Requests/Create' . $this->fileName), $template[0]);
+        file_put_contents(app_path('Http/Requests/Update' . $this->fileName), $template[1]);
     }
 
 }
