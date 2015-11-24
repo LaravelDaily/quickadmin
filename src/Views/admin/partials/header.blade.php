@@ -29,6 +29,8 @@
           href="{{ url('quickadmin/css') }}/quickadmin-theme-default.css"/>
     <link rel="stylesheet"
           href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.standalone.min.css"/>
 </head>
 
 <body class="page-header-fixed">
