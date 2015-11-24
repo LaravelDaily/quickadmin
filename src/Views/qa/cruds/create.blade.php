@@ -50,20 +50,12 @@
         </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <h3>Add fields</h3>
 
     <table class="table">
         <tbody id="generator">
-        <tr>
-            <td>Show in list</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
         @if(old('f_type'))
             @foreach(old('f_type') as $index => $fieldName)
                 @include('tpl::crud_field_line', ['index' => $index])
@@ -76,12 +68,11 @@
 
     <div class="form-group">
         <div class="col-md-12">
-            <button type="button" id="addField" class="btn btn-success"><i class="fa fa-plus"></i> Add one more field
-            </button>
+            <button type="button" id="addField" class="btn btn-success"><i class="fa fa-plus"></i> Add one more field</button>
         </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="form-group">
         <div class="col-md-12">
@@ -97,102 +88,32 @@
             @include('tpl::crud_field_line', ['index' => ''])
             </tbody>
         </table>
-
-        <!-- Select for relationship column-->
-        @foreach($models as $key => $model)
-            <select name="f_relationship_field[{{ $key }}]" class="form-control relationship-field rf-{{ $key }}">
-                <option value="">Select display field</option>
-                @foreach($model as $key2 => $option)
-                    <option value="{{ $option }}"
-                            @if($option == old('f_relationship_field.'.$key)) selected @endif>{{ $option }}</option>
-                @endforeach
-            </select>
-            @endforeach
-                    <!-- /Select for relationship column-->
     </div>
 
 @endsection
 
 @section('javascript')
     <script>
-        function typeChange(e) {
-            var val = $(e).val();
-            // Hide all possible outputs
-            $(e).parent().parent().find('.value').hide();
-            $(e).parent().parent().find('.default_c').hide();
-            $(e).parent().parent().find('.relationship').hide();
-            $(e).parent().parent().find('.title').show().val('');
-            $(e).parent().parent().find('.texteditor').hide();
-            $(e).parent().parent().find('.size').hide();
-
-            // Show a checbox which enables/disables showing in list
-            $(e).parent().parent().parent().find('.show2').show();
-            $(e).parent().parent().parent().find('.show_hid').val(1);
-            switch (val) {
-                case 'radio':
-                    $(e).parent().parent().find('.value').show();
-                    break;
-                case 'checkbox':
-                    $(e).parent().parent().find('.default_c').show();
-                    break;
-                case 'relationship':
-                    $(e).parent().parent().find('.relationship').show();
-                    $(e).parent().parent().find('.title').hide().val('-');
-                    break;
-                case 'textarea':
-                    $(e).parent().parent().find('.show2').hide();
-                    $(e).parent().parent().find('.show_hid').val(0);
-                    $(e).parent().parent().find('.texteditor').show();
-                    break;
-                case 'file':
-                    $(e).parent().parent().find('.size').show();
-                    break;
-            }
-        }
-
-        function relationshipChange(e) {
-            var val = $(e).val();
-            $(e).parent().parent().find('.relationship-field').remove();
-            var select = $('.rf-' + val).clone();
-            $(e).parent().parent().find('.relationship-holder').html(select);
-        }
-
         $(document).ready(function () {
-            $('.type').each(function () {
-                typeChange($(this))
-            });
-            $('.relationship').each(function () {
-                relationshipChange($(this))
-            });
-
-            $('.show2').change(function () {
-                var checked = $(this).is(":checked");
-                if (checked) {
-                    $(this).parent().find('.show_hid').val(1);
-                } else {
-                    $(this).parent().find('.show_hid').val(0);
-                }
-            });
-
             // Add new row to the table of fields
             $('#addField').click(function () {
                 var line = $('#line').html();
                 var table = $('#generator');
                 table.append(line);
             });
-
             // Remove row from the table of fields
             $(document).on('click', '.rem', function () {
                 $(this).parent().parent().remove();
             });
 
             $(document).on('change', '.type', function () {
-                typeChange($(this))
-            });
-            $(document).on('change', '.relationship', function () {
-                relationshipChange($(this))
+                var val = $(this).val();
+                if(val == 'radio' || val == 'checkbox') {
+                    $(this).parent().parent().find('.value').show();
+                }else{
+                    $(this).parent().parent().find('.value').hide();
+                }
             });
         });
-
     </script>
 @stop
