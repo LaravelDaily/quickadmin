@@ -13,7 +13,7 @@ if (Schema::hasTable('cruds')) {
     if (!empty($cruds)) {
         Route::group([
             'middleware' => ['auth', 'role'],
-            'prefix'     => 'admin',
+            'prefix'     => config('quickadmin.route'),
             'namespace'  => 'App\Http\Controllers',
         ], function () use ($cruds) {
             foreach ($cruds as $crud) {
@@ -28,12 +28,12 @@ Route::group([
     'middleware' => 'auth'
 ], function () {
     // Dashboard home page route
-    Route::get('qa', 'QuickadminController@index');
+    Route::get(config('quickadmin.route'), 'QuickadminController@index');
     Route::get('crud', 'QuickadminCrudController@create');
     Route::post('crud', 'QuickadminCrudController@insert');
 });
 
-// @todo rethink in v2
+// @todo move to default routes.php
 Route::group(['namespace' => 'App\Http\Controllers'], function () {
     // Point to App\Http\Controllers\UsersController as a resource
     resource('users', 'UsersController');

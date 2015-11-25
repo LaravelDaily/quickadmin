@@ -10,4 +10,10 @@ return [
     'date_format'        => 'Y-m-d',
     'date_format_jquery' => 'yyyy-mm-dd',
 
+    /**
+     * Quickadmin settings
+     */
+    // Default route
+    'route'              => 'admin',
+
 ];
