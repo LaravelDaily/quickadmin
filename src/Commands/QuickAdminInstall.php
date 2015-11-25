@@ -46,7 +46,7 @@ class QuickAdminInstall extends Command
         $this->createUser();
         $this->info('4. Copy master template to resource\views');
         $this->copyMasterTemplate();
-        $this->info('Installation was successful. Visit your_domain/qa to access admin panel');
+        $this->info('Installation was successful. Visit your_domain.com/admin to access admin panel');
     }
 
     /**
