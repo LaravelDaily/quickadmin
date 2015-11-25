@@ -36,12 +36,11 @@
 
         <!-- Use ckeditor on textarea field -->
         <select name="f_texteditor[]" class="form-control texteditor" style="display: none;">
-            <option>Use CKEDITOR</option>
-            <option value="1"
-                    @if($key == old('f_texteditor.'.$index)) selected @endif>Yes
-            </option>
             <option value="0"
-                    @if($key == old('f_texteditor.'.$index)) selected @endif>No
+                    @if($key == old('f_texteditor.'.$index)) selected @endif>Don't use CKEDITOR
+            </option>
+            <option value="1"
+                    @if($key == old('f_texteditor.'.$index)) selected @endif>Use CKEDITOR
             </option>
         </select>
         <!-- /Use ckeditor on textarea field -->

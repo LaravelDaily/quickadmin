@@ -127,15 +127,16 @@ class ViewsBuilder
         foreach ($this->fields as $field) {
             // Check if there is no duplication for radio and checkbox.
             // Password fields are excluded from the table too.
-            if (!in_array($field->title, $used) && $field->type != 'password' && $field->show == 1) {
+            if (!in_array($field->title, $used)
+                && $field->type != 'password'
+                && $field->type != 'textarea'
+                && $field->show == 1
+            ) {
                 $headings .= "<th>$field->label</th>\r\n";
                 // Format our table column by field type
                 if ($field->type == 'relationship') {
                     $columns .= '<td>{{ $row->' . $field->relationship_name . '->' . $field->relationship_field . " }}</td>\r\n";
                     $used[$field->relationship_field] = $field->relationship_field;
-                } elseif ($field->type == 'textarea') {
-                    $columns .= '<td>{!! $row->' . $field->title . " !!}</td>\r\n";
-                    $used[$field->title] = $field->title;
                 } else {
                     $columns .= '<td>{{ $row->' . $field->title . " }}</td>\r\n";
                     $used[$field->title] = $field->title;

@@ -2,7 +2,7 @@
     <div class="page-header-inner">
         <div class="page-header-inner">
             <div class="navbar-header">
-                <a href="{{ url('qa') }}" class="navbar-brand">
+                <a href="{{ url(config('quickadmin.route')) }}" class="navbar-brand">
                     QuickAdmin
                 </a>
             </div>

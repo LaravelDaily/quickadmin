@@ -131,6 +131,6 @@ class QuickadminCrudController extends Controller
         // Destroy our cache file
         $cache->destroy('fieldsinfo');
 
-        return redirect('qa');
+        return redirect(config('quickadmin.route'));
     }
 }
