@@ -84,7 +84,7 @@ class QuickAdminInstall extends Command
     {
         $data['name']     = $this->ask('Administrator name');
         $data['email']    = $this->ask('Administrator email');
-        $data['password'] = $this->secret('Administrator password');
+        $data['password'] = bcrypt($this->secret('Administrator password'));
         $data['role_id']  = 1;
         User::create($data);
         $this->info('User has been created');
