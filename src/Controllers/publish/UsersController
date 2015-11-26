@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -39,7 +40,9 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::create($request->all());
+        $input = $request->all();
+        $input['password'] = Hash::make($input['password']);
+        $user = User::create($input);
 
         return redirect()->route('users.index')->withMessage('User was successfully created!');
     }
@@ -70,7 +73,9 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $user->update($request->all());
+        $input = $request->all();
+        $input['password'] = Hash::make($input['password']);
+        $user->update($input);
 
         return redirect()->route('users.index')->withMessage('User was successfully updated!');
     }

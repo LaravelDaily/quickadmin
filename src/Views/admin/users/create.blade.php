@@ -42,9 +42,9 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('role', 'Role', ['class'=>'col-md-2 control-label']) !!}
+        {!! Form::label('role_id', 'Role', ['class'=>'col-md-2 control-label']) !!}
         <div class="col-sm-10">
-            {!! Form::select('role', $roles, old('role'), ['class'=>'form-control']) !!}
+            {!! Form::select('role_id', $roles, old('role_id'), ['class'=>'form-control']) !!}
         </div>
     </div>
 
