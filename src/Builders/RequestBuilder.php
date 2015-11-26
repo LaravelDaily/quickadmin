@@ -25,7 +25,7 @@ class RequestBuilder
     {
         $cache          = new QuickCache();
         $cached         = $cache->get('fieldsinfo');
-        $this->template = __DIR__ . '/../Templates/request';
+        $this->template = __DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Templates'. DIRECTORY_SEPARATOR .'request';
         $this->name     = $cached['name'];
         $this->fields   = $cached['fields'];
         $this->soft     = $cached['soft_delete'];
@@ -146,8 +146,8 @@ class RequestBuilder
      */
     private function publish($template)
     {
-        file_put_contents(app_path('Http/Requests/Create' . $this->fileName), $template[0]);
-        file_put_contents(app_path('Http/Requests/Update' . $this->fileName), $template[1]);
+        file_put_contents(app_path('Http'. DIRECTORY_SEPARATOR .'Requests'. DIRECTORY_SEPARATOR .'Create' . $this->fileName), $template[0]);
+        file_put_contents(app_path('Http'. DIRECTORY_SEPARATOR .'Requests'. DIRECTORY_SEPARATOR .'Update' . $this->fileName), $template[1]);
     }
 
 }

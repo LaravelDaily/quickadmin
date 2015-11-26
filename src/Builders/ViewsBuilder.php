@@ -34,9 +34,9 @@ class ViewsBuilder
         $cache          = new QuickCache();
         $cached         = $cache->get('fieldsinfo');
         $this->template = [
-            0 => __DIR__ . '/../Templates/view_index',
-            1 => __DIR__ . '/../Templates/view_edit',
-            2 => __DIR__ . '/../Templates/view_create',
+            0 => __DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Templates'. DIRECTORY_SEPARATOR .'view_index',
+            1 => __DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Templates'. DIRECTORY_SEPARATOR .'view_edit',
+            2 => __DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Templates'. DIRECTORY_SEPARATOR .'view_create',
         ];
         $this->name     = $cached['name'];
         $this->fields   = $cached['fields'];
@@ -162,7 +162,7 @@ class ViewsBuilder
             if ($field->type == 'relationship') {
                 $label = $field->relationship_name . '_id';
             }
-            $temp = file_get_contents(__DIR__ . '/../Templates/fields/' . $field->type);
+            $temp = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Templates'. DIRECTORY_SEPARATOR .'fields'. DIRECTORY_SEPARATOR . $field->type);
             $temp = str_replace([
                 'old(\'$LABEL$\')',
                 '$LABEL$',
@@ -200,7 +200,7 @@ class ViewsBuilder
             if ($field->type == 'relationship') {
                 $key = $field->relationship_name . '_id';
             }
-            $temp = file_get_contents(__DIR__ . '/../Templates/fields/' . $field->type);
+            $temp = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Templates'. DIRECTORY_SEPARATOR .'fields'. DIRECTORY_SEPARATOR . $field->type);
             $temp = str_replace([
                 '$LABEL$',
                 '$TITLE$',
@@ -238,12 +238,12 @@ class ViewsBuilder
      */
     private function publish($template)
     {
-        if (!file_exists(base_path('resources/views/admin/' . $this->path))) {
-            mkdir(base_path('resources/views/admin/' . $this->path));
+        if (!file_exists(base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'. DIRECTORY_SEPARATOR . $this->path))) {
+            mkdir(base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'. DIRECTORY_SEPARATOR . $this->path));
         }
-        file_put_contents(base_path('resources/views/admin/' . $this->path . '/index.blade.php'), $template[0]);
-        file_put_contents(base_path('resources/views/admin/' . $this->path . '/edit.blade.php'), $template[1]);
-        file_put_contents(base_path('resources/views/admin/' . $this->path . '/create.blade.php'), $template[2]);
+        file_put_contents(base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'. DIRECTORY_SEPARATOR . $this->path . DIRECTORY_SEPARATOR .'index.blade.php'), $template[0]);
+        file_put_contents(base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'. DIRECTORY_SEPARATOR . $this->path . DIRECTORY_SEPARATOR .'edit.blade.php'), $template[1]);
+        file_put_contents(base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'. DIRECTORY_SEPARATOR . $this->path . DIRECTORY_SEPARATOR .'create.blade.php'), $template[2]);
     }
 
 }

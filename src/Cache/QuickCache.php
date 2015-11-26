@@ -11,7 +11,7 @@ class QuickCache
 
     public function __construct()
     {
-        $this->cacheDir = storage_path('framework/cache/');
+        $this->cacheDir = storage_path('framework'. DIRECTORY_SEPARATOR .'cache'. DIRECTORY_SEPARATOR);
         $this->files    = new Filesystem();
         if (!file_exists($this->cacheDir)) {
             mkdir($this->cacheDir);
