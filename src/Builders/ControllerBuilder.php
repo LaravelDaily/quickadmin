@@ -239,11 +239,11 @@ class ControllerBuilder
      */
     private function publish($template)
     {
-        if (!file_exists(app_path('Http\Controllers\Admin'))) {
-            mkdir(app_path('Http\Controllers\Admin'));
-            chmod(app_path('Http\Controllers\Admin'), 0777);
+        if (!file_exists(app_path('Http/Controllers/Admin'))) {
+            mkdir(app_path('Http/Controllers/Admin'));
+            chmod(app_path('Http/Controllers/Admin'), 0777);
         }
-        file_put_contents(app_path('Http\Controllers\Admin\\' . $this->fileName), $template);
+        file_put_contents(app_path('Http/Controllers/Admin/' . $this->fileName), $template);
     }
 
 }
