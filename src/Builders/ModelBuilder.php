@@ -31,7 +31,7 @@ class ModelBuilder
     {
         $cache          = new QuickCache();
         $cached         = $cache->get('fieldsinfo');
-        $this->template = __DIR__ . '/../Templates/model';
+        $this->template = __DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Templates'. DIRECTORY_SEPARATOR .'model';
         $this->name     = $cached['name'];
         $this->fields   = $cached['fields'];
         $this->soft     = $cached['soft_delete'];

@@ -29,7 +29,7 @@ class ControllerBuilder
     {
         $cache               = new QuickCache();
         $cached              = $cache->get('fieldsinfo');
-        $this->template      = __DIR__ . '/../Templates/controller';
+        $this->template      = __DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Templates'. DIRECTORY_SEPARATOR .'controller';
         $this->name          = $cached['name'];
         $this->fields        = $cached['fields'];
         $this->relationships = $cached['relationships'];
@@ -239,11 +239,11 @@ class ControllerBuilder
      */
     private function publish($template)
     {
-        if (!file_exists(app_path('Http/Controllers/Admin'))) {
-            mkdir(app_path('Http/Controllers/Admin'));
-            chmod(app_path('Http/Controllers/Admin'), 0777);
+        if (!file_exists(app_path('Http'. DIRECTORY_SEPARATOR .'Controllers'. DIRECTORY_SEPARATOR .'Admin'))) {
+            mkdir(app_path('Http'. DIRECTORY_SEPARATOR .'Controllers'. DIRECTORY_SEPARATOR .'Admin'));
+            chmod(app_path('Http'. DIRECTORY_SEPARATOR .'Controllers'. DIRECTORY_SEPARATOR .'Admin'), 0777);
         }
-        file_put_contents(app_path('Http/Controllers/Admin/' . $this->fileName), $template);
+        file_put_contents(app_path('Http'. DIRECTORY_SEPARATOR .'Controllers'. DIRECTORY_SEPARATOR .'Admin'. DIRECTORY_SEPARATOR . $this->fileName), $template);
     }
 
 }

@@ -17,20 +17,20 @@ class QuickadminServiceProvider extends ServiceProvider
     public function boot()
     {
         // Register vendor views
-        $this->loadViewsFrom(__DIR__ . '/Views/qa', 'qa');
-        $this->loadViewsFrom(__DIR__ . '/Views/templates', 'tpl');
+        $this->loadViewsFrom(__DIR__ . DIRECTORY_SEPARATOR . 'Views'. DIRECTORY_SEPARATOR .'qa', 'qa');
+        $this->loadViewsFrom(__DIR__ . DIRECTORY_SEPARATOR . 'Views'. DIRECTORY_SEPARATOR .'templates', 'tpl');
         /* Publish master templates */
         $this->publishes([
-            __DIR__ . '/Config/quickadmin.php'                  => config_path('quickadmin.php'),
-            __DIR__ . '/Views/admin'                            => base_path('resources/views/admin'),
-            __DIR__ . '/Views/auth'                             => base_path('resources/views/auth'),
-            __DIR__ . '/Views/emails'                           => base_path('resources/views/emails'),
-            __DIR__ . '/Public/quickadmin'                      => base_path('public/quickadmin'),
-            __DIR__ . '/Controllers/publish/UsersController'    => app_path('Http/Controllers/UsersController.php'),
-            __DIR__ . '/Controllers/publish/Controller'         => app_path('Http/Controllers/Controller.php'),
-            __DIR__ . '/Controllers/publish/PasswordController' => app_path('Http/Controllers/Auth/PasswordController.php'),
-            __DIR__ . '/Controllers/publish/FileUploadTrait'    => app_path('Http/Controllers/Traits/FileUploadTrait.php'),
-            __DIR__ . '/Models/publish/Role'                    => app_path('Role.php'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Config'. DIRECTORY_SEPARATOR .'quickadmin.php'                  => config_path('quickadmin.php'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Views'. DIRECTORY_SEPARATOR .'admin'                            => base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Views'. DIRECTORY_SEPARATOR .'auth'                             => base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'auth'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Views'. DIRECTORY_SEPARATOR .'emails'                           => base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'emails'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Public'. DIRECTORY_SEPARATOR .'quickadmin'                      => base_path('public'. DIRECTORY_SEPARATOR .'quickadmin'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Controllers'. DIRECTORY_SEPARATOR .'publish'. DIRECTORY_SEPARATOR .'UsersController'    => app_path('Http'. DIRECTORY_SEPARATOR .'Controllers'. DIRECTORY_SEPARATOR .'UsersController.php'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Controllers'. DIRECTORY_SEPARATOR .'publish'. DIRECTORY_SEPARATOR .'Controller'         => app_path('Http'. DIRECTORY_SEPARATOR .'Controllers'. DIRECTORY_SEPARATOR .'Controller.php'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Controllers'. DIRECTORY_SEPARATOR .'publish'. DIRECTORY_SEPARATOR .'PasswordController' => app_path('Http'. DIRECTORY_SEPARATOR .'Controllers'. DIRECTORY_SEPARATOR .'Auth'. DIRECTORY_SEPARATOR .'PasswordController.php'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Controllers'. DIRECTORY_SEPARATOR .'publish'. DIRECTORY_SEPARATOR .'FileUploadTrait'    => app_path('Http'. DIRECTORY_SEPARATOR .'Controllers'. DIRECTORY_SEPARATOR .'Traits'. DIRECTORY_SEPARATOR .'FileUploadTrait.php'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Models'. DIRECTORY_SEPARATOR .'publish'. DIRECTORY_SEPARATOR .'Role'                    => app_path('Role.php'),
         ], 'quickadmin');
 
         // Register commands
@@ -41,7 +41,7 @@ class QuickadminServiceProvider extends ServiceProvider
             'quickadmin:install'
         ]);
         // Routing
-        include __DIR__ . '/routes.php';
+        include __DIR__ . DIRECTORY_SEPARATOR .'routes.php';
     }
 
     /**
