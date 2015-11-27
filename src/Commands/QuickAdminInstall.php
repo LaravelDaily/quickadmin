@@ -96,8 +96,8 @@ class QuickAdminInstall extends Command
     public function copyMasterTemplate()
     {
         Crud::create([
-            'name'    => 'Users',
-            'title'   => 'Users',
+            'name'    => 'User',
+            'title'   => 'User',
             'is_crud' => 0
         ]);
         $this->callSilent('vendor:publish', [

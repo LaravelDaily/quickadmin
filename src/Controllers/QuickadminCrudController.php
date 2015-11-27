@@ -31,7 +31,12 @@ class QuickadminCrudController extends Controller
         // Get columns for relationship
         $models = [];
         foreach (Crud::all() as $crud) {
-            $tableName         = strtolower($crud->name);
+            // We are having a default User model
+            if ($crud->title == 'User' && $crud->is_crud == 0) {
+                $tableName = 'users';
+            } else {
+                $tableName = strtolower($crud->name);
+            }
             $models[$crud->id] = Schema::getColumnListing($tableName);
         }
 
