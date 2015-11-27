@@ -25,7 +25,7 @@ class RequestBuilder
     {
         $cache          = new QuickCache();
         $cached         = $cache->get('fieldsinfo');
-        $this->template = __DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Templates'. DIRECTORY_SEPARATOR .'request';
+        $this->template = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . 'request';
         $this->name     = $cached['name'];
         $this->fields   = $cached['fields'];
         $this->soft     = $cached['soft_delete'];
@@ -89,7 +89,7 @@ class RequestBuilder
         foreach ($this->fields as $field) {
             // Check if there is no duplication for radio and checkbox
             if (!in_array($field->title, $used)) {
-                if ($field->type != 'file') {
+                if ($field->type != 'file' && $field->type != 'relationship') {
                     if ($type == 0 || $field->type != 'password') {
                         switch ($field->validation) {
                             case 'required':
@@ -103,7 +103,19 @@ class RequestBuilder
                                 break;
                         }
                     }
-                } else {
+                } elseif ($field->type == 'relationship') {
+                    switch ($field->validation) {
+                        case 'required':
+                            $rules .= "'" . $field->relationship_name . "_" . $field->relationship_field . "' => '$field->validation', \r\n            ";
+                            break;
+                        case 'required|unique':
+                            $camelName = Str::camel($this->name);
+                            // Insert table names
+                            $tableName = strtolower($camelName);
+                            $rules .= "'" . $field->relationship_name . "_" . $field->relationship_field . "' => '$field->validation:$tableName,$field->title,'." . '$this->' . $this->request . ", \r\n            ";
+                            break;
+                    }
+                } elseif ($field->type == 'file') {
                     switch ($field->validation) {
                         case 'required':
                             $rules .= "'$field->title' => 'max:$field->size|$field->validation', \r\n            ";
@@ -146,8 +158,10 @@ class RequestBuilder
      */
     private function publish($template)
     {
-        file_put_contents(app_path('Http'. DIRECTORY_SEPARATOR .'Requests'. DIRECTORY_SEPARATOR .'Create' . $this->fileName), $template[0]);
-        file_put_contents(app_path('Http'. DIRECTORY_SEPARATOR .'Requests'. DIRECTORY_SEPARATOR .'Update' . $this->fileName), $template[1]);
+        file_put_contents(app_path('Http' . DIRECTORY_SEPARATOR . 'Requests' . DIRECTORY_SEPARATOR . 'Create' . $this->fileName),
+            $template[0]);
+        file_put_contents(app_path('Http' . DIRECTORY_SEPARATOR . 'Requests' . DIRECTORY_SEPARATOR . 'Update' . $this->fileName),
+            $template[1]);
     }
 
 }
