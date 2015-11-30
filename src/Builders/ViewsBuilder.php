@@ -240,6 +240,7 @@ class ViewsBuilder
     {
         if (!file_exists(base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'. DIRECTORY_SEPARATOR . $this->path))) {
             mkdir(base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'. DIRECTORY_SEPARATOR . $this->path));
+            chmod(base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'), 0777);
         }
         file_put_contents(base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'. DIRECTORY_SEPARATOR . $this->path . DIRECTORY_SEPARATOR .'index.blade.php'), $template[0]);
         file_put_contents(base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'. DIRECTORY_SEPARATOR . $this->path . DIRECTORY_SEPARATOR .'edit.blade.php'), $template[1]);
