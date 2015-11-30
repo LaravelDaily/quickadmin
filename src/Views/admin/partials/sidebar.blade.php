@@ -6,7 +6,7 @@
             data-slide-speed="200">
             @if(Auth::user()->role_id == 1)
                 <li @if(Request::path() == 'crud') class="active" @endif>
-                    <a href="{{ url('crud') }}">
+                    <a href="{{ url(config('quickadmin.route').'/crud') }}">
                         <i class="fa fa-plus"></i>
                         <span class="title">Crud</span>
                     </a>

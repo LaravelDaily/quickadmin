@@ -28,9 +28,9 @@ Route::group([
     'middleware' => 'auth'
 ], function () {
     // Dashboard home page route
-    Route::get(config('quickadmin.route'), 'QuickadminController@index');
-    Route::get('crud', 'QuickadminCrudController@create');
-    Route::post('crud', 'QuickadminCrudController@insert');
+    Route::get(config('quickadmin.homeRoute'), 'QuickadminController@index');
+    Route::get(config('quickadmin.route') . '/crud', 'QuickadminCrudController@create');
+    Route::post(config('quickadmin.route') . '/crud', 'QuickadminCrudController@insert');
 });
 
 // @todo move to default routes.php

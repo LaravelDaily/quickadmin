@@ -106,13 +106,13 @@ class RequestBuilder
                 } elseif ($field->type == 'relationship') {
                     switch ($field->validation) {
                         case 'required':
-                            $rules .= "'" . $field->relationship_name . "_" . $field->relationship_field . "' => '$field->validation', \r\n            ";
+                            $rules .= "'" . $field->relationship_name . "_id' => '$field->validation', \r\n            ";
                             break;
                         case 'required|unique':
                             $camelName = Str::camel($this->name);
                             // Insert table names
                             $tableName = strtolower($camelName);
-                            $rules .= "'" . $field->relationship_name . "_" . $field->relationship_field . "' => '$field->validation:$tableName,$field->title,'." . '$this->' . $this->request . ", \r\n            ";
+                            $rules .= "'" . $field->relationship_name . "_id' => '$field->validation:$tableName,$field->relationship_name_id,'." . '$this->' . $this->request . ", \r\n            ";
                             break;
                     }
                 } elseif ($field->type == 'file') {

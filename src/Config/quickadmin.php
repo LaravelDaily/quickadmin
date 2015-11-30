@@ -15,5 +15,7 @@ return [
      */
     // Default route
     'route'              => 'admin',
+    // Default home route
+    'homeRoute'          => 'admin',
 
 ];
