@@ -29,14 +29,28 @@ Route::group([
 ], function () {
     // Dashboard home page route
     Route::get(config('quickadmin.homeRoute'), 'QuickadminController@index');
-    Route::get(config('quickadmin.route') . '/crud', 'QuickadminCrudController@create');
-    Route::post(config('quickadmin.route') . '/crud', 'QuickadminCrudController@insert');
+    Route::group([
+        'middleware' => 'role'
+    ], function () {
+        Route::get(config('quickadmin.route') . '/crud', [
+            'as'   => 'crud',
+            'uses' => 'QuickadminCrudController@create'
+        ]);
+        Route::post(config('quickadmin.route') . '/crud', [
+            'as'   => 'crud',
+            'uses' => 'QuickadminCrudController@insert'
+        ]);
+    });
 });
 
 // @todo move to default routes.php
 Route::group(['namespace' => 'App\Http\Controllers'], function () {
     // Point to App\Http\Controllers\UsersController as a resource
-    resource('users', 'UsersController');
+    Route::group([
+        'middleware' => 'role'
+    ], function () {
+        resource('users', 'UsersController');
+    });
     // Authentication routes...
     Route::get('auth/login', 'Auth\AuthController@getLogin');
     Route::post('auth/login', 'Auth\AuthController@postLogin');

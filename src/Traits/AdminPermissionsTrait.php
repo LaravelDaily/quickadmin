@@ -10,9 +10,7 @@ trait AdminPermissionsTrait
         if (is_null($request->route()->getName())) {
             return true;
         }
-
         list($role, $crud) = $this->parseData($request);
-
         if (in_array($role, explode(',', $crud->roles))) {
             return true;
         }
@@ -28,8 +26,17 @@ trait AdminPermissionsTrait
     private function parseData($request)
     {
         $role     = $request->user()->role_id;
-        $crudName = explode('.', $request->route()->getName())[1];
-        $crud     = Crud::where('name', ucfirst($crudName))->firstOrFail();
+        $route    = explode('.', $request->route()->getName());
+        $official = [
+            'crud',
+            'users'
+        ];
+        if (in_array($route[0], $official)) {
+            return [$role, (object) ['roles' => config('quickadmin.defaultRole') . ',']];
+        } else {
+            $crudName = $route[1];
+        }
+        $crud = Crud::where('name', ucfirst($crudName))->firstOrFail();
 
         return [$role, $crud];
     }
