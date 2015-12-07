@@ -11,7 +11,7 @@
       "email": "povilas@webcoderpro.com"
     }
   ],
-  "version": "0.2.10",
+  "version": "0.2.11",
   "require": {
     "illuminate/html": "5.0.*@dev"
   },
