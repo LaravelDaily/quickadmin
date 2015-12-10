@@ -124,6 +124,7 @@
             $(e).parent().parent().find('.title').show().val('');
             $(e).parent().parent().find('.texteditor').hide();
             $(e).parent().parent().find('.size').hide();
+            $(e).parent().parent().find('.dimensions').hide();
 
             // Show a checbox which enables/disables showing in list
             $(e).parent().parent().parent().find('.show2').show();
@@ -146,6 +147,10 @@
                     break;
                 case 'file':
                     $(e).parent().parent().find('.size').show();
+                    break;
+                case 'photo':
+                    $(e).parent().parent().find('.size').show();
+                    $(e).parent().parent().find('.dimensions').show();
                     break;
             }
         }

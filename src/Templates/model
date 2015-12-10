@@ -17,4 +17,5 @@ class $CLASS$ extends Model {
     $RELATIONSHIPS$
     $PASSWORDHASH$
     $DATEPICKERS$
+    $DATETIMEPICKERS$
 }

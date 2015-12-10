@@ -92,4 +92,22 @@ class $CLASS$ extends Controller {
 		return redirect()->route('admin.$COLLECTION$.index');
 	}
 
+    /**
+     * Mass delete function from index page
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function massDelete(Request $request)
+    {
+        if ($request->get('toDelete') != 'mass') {
+            $toDelete = json_decode($request->get('toDelete'));
+            $MODEL$::destroy($toDelete);
+        } else {
+            $MODEL$::whereNotNull('id')->delete();
+        }
+
+        return redirect()->route('admin.$COLLECTION$.index');
+    }
+
 }

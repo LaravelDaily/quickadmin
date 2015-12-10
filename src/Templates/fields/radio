@@ -2,5 +2,6 @@
     {!! Form::label('$LABEL$', '$TITLE$', array('class'=>'col-md-2 control-label')) !!}
     <div class="col-sm-10">
         {!! Form::radio('$LABEL$'$VALUE$, false) !!}
+        $HELPER$
     </div>
 </div>

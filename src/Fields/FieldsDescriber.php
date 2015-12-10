@@ -16,9 +16,12 @@ class FieldsDescriber
             'radio'        => 'Radio',
             'checkbox'     => 'Checkbox',
             'date'         => 'Date picker',
+            'datetime'     => 'Date and time picker',
             'relationship' => 'Relationship',
             'file'         => 'File field',
+            'photo'        => 'Photo field',
             'password'     => 'Password field (hashed)',
+            'money'        => 'Money',
         ];
     }
 
@@ -47,10 +50,13 @@ class FieldsDescriber
             'textarea'     => 'text("$FIELDNAME$")',
             'radio'        => 'string("$FIELDNAME$")',
             'checkbox'     => 'tinyInteger("$FIELDNAME$")->default($STATE$)',
-            'date'         => 'string("$FIELDNAME$")',
+            'date'         => 'date("$FIELDNAME$")',
+            'datetime'     => 'dateTime("$FIELDNAME$")',
             'relationship' => 'integer("$RELATIONSHIP$_id")->references("id")->on("$RELATIONSHIP$")',
             'file'         => 'string("$FIELDNAME$")',
+            'photo'        => 'string("$FIELDNAME$")',
             'password'     => 'string("$FIELDNAME$")',
+            'money'        => 'decimal("$FIELDNAME$", 15, 2)',
         ];
     }
 

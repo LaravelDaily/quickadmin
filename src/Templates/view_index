@@ -13,6 +13,9 @@
             <table class="table table-striped table-hover table-responsive datatable">
                 <thead>
                     <tr>
+                        <th>
+                            {!! Form::checkbox('delete_all',1,false,['class' => 'mass']) !!}
+                        </th>
                         $HEADINGS$
                         <th>&nbsp;</th>
                     </tr>
@@ -21,6 +24,9 @@
                 <tbody>
                     @foreach ($$RESOURCE$ as $row)
                         <tr>
+                            <td>
+                                {!! Form::checkbox('del-'.$row->id,1,false,['class' => 'single','data-id'=> $row->id]) !!}
+                            </td>
                             $FIELDS$
                             <td>
                                 {!! link_to_route('admin.$ROUTE$.edit', 'Edit', array($row->id), array('class' => 'btn btn-xs btn-info')) !!}
@@ -32,6 +38,16 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="row">
+                <div class="col-xs-12">
+                    <button class="btn btn-danger" id="delete">
+                        Delete checked
+                    </button>
+                </div>
+            </div>
+            {!! Form::open(['route' => 'admin.$ROUTE$.massDelete', 'method' => 'post', 'id' => 'massDelete']) !!}
+                <input type="hidden" id="send" name="toDelete">
+            {!! Form::close() !!}
         </div>
 	</div>
 @else
@@ -39,3 +55,26 @@
 @endif
 
 @endsection
+
+@section('javascript')
+    <script>
+        $(document).ready(function () {
+            $('#delete').click(function () {
+                var send = $('#send');
+                var mass = $('.mass').is(":checked");
+                if (mass == true) {
+                    send.val('mass');
+                } else {
+                    var toDelete = [];
+                    $('.single').each(function () {
+                        if ($(this).is(":checked")) {
+                            toDelete.push($(this).data('id'));
+                        }
+                    });
+                    send.val(JSON.stringify(toDelete));
+                }
+                $('#massDelete').submit();
+            });
+        });
+    </script>
+@stop

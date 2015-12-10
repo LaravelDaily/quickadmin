@@ -34,9 +34,9 @@ class ViewsBuilder
         $cache          = new QuickCache();
         $cached         = $cache->get('fieldsinfo');
         $this->template = [
-            0 => __DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Templates'. DIRECTORY_SEPARATOR .'view_index',
-            1 => __DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Templates'. DIRECTORY_SEPARATOR .'view_edit',
-            2 => __DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Templates'. DIRECTORY_SEPARATOR .'view_create',
+            0 => __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . 'view_index',
+            1 => __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . 'view_edit',
+            2 => __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . 'view_create',
         ];
         $this->name     = $cached['name'];
         $this->fields   = $cached['fields'];
@@ -137,6 +137,9 @@ class ViewsBuilder
                 if ($field->type == 'relationship') {
                     $columns .= '<td>{{ $row->' . $field->relationship_name . '->' . $field->relationship_field . " }}</td>\r\n";
                     $used[$field->relationship_field] = $field->relationship_field;
+                } elseif ($field->type == 'photo') {
+                    $columns .= '<td><img src="{{ asset(\'uploads/thumb\') . \'/\'.  $row->' . $field->title . " }}\"></td>\r\n";
+                    $used[$field->title] = $field->title;
                 } else {
                     $columns .= '<td>{{ $row->' . $field->title . " }}</td>\r\n";
                     $used[$field->title] = $field->title;
@@ -162,7 +165,7 @@ class ViewsBuilder
             if ($field->type == 'relationship') {
                 $label = $field->relationship_name . '_id';
             }
-            $temp = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Templates'. DIRECTORY_SEPARATOR .'fields'. DIRECTORY_SEPARATOR . $field->type);
+            $temp = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . 'fields' . DIRECTORY_SEPARATOR . $field->type);
             $temp = str_replace([
                 'old(\'$LABEL$\')',
                 '$LABEL$',
@@ -170,7 +173,10 @@ class ViewsBuilder
                 '$VALUE$',
                 '$STATE$',
                 '$SELECT$',
-                '$TEXTEDITOR$'
+                '$TEXTEDITOR$',
+                '$HELPER$',
+                '$WIDTH$',
+                '$HEIGHT$',
             ], [
                 'old(\'$LABEL$\',$' . $this->resource . '->' . $label . ')',
                 $label,
@@ -178,7 +184,10 @@ class ViewsBuilder
                 $field->value != '' ? ', "' . $field->value . '"' : '',
                 $field->default,
                 '$' . $field->relationship_name,
-                $field->texteditor == 1 ? ' ckeditor' : ''
+                $field->texteditor == 1 ? ' ckeditor' : '',
+                $this->helper($field->helper),
+                $field->dimension_w,
+                $field->dimension_h,
             ], $temp);
             $form .= $temp;
         }
@@ -200,21 +209,27 @@ class ViewsBuilder
             if ($field->type == 'relationship') {
                 $key = $field->relationship_name . '_id';
             }
-            $temp = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Templates'. DIRECTORY_SEPARATOR .'fields'. DIRECTORY_SEPARATOR . $field->type);
+            $temp = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . 'fields' . DIRECTORY_SEPARATOR . $field->type);
             $temp = str_replace([
                 '$LABEL$',
                 '$TITLE$',
                 '$VALUE$',
                 '$STATE$',
                 '$SELECT$',
-                '$TEXTEDITOR$'
+                '$TEXTEDITOR$',
+                '$HELPER$',
+                '$WIDTH$',
+                '$HEIGHT$',
             ], [
                 $key,
                 $title,
                 $field->value != '' ? ', ' . $field->value : '',
                 $field->default,
                 '$' . $field->relationship_name,
-                $field->texteditor == 1 ? ' ckeditor' : ''
+                $field->texteditor == 1 ? ' ckeditor' : '',
+                $this->helper($field->helper),
+                $field->dimension_w,
+                $field->dimension_h,
             ], $temp);
             $form .= $temp;
         }
@@ -234,17 +249,36 @@ class ViewsBuilder
     }
 
     /**
+     * Create helper blocks for form fields
+     *
+     * @param $value
+     *
+     * @return string
+     */
+    private function helper($value)
+    {
+        if ($value != '') {
+            return '<p class="help-block">' . $value . '</p>';
+        } else {
+            return '';
+        }
+    }
+
+    /**
      *  Publish files into their places
      */
     private function publish($template)
     {
-        if (!file_exists(base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'. DIRECTORY_SEPARATOR . $this->path))) {
-            mkdir(base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'. DIRECTORY_SEPARATOR . $this->path));
-            chmod(base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'), 0777);
+        if (!file_exists(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . $this->path))) {
+            mkdir(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . $this->path));
+            chmod(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin'), 0777);
         }
-        file_put_contents(base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'. DIRECTORY_SEPARATOR . $this->path . DIRECTORY_SEPARATOR .'index.blade.php'), $template[0]);
-        file_put_contents(base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'. DIRECTORY_SEPARATOR . $this->path . DIRECTORY_SEPARATOR .'edit.blade.php'), $template[1]);
-        file_put_contents(base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'. DIRECTORY_SEPARATOR . $this->path . DIRECTORY_SEPARATOR .'create.blade.php'), $template[2]);
+        file_put_contents(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . $this->path . DIRECTORY_SEPARATOR . 'index.blade.php'),
+            $template[0]);
+        file_put_contents(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . $this->path . DIRECTORY_SEPARATOR . 'edit.blade.php'),
+            $template[1]);
+        file_put_contents(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . $this->path . DIRECTORY_SEPARATOR . 'create.blade.php'),
+            $template[2]);
     }
 
 }

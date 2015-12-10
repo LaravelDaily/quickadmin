@@ -89,7 +89,7 @@ class RequestBuilder
         foreach ($this->fields as $field) {
             // Check if there is no duplication for radio and checkbox
             if (!in_array($field->title, $used)) {
-                if ($field->type != 'file' && $field->type != 'relationship') {
+                if ($field->type != 'file' && $field->type != 'relationship' && $field->type != 'money') {
                     if ($type == 0 || $field->type != 'password') {
                         switch ($field->validation) {
                             case 'required':
@@ -115,7 +115,7 @@ class RequestBuilder
                             $rules .= "'" . $field->relationship_name . "_id' => '$field->validation:$tableName,$field->relationship_name_id,'." . '$this->' . $this->request . ", \r\n            ";
                             break;
                     }
-                } elseif ($field->type == 'file') {
+                } elseif ($field->type == 'file' || $field->type == 'photo') {
                     switch ($field->validation) {
                         case 'required':
                             $rules .= "'$field->title' => 'max:$field->size|$field->validation', \r\n            ";
@@ -132,6 +132,22 @@ class RequestBuilder
                             break;
                     }
 
+                } elseif ($field->type == 'money') {
+                    switch ($field->validation) {
+                        case 'required':
+                            $rules .= "'$field->title' => 'numeric|$field->validation', \r\n            ";
+                            break;
+                        case 'required|unique':
+                            $camelName = Str::camel($this->name);
+                            // Insert table names
+                            $tableName = strtolower($camelName);
+                            $rules .= "'$field->title' => 'numeric|$field->validation:$tableName,$field->title,'." . '$this->' . $this->request . ", \r\n            ";
+                            break;
+                        default:
+                            // We got a file field which has a bit different validation
+                            $rules .= "'$field->title' => 'numeric', \r\n            ";
+                            break;
+                    }
                 }
                 $used[$field->title] = $field->title;
             }

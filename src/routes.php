@@ -17,6 +17,10 @@ if (Schema::hasTable('cruds')) {
             'namespace'  => 'App\Http\Controllers',
         ], function () use ($cruds) {
             foreach ($cruds as $crud) {
+                post(strtolower($crud->name) . '/massDelete', [
+                    'as'   => config('quickadmin.route') . '.' . strtolower($crud->name) . '.massDelete',
+                    'uses' => 'Admin\\' . ucfirst(camel_case($crud->name)) . 'Controller@massDelete'
+                ]);
                 resource(strtolower($crud->name), 'Admin\\' . ucfirst(camel_case($crud->name)) . 'Controller');
             }
         });

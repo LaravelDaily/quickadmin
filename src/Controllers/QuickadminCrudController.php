@@ -75,12 +75,15 @@ class QuickadminCrudController extends Controller
         $cached['files']         = 0;
         $cached['password']      = 0;
         $cached['date']          = 0;
+        $cached['datetime']      = 0;
         $fields                  = [];
+
         foreach ($request->f_type as $index => $field) {
             $fields[$index] = [
                 'type'               => $field,
                 'title'              => $request->f_title[$index],
                 'label'              => $request->f_label[$index],
+                'helper'             => $request->f_helper[$index],
                 'validation'         => $request->f_validation[$index],
                 'value'              => $request->f_value[$index],
                 'default'            => $request->f_default[$index],
@@ -90,17 +93,22 @@ class QuickadminCrudController extends Controller
                 'texteditor'         => $request->f_texteditor[$index],
                 'size'               => $request->f_size[$index] * 1024,
                 'show'               => $request->f_show[$index],
+                'dimension_h'        => $request->f_dimension_h[$index],
+                'dimension_w'        => $request->f_dimension_w[$index],
             ];
             if ($field == 'relationship') {
                 $cached['relationships']++;
-            } elseif ($field == 'file') {
+            } elseif ($field == 'file' || $field == 'photo') {
                 $cached['files']++;
             } elseif ($field == 'password') {
                 $cached['password']++;
             } elseif ($field == 'date') {
                 $cached['date']++;
+            } elseif ($field == 'datetime') {
+                $cached['datetime']++;
             }
         }
+//        dd($fields);
         $cached['fields']      = $fields;
         $cached['name']        = $request->name;
         $cached['soft_delete'] = $request->soft;

@@ -13,7 +13,8 @@
   ],
   "version": "0.2.11",
   "require": {
-    "illuminate/html": "5.0.*@dev"
+    "illuminate/html": "5.0.*@dev",
+    "intervention/image": "^2.3"
   },
   "classmap": [
     "src/Controllers",

@@ -23,6 +23,8 @@ class ModelBuilder
     private $password;
     // Have datepickers?
     private $date;
+    // Have datetimepickers?
+    private $datetime;
 
     /**
      * Build our model file
@@ -31,12 +33,13 @@ class ModelBuilder
     {
         $cache          = new QuickCache();
         $cached         = $cache->get('fieldsinfo');
-        $this->template = __DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Templates'. DIRECTORY_SEPARATOR .'model';
+        $this->template = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . 'model';
         $this->name     = $cached['name'];
         $this->fields   = $cached['fields'];
         $this->soft     = $cached['soft_delete'];
         $this->password = $cached['password'];
         $this->date     = $cached['date'];
+        $this->datetime = $cached['datetime'];
         $this->names();
         $template = (string) $this->loadTemplate();
         $template = $this->buildParts($template);
@@ -90,6 +93,7 @@ class ModelBuilder
             '$PASSWORDHASH$',
             '$DATEPICKERS_CALL$',
             '$DATEPICKERS$',
+            '$DATETIMEPICKERS$',
         ], [
             $this->namespace,
             $soft_call,
@@ -101,8 +105,9 @@ class ModelBuilder
             $this->buildRelationships(),
             $this->password > 0 ? "use Illuminate\Support\Facades\Hash; \n\r" : '',
             $this->password > 0 ? $this->passwordHash() : '',
-            $this->date > 0 ? "use Carbon\Carbon; \n\r" : '',
+            $this->date > 0 || $this->datetime > 0 ? "use Carbon\Carbon; \n\r" : '',
             $this->date > 0 ? $this->datepickers() : '',
+            $this->datetime > 0 ? $this->datetimepickers() : '',
         ], $template);
 
         return $template;
@@ -244,6 +249,37 @@ class ModelBuilder
     public function get' . $camel . 'Attribute($input)
     {
         return Carbon::createFromFormat(\'Y-m-d\', $input)->format(config(\'quickadmin.date_format\'));
+    }' . "\r\n\r\n";
+            }
+        }
+
+        return $dates;
+    }
+
+    private function datetimepickers()
+    {
+        $dates = '';
+        foreach ($this->fields as $field) {
+            if ($field->type == 'datetime') {
+                $camel = ucfirst(Str::camel(str_replace('_', ' ', $field->title)));
+                $dates .= '/**
+     * Set attribute to datetime format
+     * @param $input
+     */
+    public function set' . $camel . 'Attribute($input)
+    {
+        $this->attributes[\'' . $field->title . '\'] = Carbon::createFromFormat(config(\'quickadmin.date_format\') . \' \' . config(\'quickadmin.time_format\'), $input)->format(\'Y-m-d H:i:s\');
+    }
+
+    /**
+     * Get attribute from datetime format
+     * @param $input
+     *
+     * @return string
+     */
+    public function get' . $camel . 'Attribute($input)
+    {
+        return Carbon::createFromFormat(\'Y-m-d H:i:s\', $input)->format(config(\'quickadmin.date_format\') . \' \' .config(\'quickadmin.time_format\'));
     }' . "\r\n\r\n";
             }
         }

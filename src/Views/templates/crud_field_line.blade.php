@@ -20,6 +20,17 @@
                placeholder="File size limit (in MB)" style="display: none;">
         <!-- /File size limit -->
 
+        <!-- File dimensions limit -->
+        <label class="dimensions">File maximum width:</label>
+        <input type="text" name="f_dimension_w[]" value="{{ old('f_dimension_w.'.$index, '4096') }}"
+               class="form-control dimensions"
+               placeholder="File maximum width" style="display: none;">
+        <label class="dimensions">File maximum height:</label>
+        <input type="text" name="f_dimension_h[]" value="{{ old('f_dimension_h.'.$index, '4096') }}"
+               class="form-control dimensions"
+               placeholder="File maximum height" style="display: none;">
+        <!-- /File dimensions limit -->
+
         <!-- Value for radio button -->
         <input type="text" name="f_value[]" value="{{ old('f_value.'.$index) }}" class="form-control value"
                placeholder="Value" style="display: none;">
@@ -59,6 +70,8 @@
     <td>
         <input type="text" name="f_label[]" value="{{ old('f_label.'.$index) }}" class="form-control"
                required="required" placeholder="Field visual title">
+        <input type="text" name="f_helper[]" value="{{ old('f_helper.'.$index) }}" class="form-control"
+               placeholder="Field helper box">
     </td>
     <td>
         <select name="f_validation[]" class="form-control" required="required">

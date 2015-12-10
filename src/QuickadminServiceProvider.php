@@ -17,20 +17,21 @@ class QuickadminServiceProvider extends ServiceProvider
     public function boot()
     {
         // Register vendor views
-        $this->loadViewsFrom(__DIR__ . DIRECTORY_SEPARATOR . 'Views'. DIRECTORY_SEPARATOR .'qa', 'qa');
-        $this->loadViewsFrom(__DIR__ . DIRECTORY_SEPARATOR . 'Views'. DIRECTORY_SEPARATOR .'templates', 'tpl');
+        $this->loadViewsFrom(__DIR__ . DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR . 'qa', 'qa');
+        $this->loadViewsFrom(__DIR__ . DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR . 'templates', 'tpl');
         /* Publish master templates */
         $this->publishes([
-            __DIR__ . DIRECTORY_SEPARATOR . 'Config'. DIRECTORY_SEPARATOR .'quickadmin.php'                  => config_path('quickadmin.php'),
-            __DIR__ . DIRECTORY_SEPARATOR . 'Views'. DIRECTORY_SEPARATOR .'admin'                            => base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'admin'),
-            __DIR__ . DIRECTORY_SEPARATOR . 'Views'. DIRECTORY_SEPARATOR .'auth'                             => base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'auth'),
-            __DIR__ . DIRECTORY_SEPARATOR . 'Views'. DIRECTORY_SEPARATOR .'emails'                           => base_path('resources'. DIRECTORY_SEPARATOR .'views'. DIRECTORY_SEPARATOR .'emails'),
-            __DIR__ . DIRECTORY_SEPARATOR . 'Public'. DIRECTORY_SEPARATOR .'quickadmin'                      => base_path('public'. DIRECTORY_SEPARATOR .'quickadmin'),
-            __DIR__ . DIRECTORY_SEPARATOR . 'Controllers'. DIRECTORY_SEPARATOR .'publish'. DIRECTORY_SEPARATOR .'UsersController'    => app_path('Http'. DIRECTORY_SEPARATOR .'Controllers'. DIRECTORY_SEPARATOR .'UsersController.php'),
-            __DIR__ . DIRECTORY_SEPARATOR . 'Controllers'. DIRECTORY_SEPARATOR .'publish'. DIRECTORY_SEPARATOR .'Controller'         => app_path('Http'. DIRECTORY_SEPARATOR .'Controllers'. DIRECTORY_SEPARATOR .'Controller.php'),
-            __DIR__ . DIRECTORY_SEPARATOR . 'Controllers'. DIRECTORY_SEPARATOR .'publish'. DIRECTORY_SEPARATOR .'PasswordController' => app_path('Http'. DIRECTORY_SEPARATOR .'Controllers'. DIRECTORY_SEPARATOR .'Auth'. DIRECTORY_SEPARATOR .'PasswordController.php'),
-            __DIR__ . DIRECTORY_SEPARATOR . 'Controllers'. DIRECTORY_SEPARATOR .'publish'. DIRECTORY_SEPARATOR .'FileUploadTrait'    => app_path('Http'. DIRECTORY_SEPARATOR .'Controllers'. DIRECTORY_SEPARATOR .'Traits'. DIRECTORY_SEPARATOR .'FileUploadTrait.php'),
-            __DIR__ . DIRECTORY_SEPARATOR . 'Models'. DIRECTORY_SEPARATOR .'publish'. DIRECTORY_SEPARATOR .'Role'                    => app_path('Role.php'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Config' . DIRECTORY_SEPARATOR . 'quickadmin.php'                                            => config_path('quickadmin.php'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR . 'admin'                                                      => base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR . 'auth'                                                       => base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'auth'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR . 'emails'                                                     => base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'emails'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Public' . DIRECTORY_SEPARATOR . 'quickadmin'                                                => base_path('public' . DIRECTORY_SEPARATOR . 'quickadmin'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'publish' . DIRECTORY_SEPARATOR . 'UsersController'    => app_path('Http' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'UsersController.php'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'publish' . DIRECTORY_SEPARATOR . 'Controller'         => app_path('Http' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'Controller.php'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'publish' . DIRECTORY_SEPARATOR . 'PasswordController' => app_path('Http' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'Auth' . DIRECTORY_SEPARATOR . 'PasswordController.php'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'publish' . DIRECTORY_SEPARATOR . 'AuthController'     => app_path('Http' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'Auth' . DIRECTORY_SEPARATOR . 'AuthController.php'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'publish' . DIRECTORY_SEPARATOR . 'FileUploadTrait'    => app_path('Http' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'Traits' . DIRECTORY_SEPARATOR . 'FileUploadTrait.php'),
+            __DIR__ . DIRECTORY_SEPARATOR . 'Models' . DIRECTORY_SEPARATOR . 'publish' . DIRECTORY_SEPARATOR . 'Role'                    => app_path('Role.php'),
         ], 'quickadmin');
 
         // Register commands
@@ -41,7 +42,7 @@ class QuickadminServiceProvider extends ServiceProvider
             'quickadmin:install'
         ]);
         // Routing
-        include __DIR__ . DIRECTORY_SEPARATOR .'routes.php';
+        include __DIR__ . DIRECTORY_SEPARATOR . 'routes.php';
     }
 
     /**
@@ -62,10 +63,12 @@ class QuickadminServiceProvider extends ServiceProvider
         $this->app->make('Laraveldaily\Quickadmin\Builders\ViewsBuilder');
         // Register dependency packages
         $this->app->register('Illuminate\Html\HtmlServiceProvider');
+        $this->app->register('Intervention\Image\ImageServiceProvider');
         // Register dependancy aliases
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('HTML', 'Illuminate\Html\HtmlFacade');
         $loader->alias('Form', 'Illuminate\Html\FormFacade');
+        $loader->alias('Image', 'Intervention\Image\Facades\Image');
     }
 
 }
