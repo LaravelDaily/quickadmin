@@ -138,7 +138,7 @@ class ViewsBuilder
                     $columns .= '<td>{{ $row->' . $field->relationship_name . '->' . $field->relationship_field . " }}</td>\r\n";
                     $used[$field->relationship_field] = $field->relationship_field;
                 } elseif ($field->type == 'photo') {
-                    $columns .= '<td><img src="{{ asset(\'uploads/thumb\') . \'/\'.  $row->' . $field->title . " }}\"></td>\r\n";
+                    $columns .= '<td>@if($row->' . $field->title . '. != \'\')<img src="{{ asset(\'uploads/thumb\') . \'/\'.  $row->' . $field->title . " }}\">@endif</td>\r\n";
                     $used[$field->title] = $field->title;
                 } else {
                     $columns .= '<td>{{ $row->' . $field->title . " }}</td>\r\n";

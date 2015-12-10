@@ -60,20 +60,22 @@
     <script>
         $(document).ready(function () {
             $('#delete').click(function () {
-                var send = $('#send');
-                var mass = $('.mass').is(":checked");
-                if (mass == true) {
-                    send.val('mass');
-                } else {
-                    var toDelete = [];
-                    $('.single').each(function () {
-                        if ($(this).is(":checked")) {
-                            toDelete.push($(this).data('id'));
-                        }
-                    });
-                    send.val(JSON.stringify(toDelete));
+                if (window.confirm("Are you sure?")) {
+                    var send = $('#send');
+                    var mass = $('.mass').is(":checked");
+                    if (mass == true) {
+                        send.val('mass');
+                    } else {
+                        var toDelete = [];
+                        $('.single').each(function () {
+                            if ($(this).is(":checked")) {
+                                toDelete.push($(this).data('id'));
+                            }
+                        });
+                        send.val(JSON.stringify(toDelete));
+                    }
+                    $('#massDelete').submit();
                 }
-                $('#massDelete').submit();
             });
         });
     </script>

@@ -71,7 +71,7 @@
         <input type="text" name="f_label[]" value="{{ old('f_label.'.$index) }}" class="form-control"
                required="required" placeholder="Field visual title">
         <input type="text" name="f_helper[]" value="{{ old('f_helper.'.$index) }}" class="form-control"
-               placeholder="Field helper box">
+               placeholder="Optional additional comment below the field">
     </td>
     <td>
         <select name="f_validation[]" class="form-control" required="required">
