@@ -20,6 +20,12 @@
 
     {!! Form::open(['class' => 'form-horizontal']) !!}
 
+    <div class="form-group">
+        {!! Form::label('parent_id', 'CRUD parent', ['class'=>'col-md-2 control-label']) !!}
+        <div class="col-sm-10">
+            {!! Form::select('parent_id', $parentsSelect, old('parent_id'), ['class'=>'form-control']) !!}
+        </div>
+    </div>
 
     <div class="form-group">
         {!! Form::label('name', 'CRUD name', ['class'=>'col-md-2 control-label']) !!}

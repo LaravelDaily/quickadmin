@@ -11,10 +11,11 @@
       "email": "povilas@webcoderpro.com"
     }
   ],
-  "version": "0.3.0",
+  "version": "0.2.11",
   "require": {
     "illuminate/html": "5.0.*@dev",
-    "intervention/image": "^2.3"
+    "intervention/image": "^2.3",
+    "yajra/laravel-datatables-oracle": "~5.0"
   },
   "classmap": [
     "src/Controllers",

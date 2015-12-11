@@ -25,4 +25,13 @@ class Crud extends Model
     {
         $this->attributes['name'] = ucfirst(Str::camel($input));
     }
+
+    /**
+     * Get children links
+     * @return mixed
+     */
+    public function children()
+    {
+        return $this->hasMany('Laraveldaily\Quickadmin\Models\Crud', 'parent_id', 'id')->orderBy('position');
+    }
 }

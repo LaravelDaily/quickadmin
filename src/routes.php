@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\View;
 use Laraveldaily\Quickadmin\Models\Crud;
 
 if (Schema::hasTable('cruds')) {
-    $cruds = Crud::where('is_crud', 1)->orderBy('position')->get();
+    $cruds = Crud::with('children')->where('is_crud', 1)->orderBy('position')->get();
     View::share('cruds', $cruds);
     if (!empty($cruds)) {
         Route::group([
@@ -43,6 +43,14 @@ Route::group([
         Route::post(config('quickadmin.route') . '/crud', [
             'as'   => 'crud',
             'uses' => 'QuickadminCrudController@insert'
+        ]);
+        Route::get(config('quickadmin.route') . '/actions', [
+            'as'   => 'actions',
+            'uses' => 'UserActionsController@index'
+        ]);
+        Route::get(config('quickadmin.route') . '/actions/ajax', [
+            'as'   => 'actions.ajax',
+            'uses' => 'UserActionsController@table'
         ]);
     });
 });

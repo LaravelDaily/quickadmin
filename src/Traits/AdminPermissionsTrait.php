@@ -29,7 +29,8 @@ trait AdminPermissionsTrait
         $route    = explode('.', $request->route()->getName());
         $official = [
             'crud',
-            'users'
+            'users',
+            'actions'
         ];
         if (in_array($route[0], $official)) {
             return [$role, (object) ['roles' => config('quickadmin.defaultRole') . ',']];

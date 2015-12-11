@@ -28,6 +28,7 @@ class QuickadminCrudController extends Controller
         $fieldValidation   = FieldsDescriber::validation();
         $defaultValuesCbox = FieldsDescriber::default_cbox();
         $crudsSelect       = Crud::lists('title', 'id');
+        $parentsSelect     = Crud::where('parent_id', null)->lists('title', 'id')->prepend('-- no parent --', 'null');
         // Get columns for relationship
         $models = [];
         foreach (Crud::all() as $crud) {
@@ -41,7 +42,7 @@ class QuickadminCrudController extends Controller
         }
 
         return view("qa::cruds.create",
-            compact('fieldTypes', 'fieldValidation', 'defaultValuesCbox', 'crudsSelect', 'models'));
+            compact('fieldTypes', 'fieldValidation', 'defaultValuesCbox', 'crudsSelect', 'models', 'parentsSelect'));
     }
 
     /**
@@ -119,7 +120,7 @@ class QuickadminCrudController extends Controller
             'icon'      => $request->icon != '' ? $request->icon : 'fa-database',
             'name'      => $request->name,
             'title'     => $request->title,
-            'parent_id' => null,
+            'parent_id' => $request->parent_id != 0 ? $request->parent_id : null,
             'roles'     => '1'
         ]);
         // Create migrations
