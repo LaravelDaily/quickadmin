@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col-md-10 col-md-offset-2">
-            <h1>Create new menu parent item</h1>
+            <h1>Create new parent menu item</h1>
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -36,7 +36,7 @@
 
     <div class="form-group">
         <div class="col-md-12">
-            {!! Form::submit('Create CRUD', ['class' => 'btn btn-primary']) !!}
+            {!! Form::submit('Create parent', ['class' => 'btn btn-primary']) !!}
         </div>
     </div>
 
