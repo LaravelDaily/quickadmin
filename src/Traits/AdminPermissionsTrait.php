@@ -1,6 +1,6 @@
 <?php namespace Laraveldaily\Quickadmin\Traits;
 
-use Laraveldaily\Quickadmin\Models\Crud;
+use Laraveldaily\Quickadmin\Models\Menu;
 
 trait AdminPermissionsTrait
 {
@@ -10,8 +10,8 @@ trait AdminPermissionsTrait
         if (is_null($request->route()->getName())) {
             return true;
         }
-        list($role, $crud) = $this->parseData($request);
-        if (in_array($role, explode(',', $crud->roles))) {
+        list($role, $menu) = $this->parseData($request);
+        if (in_array($role, explode(',', $menu->roles))) {
             return true;
         }
 
@@ -28,17 +28,17 @@ trait AdminPermissionsTrait
         $role     = $request->user()->role_id;
         $route    = explode('.', $request->route()->getName());
         $official = [
-            'crud',
+            'menu',
             'users',
             'actions'
         ];
         if (in_array($route[0], $official)) {
             return [$role, (object) ['roles' => config('quickadmin.defaultRole') . ',']];
         } else {
-            $crudName = $route[1];
+            $menuName = $route[1];
         }
-        $crud = Crud::where('name', ucfirst($crudName))->firstOrFail();
+        $menu = Menu::where('name', ucfirst($menuName))->firstOrFail();
 
-        return [$role, $crud];
+        return [$role, $menu];
     }
 }

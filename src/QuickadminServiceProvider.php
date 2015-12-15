@@ -55,7 +55,7 @@ class QuickadminServiceProvider extends ServiceProvider
         // Register main classes
         $this->app->make('Laraveldaily\Quickadmin\Controllers\QuickadminController');
         $this->app->make('Laraveldaily\Quickadmin\Controllers\UserActionsController');
-        $this->app->make('Laraveldaily\Quickadmin\Controllers\QuickadminCrudController');
+        $this->app->make('Laraveldaily\Quickadmin\Controllers\QuickadminMenuController');
         $this->app->make('Laraveldaily\Quickadmin\Cache\QuickCache');
         $this->app->make('Laraveldaily\Quickadmin\Builders\MigrationBuilder');
         $this->app->make('Laraveldaily\Quickadmin\Builders\ModelBuilder');

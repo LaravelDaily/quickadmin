@@ -22,6 +22,7 @@ class FieldsDescriber
             'photo'        => 'Photo field',
             'password'     => 'Password field (hashed)',
             'money'        => 'Money',
+            'enum'         => 'ENUM',
         ];
     }
 
@@ -57,6 +58,7 @@ class FieldsDescriber
             'photo'        => 'string("$FIELDNAME$")',
             'password'     => 'string("$FIELDNAME$")',
             'money'        => 'decimal("$FIELDNAME$", 15, 2)',
+            'enum'         => 'enum("$FIELDNAME$", [$VALUES$])',
         ];
     }
 

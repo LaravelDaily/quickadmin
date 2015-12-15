@@ -17,21 +17,25 @@ class UserActionsObserver
             // Data was updated
             $action = 'updated';
         }
-        UsersLogs::create([
-            'user_id'      => Auth::user()->id,
-            'action'       => $action,
-            'action_model' => $model->getTable(),
-            'action_id'    => $model->id
-        ]);
+        if (Auth::check()) {
+            UsersLogs::create([
+                'user_id'      => Auth::user()->id,
+                'action'       => $action,
+                'action_model' => $model->getTable(),
+                'action_id'    => $model->id
+            ]);
+        }
     }
 
     public function deleting($model)
     {
-        UsersLogs::create([
-            'user_id'      => Auth::user()->id,
-            'action'       => 'deleted',
-            'action_model' => $model->getTable(),
-            'action_id'    => $model->id
-        ]);
+        if (Auth::check()) {
+            UsersLogs::create([
+                'user_id'      => Auth::user()->id,
+                'action'       => 'deleted',
+                'action_model' => $model->getTable(),
+                'action_id'    => $model->id
+            ]);
+        }
     }
 }

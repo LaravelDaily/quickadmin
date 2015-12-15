@@ -4,7 +4,7 @@ namespace Laraveldaily\Quickadmin\Commands;
 
 use App\User;
 use Illuminate\Console\Command;
-use Laraveldaily\Quickadmin\Models\Crud;
+use Laraveldaily\Quickadmin\Models\Menu;
 use Laraveldaily\Quickadmin\Models\Role;
 
 class QuickAdminInstall extends Command
@@ -58,8 +58,8 @@ class QuickAdminInstall extends Command
             database_path('migrations'. DIRECTORY_SEPARATOR .'2015_10_10_000000_create_roles_table.php'));
         copy(__DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Migrations'. DIRECTORY_SEPARATOR .'2015_10_10_000000_update_users_table',
             database_path('migrations'. DIRECTORY_SEPARATOR .'2015_10_10_000000_update_users_table.php'));
-        copy(__DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Migrations'. DIRECTORY_SEPARATOR .'2015_10_10_000000_create_cruds_table',
-            database_path('migrations'. DIRECTORY_SEPARATOR .'2015_10_10_000000_create_cruds_table.php'));
+        copy(__DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Migrations'. DIRECTORY_SEPARATOR .'2015_10_10_000000_create_menus_table',
+            database_path('migrations'. DIRECTORY_SEPARATOR .'2015_10_10_000000_create_menus_table.php'));
         copy(__DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Migrations'. DIRECTORY_SEPARATOR .'2015_12_11_000000_create_users_logs_table',
             database_path('migrations'. DIRECTORY_SEPARATOR .'2015_12_11_000000_create_users_logs_table.php'));
         copy(__DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Models'. DIRECTORY_SEPARATOR .'publish'. DIRECTORY_SEPARATOR .'User', app_path('User.php'));
@@ -97,10 +97,10 @@ class QuickAdminInstall extends Command
      */
     public function copyMasterTemplate()
     {
-        Crud::create([
+        Menu::create([
             'name'    => 'User',
             'title'   => 'User',
-            'is_crud' => 0
+            'menu_type' => 0
         ]);
         $this->callSilent('vendor:publish', [
             '--tag'   => ['quickadmin'],

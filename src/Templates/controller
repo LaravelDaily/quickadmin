@@ -34,6 +34,7 @@ class $CLASS$ extends Controller {
 	public function create()
 	{
 	    $RELATIONSHIPS$
+	    $ENUM$
 	    return view('admin.$COLLECTION$.create'$RELATIONSHIP_COMPACT$);
 	}
 
@@ -60,6 +61,7 @@ class $CLASS$ extends Controller {
 	{
 		$$RESOURCE$ = $MODEL$::find($id);
 	    $RELATIONSHIPS$
+	    $ENUM$
 		return view('admin.$COLLECTION$.edit', compact('$RESOURCE$'$RELATIONSHIP_COMPACT_EDIT$));
 	}
 

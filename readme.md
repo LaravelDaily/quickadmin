@@ -1,3 +1,9 @@
+## License
+This package license information is stored in license.txt file.
+
+## Requirements
+* Laravel `^5.1.11` - Because of ACL authorization engine: http://laravel.com/docs/5.1/authorization#introduction
+
 ## Quick Admin installation
 1. Install the package via `composer require laraveldaily/quickadmin`.
 2. Add `Laraveldaily\Quickadmin\QuickadminServiceProvider::class,` to your `\config\app.php` providers.

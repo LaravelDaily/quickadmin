@@ -3,7 +3,7 @@ namespace Laraveldaily\Quickadmin\Builders;
 
 use Illuminate\Support\Str;
 use Laraveldaily\Quickadmin\Cache\QuickCache;
-use Laraveldaily\Quickadmin\Models\Crud;
+use Laraveldaily\Quickadmin\Models\Menu;
 
 class ModelBuilder
 {
@@ -25,6 +25,8 @@ class ModelBuilder
     private $date;
     // Have datetimepickers?
     private $datetime;
+    // Have enum?
+    private $enum;
 
     /**
      * Build our model file
@@ -40,6 +42,7 @@ class ModelBuilder
         $this->password = $cached['password'];
         $this->date     = $cached['date'];
         $this->datetime = $cached['datetime'];
+        $this->enum     = $cached['enum'];
         $this->names();
         $template = (string) $this->loadTemplate();
         $template = $this->buildParts($template);
@@ -94,6 +97,7 @@ class ModelBuilder
             '$DATEPICKERS_CALL$',
             '$DATEPICKERS$',
             '$DATETIMEPICKERS$',
+            '$ENUMS$',
         ], [
             $this->namespace,
             $soft_call,
@@ -108,6 +112,7 @@ class ModelBuilder
             $this->date > 0 || $this->datetime > 0 ? "use Carbon\Carbon; \n\r" : '',
             $this->date > 0 ? $this->datepickers() : '',
             $this->datetime > 0 ? $this->datetimepickers() : '',
+            $this->enum > 0 ? $this->enum() : '',
         ], $template);
 
         return $template;
@@ -161,12 +166,12 @@ class ModelBuilder
      */
     private function buildRelationships()
     {
-        $cruds         = Crud::all()->keyBy('id');
+        $menus         = Menu::all()->keyBy('id');
         $used          = [];
         $relationships = '';
         foreach ($this->fields as $key => $field) {
             if (!in_array($field->title, $used) && $field->type == 'relationship') {
-                $crud    = $cruds[$field->relationship_id];
+                $menu    = $menus[$field->relationship_id];
                 $relLine = '
     public function $RELATIONSHIP$()
     {
@@ -176,8 +181,8 @@ class ModelBuilder
                     '$RELATIONSHIP$',
                     '$RELATIONSHIP_MODEL$'
                 ], [
-                    strtolower($crud->name),
-                    ucfirst(Str::camel($crud->name))
+                    strtolower($menu->name),
+                    ucfirst(Str::camel($menu->name))
                 ], $relLine);
                 $relationships .= $relLine;
             }
@@ -285,5 +290,34 @@ class ModelBuilder
         }
 
         return $dates;
+    }
+
+    /**
+     * Generate enum model
+     * @return string
+     */
+    public function enum()
+    {
+        $return = "\r\n";
+        foreach ($this->fields as $field) {
+            if ($field->type == 'enum') {
+                $values      = '';
+                $field->enum = explode(',', $field->enum);
+                foreach ($field->enum as $val) {
+                    // Remove first whitespace
+                    if (strpos(substr($val, 0, 1), ' ') !== false) {
+                        $len = strlen($val);
+                        $val = substr($val, 1, $len);
+                    }
+                    $values .= '"' . $val . '" => "' . $val . '"';
+                    if ($val != last($field->enum)) {
+                        $values .= ', ';
+                    }
+                }
+                $return .= '    public static $' . $field->title . ' = [' . $values . '];' . "\r\n";
+            }
+        }
+
+        return $return;
     }
 }

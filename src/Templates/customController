@@ -1,0 +1,19 @@
+<?php namespace $NAMESPACE$;
+
+use App\Http\Controllers\Controller;
+
+class $CLASS$ extends Controller {
+
+	/**
+	 * Index page
+	 *
+     * @param Request $request
+     *
+     * @return \Illuminate\View\View
+	 */
+	public function getIndex()
+    {
+		return view('admin.$COLLECTION$.index');
+	}
+
+}

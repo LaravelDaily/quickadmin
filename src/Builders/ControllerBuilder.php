@@ -3,7 +3,7 @@ namespace Laraveldaily\Quickadmin\Builders;
 
 use Illuminate\Support\Str;
 use Laraveldaily\Quickadmin\Cache\QuickCache;
-use Laraveldaily\Quickadmin\Models\Crud;
+use Laraveldaily\Quickadmin\Models\Menu;
 
 class ControllerBuilder
 {
@@ -21,6 +21,7 @@ class ControllerBuilder
     private $fields;
     private $relationships;
     private $files;
+    private $enum;
 
     /**
      * Build our controller file
@@ -29,11 +30,22 @@ class ControllerBuilder
     {
         $cache               = new QuickCache();
         $cached              = $cache->get('fieldsinfo');
-        $this->template      = __DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Templates'. DIRECTORY_SEPARATOR .'controller';
+        $this->template      = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . 'controller';
         $this->name          = $cached['name'];
         $this->fields        = $cached['fields'];
         $this->relationships = $cached['relationships'];
         $this->files         = $cached['files'];
+        $this->enum          = $cached['enum'];
+        $this->names();
+        $template = (string) $this->loadTemplate();
+        $template = $this->buildParts($template);
+        $this->publish($template);
+    }
+
+    public function buildCustom($name)
+    {
+        $this->template = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . 'customController';
+        $this->name     = $name;
         $this->names();
         $template = (string) $this->loadTemplate();
         $template = $this->buildParts($template);
@@ -71,7 +83,8 @@ class ControllerBuilder
             '$RELATIONSHIP_COMPACT_EDIT$',
             '$RELATIONSHIP_NAMESPACES$',
             '$FILETRAIT$',
-            '$FILESAVING$'
+            '$FILESAVING$',
+            '$ENUM$',
         ], [
             $this->namespace,
             $this->modelName,
@@ -86,7 +99,8 @@ class ControllerBuilder
             $this->compactEditBuilder(),
             $this->relationshipsNamespaces(),
             $this->files > 0 ? 'use App\Http\Controllers\Traits\FileUploadTrait;' : '',
-            $this->files > 0 ? '$this->saveFiles($request);' : ''
+            $this->files > 0 ? '$this->saveFiles($request);' : '',
+            $this->enum > 0 ? $this->enum() : '',
         ], $template);
 
         return $template;
@@ -122,13 +136,13 @@ class ControllerBuilder
         if ($this->relationships == 0) {
             return '';
         } else {
-            $cruds         = Crud::all()->keyBy('id');
+            $menus         = Menu::all()->keyBy('id');
             $relationships = '';
             $first         = true;
             foreach ($this->fields as $field) {
                 if ($field->type == 'relationship') {
-                    $crud = $cruds[$field->relationship_id];
-                    $relationships .= 'use App\\' . ucfirst(Str::camel($crud->name)) . ";\r\n";
+                    $menu = $menus[$field->relationship_id];
+                    $relationships .= 'use App\\' . ucfirst(Str::camel($menu->name)) . ";\r\n";
                 }
             }
 
@@ -145,7 +159,7 @@ class ControllerBuilder
         if ($this->relationships == 0) {
             return '';
         } else {
-            $cruds         = Crud::all()->keyBy('id');
+            $menus         = Menu::all()->keyBy('id');
             $relationships = '';
             $first         = true;
             foreach ($this->fields as $field) {
@@ -154,11 +168,11 @@ class ControllerBuilder
                     if (!$first) {
                         $relationships .= '        ';
                     }
-                    $crud = $cruds[$field->relationship_id];
+                    $menu = $menus[$field->relationship_id];
                     $relationships .= '$'
                         . $field->relationship_name
                         . ' = '
-                        . ucfirst(Str::camel($crud->name))
+                        . ucfirst(Str::camel($menu->name))
                         . '::lists("'
                         . $field->relationship_field
                         . '", "id");'
@@ -176,21 +190,40 @@ class ControllerBuilder
      */
     public function compactBuilder()
     {
-        if ($this->relationships == 0) {
+        if ($this->relationships == 0 && $this->enum == 0) {
             return '';
         } else {
             $compact = ', compact($RELATIONS$)';
-            $first   = true;
-            foreach ($this->fields as $field) {
-                if ($field->type == 'relationship') {
-                    $toReplace = '';
-                    if ($first != true) {
-                        $toReplace .= ', ';
-                    } else {
-                        $first = false;
+            if ($this->relationships > 0) {
+                $first = true;
+                foreach ($this->fields as $field) {
+                    if ($field->type == 'relationship') {
+                        $toReplace = '';
+                        if ($first != true) {
+                            $toReplace .= ', ';
+                        } else {
+                            $first = false;
+                        }
+                        $toReplace .= '"' . $field->relationship_name . '"$RELATIONS$';
+                        $compact = str_replace('$RELATIONS$', $toReplace, $compact);
                     }
-                    $toReplace .= '"' . $field->relationship_name . '"$RELATIONS$';
-                    $compact = str_replace('$RELATIONS$', $toReplace, $compact);
+                }
+            }
+            if ($this->enum > 0) {
+                if (!isset($first)) {
+                    $first = true;
+                }
+                foreach ($this->fields as $field) {
+                    if ($field->type == 'enum') {
+                        $toReplace = '';
+                        if ($first != true) {
+                            $toReplace .= ', ';
+                        } else {
+                            $first = false;
+                        }
+                        $toReplace .= '"' . $field->title . '"$RELATIONS$';
+                        $compact = str_replace('$RELATIONS$', $toReplace, $compact);
+                    }
                 }
             }
             $compact = str_replace('$RELATIONS$', '', $compact);
@@ -205,13 +238,22 @@ class ControllerBuilder
      */
     public function compactEditBuilder()
     {
-        if ($this->relationships == 0) {
+        if ($this->relationships == 0 && $this->enum == 0) {
             return '';
         } else {
             $compact = '';
-            foreach ($this->fields as $field) {
-                if ($field->type == 'relationship') {
-                    $compact .= ', "' . $field->relationship_name . '"';
+            if ($this->relationships > 0) {
+                foreach ($this->fields as $field) {
+                    if ($field->type == 'relationship') {
+                        $compact .= ', "' . $field->relationship_name . '"';
+                    }
+                }
+            }
+            if ($this->enum > 0) {
+                foreach ($this->fields as $field) {
+                    if ($field->type == 'enum') {
+                        $compact .= ', "' . $field->title . '"';
+                    }
                 }
             }
 
@@ -239,11 +281,24 @@ class ControllerBuilder
      */
     private function publish($template)
     {
-        if (!file_exists(app_path('Http'. DIRECTORY_SEPARATOR .'Controllers'. DIRECTORY_SEPARATOR .'Admin'))) {
-            mkdir(app_path('Http'. DIRECTORY_SEPARATOR .'Controllers'. DIRECTORY_SEPARATOR .'Admin'));
-            chmod(app_path('Http'. DIRECTORY_SEPARATOR .'Controllers'. DIRECTORY_SEPARATOR .'Admin'), 0777);
+        if (!file_exists(app_path('Http' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'Admin'))) {
+            mkdir(app_path('Http' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'Admin'));
+            chmod(app_path('Http' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'Admin'), 0777);
         }
-        file_put_contents(app_path('Http'. DIRECTORY_SEPARATOR .'Controllers'. DIRECTORY_SEPARATOR .'Admin'. DIRECTORY_SEPARATOR . $this->fileName), $template);
+        file_put_contents(app_path('Http' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'Admin' . DIRECTORY_SEPARATOR . $this->fileName),
+            $template);
+    }
+
+    public function enum()
+    {
+        $return = "\r\n";
+        foreach ($this->fields as $field) {
+            if ($field->type == 'enum') {
+                $return .= '        $' . $field->title . ' = ' . $this->modelName . '::$' . $field->title . ";\r\n";
+            }
+        }
+
+        return $return;
     }
 
 }

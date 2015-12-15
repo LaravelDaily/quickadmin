@@ -47,15 +47,29 @@ class ViewsBuilder
         $this->publish($template);
     }
 
+    public function buildCustom($name)
+    {
+        $this->name     = $name;
+        $this->template = [
+            0 => __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . 'customView_index',
+            1 => '',
+            2 => ''
+        ];
+        $this->names();
+        $template = (array) $this->loadTemplate();
+        $this->publishCustom($template);
+
+    }
+
     /**
      *  Load views templates
      */
     private function loadTemplate()
     {
         return [
-            0 => file_get_contents($this->template[0]),
-            1 => file_get_contents($this->template[1]),
-            2 => file_get_contents($this->template[2]),
+            0 => $this->template[0] != '' ? file_get_contents($this->template[0]) : '',
+            1 => $this->template[1] != '' ? file_get_contents($this->template[1]) : '',
+            2 => $this->template[2] != '' ? file_get_contents($this->template[2]) : '',
         ];
     }
 
@@ -279,6 +293,16 @@ class ViewsBuilder
             $template[1]);
         file_put_contents(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . $this->path . DIRECTORY_SEPARATOR . 'create.blade.php'),
             $template[2]);
+    }
+
+    private function publishCustom($template)
+    {
+        if (!file_exists(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . $this->path))) {
+            mkdir(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . $this->path));
+            chmod(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin'), 0777);
+        }
+        file_put_contents(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . $this->path . DIRECTORY_SEPARATOR . 'index.blade.php'),
+            $template[0]);
     }
 
 }

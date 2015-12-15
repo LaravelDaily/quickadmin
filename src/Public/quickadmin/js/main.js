@@ -90,7 +90,7 @@ $(document).ready(function () {
                 }
             });
         }
-        if (hasSubMenu == true) {
+        if (hasSubMenu == true || $(this).attr('href') == '#') {
             e.preventDefault();
         }
     });

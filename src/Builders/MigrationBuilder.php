@@ -25,7 +25,7 @@ class MigrationBuilder
     {
         $cache          = new QuickCache();
         $cached         = $cache->get('fieldsinfo');
-        $this->template = __DIR__ . DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'Templates'. DIRECTORY_SEPARATOR .'migration';
+        $this->template = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . 'migration';
         $this->name     = $cached['name'];
         $this->fields   = $cached['fields'];
         $this->soft     = $cached['soft_delete'];
@@ -90,6 +90,22 @@ class MigrationBuilder
                     $field->relationship_name
                 ], $migrationTypes[$field->type]);
                 $fields .= '            '; // Add formatting space to the migration
+                if ($field->type == 'enum') {
+                    $values      = '';
+                    $field->enum = explode(',', $field->enum);
+                    foreach ($field->enum as $val) {
+                        // Remove first whitespace
+                        if (strpos(substr($val, 0, 1), ' ') !== false) {
+                            $len = strlen($val);
+                            $val = substr($val, 1, $len);
+                        }
+                        $values .= '"' . $val . '"';
+                        if ($val != last($field->enum)) {
+                            $values .= ', ';
+                        }
+                    }
+                    $migrationLine = str_replace('$VALUES$', $values, $migrationLine);
+                }
                 $fields .= '$table->' . $migrationLine . ";\r\n";
                 if ($field->type == 'relationship') {
                     $used[$field->relationship_name] = $field->relationship_name;
