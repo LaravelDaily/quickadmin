@@ -1,6 +1,3 @@
-## License
-This package license information is stored in license.txt file.
-
 ## Requirements
 * Laravel `^5.1.11` - Because of ACL authorization engine: http://laravel.com/docs/5.1/authorization#introduction
 
@@ -13,3 +10,6 @@ This package license information is stored in license.txt file.
 
 ## More information and detailed description
 [http://laraveldaily.com/packages/quickadmin/](http://laraveldaily.com/packages/quickadmin/)
+
+## License
+The MIT License (MIT). Please see [License File](license.md) for more information.
