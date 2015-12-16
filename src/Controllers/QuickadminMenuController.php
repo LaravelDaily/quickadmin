@@ -304,7 +304,7 @@ class QuickadminMenuController extends Controller
             'icon'      => $request->icon != '' ? $request->icon : 'fa-database',
             'name'      => $request->name,
             'title'     => $request->title,
-            'parent_id' => null,
+            'parent_id' => $request->parent_id,
             'roles'     => $rolesInsert
         ]);
 
