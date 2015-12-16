@@ -37,6 +37,17 @@
     </div>
 
     <div class="form-group">
+        {!! Form::label('roles', 'Roles', ['class'=>'col-md-2 control-label']) !!}
+        <div class="col-sm-10">
+            @foreach($roles as $role)
+                <div class="col-xs-12">  {!! Form::hidden('role-'.$role->id,0) !!}
+                    {!! Form::checkbox('role-'.$role->id,1,in_array($role->id, explode(',',$menu->roles))) !!}
+                    {!! $role->title !!}</div>
+            @endforeach
+        </div>
+    </div>
+
+    <div class="form-group">
         {!! Form::label('icon', 'Icon (font-awesome)', ['class'=>'col-md-2 control-label']) !!}
         <div class="col-sm-10">
             {!! Form::text('icon', old('icon',$menu->icon), ['class'=>'form-control', 'placeholder'=> 'Font awesome']) !!}

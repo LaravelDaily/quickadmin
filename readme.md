@@ -2,6 +2,9 @@
 * Laravel `^5.1.11` - Because of ACL authorization engine: http://laravel.com/docs/5.1/authorization#introduction
 
 ## Quick Admin installation
+
+###Please note: QuickAdmin requires fresh Laravel installation
+
 1. Install the package via `composer require laraveldaily/quickadmin`.
 2. Add `Laraveldaily\Quickadmin\QuickadminServiceProvider::class,` to your `\config\app.php` providers.
 3. Run `php artisan quickadmin:install` and fill the required information.

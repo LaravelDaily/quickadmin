@@ -41,6 +41,17 @@
         </div>
     </div>
 
+    <div class="form-group">
+        {!! Form::label('roles', 'Roles', ['class'=>'col-md-2 control-label']) !!}
+        <div class="col-sm-10">
+            @foreach($roles as $role)
+                <div class="col-xs-12">  {!! Form::hidden('role-'.$role->id,0) !!}
+                    {!! Form::checkbox('role-'.$role->id,1,false) !!}
+                    {!! $role->title !!}</div>
+            @endforeach
+        </div>
+    </div>
+
 
     <div class="form-group">
         {!! Form::label('soft', 'Use soft delete?', ['class'=>'col-md-2 control-label']) !!}
