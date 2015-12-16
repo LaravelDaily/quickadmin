@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col-md-10 col-md-offset-2">
-            <h1>Create new custom controller</h1>
+            <h1>Edit menu information</h1>
 
             @if ($errors->any())
                 <div class="alert alert-danger">
