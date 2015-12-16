@@ -73,12 +73,12 @@ class QuickadminMenuController extends Controller
         $fieldTypes        = FieldsDescriber::types();
         $fieldValidation   = FieldsDescriber::validation();
         $defaultValuesCbox = FieldsDescriber::default_cbox();
-        $menusSelect       = Menu::lists('title', 'id');
+        $menusSelect       = Menu::whereNotIn('menu_type', [2, 3])->lists('title', 'id');
         $roles             = Role::all();
         $parentsSelect     = Menu::where('menu_type', 2)->lists('title', 'id')->prepend('-- no parent --', 'null');
         // Get columns for relationship
         $models = [];
-        foreach (Menu::all() as $menu) {
+        foreach (Menu::whereNotIn('menu_type', [2, 3])->get() as $menu) {
             // We are having a default User model
             if ($menu->title == 'User' && $menu->is_menu == 0) {
                 $tableName = 'users';
@@ -336,10 +336,10 @@ class QuickadminMenuController extends Controller
         }
         $requestArray = $request->all();
         if ($requestArray['parent_id'] === "null") {
-            $requestArray['parent_id'] = NULL;
+            $requestArray['parent_id'] = null;
         }
         $requestArray['roles'] = $rolesInsert;
-        $menu = Menu::findOrFail($id);
+        $menu                  = Menu::findOrFail($id);
         $menu->update($requestArray);
 
         return redirect()->route('menu');

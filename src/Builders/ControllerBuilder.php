@@ -175,7 +175,7 @@ class ControllerBuilder
                         . ucfirst(Str::camel($menu->name))
                         . '::lists("'
                         . $field->relationship_field
-                        . '", "id");'
+                        . '", "id")->prepend(\'Please select\', \'\');'
                         . "\r\n";
                 }
             }
