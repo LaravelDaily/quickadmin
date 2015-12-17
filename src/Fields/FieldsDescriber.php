@@ -40,6 +40,17 @@ class FieldsDescriber
     }
 
     /**
+     * Set fields to be nullable by default if validation is not in this array
+     * @return array
+     */
+    public static function nullables()
+    {
+        return [
+            'optional',
+        ];
+    }
+
+    /**
      * Default QuickAdmin field types for migration
      * @return array
      */

@@ -149,7 +149,7 @@ class ViewsBuilder
                 $headings .= "<th>$field->label</th>\r\n";
                 // Format our table column by field type
                 if ($field->type == 'relationship') {
-                    $columns .= '<td>{{ $row->' . $field->relationship_name . '->' . $field->relationship_field . " }}</td>\r\n";
+                    $columns .= '<td>{{ isset($row->' . $field->relationship_name . '->' . $field->relationship_field . ') ? $row->' . $field->relationship_name . '->' . $field->relationship_field . " : '' }}</td>\r\n";
                     $used[$field->relationship_field] = $field->relationship_field;
                 } elseif ($field->type == 'photo') {
                     $columns .= '<td>@if($row->' . $field->title . ' != \'\')<img src="{{ asset(\'uploads/thumb\') . \'/\'.  $row->' . $field->title . " }}\">@endif</td>\r\n";

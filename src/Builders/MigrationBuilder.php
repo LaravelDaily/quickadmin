@@ -106,7 +106,11 @@ class MigrationBuilder
                     }
                     $migrationLine = str_replace('$VALUES$', $values, $migrationLine);
                 }
-                $fields .= '$table->' . $migrationLine . ";\r\n";
+                $fields .= '$table->' . $migrationLine;
+                if (in_array($field->validation, FieldsDescriber::nullables())) {
+                    $fields .= '->nullable()';
+                }
+                $fields .= ";\r\n";
                 if ($field->type == 'relationship') {
                     $used[$field->relationship_name] = $field->relationship_name;
                 } else {
