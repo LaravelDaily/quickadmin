@@ -173,7 +173,7 @@ class ViewsBuilder
         foreach ($this->fields as $field) {
             $title = $field->label;
             $label = $field->title;
-            if (in_array($field->validation, $this->starred) && $field->type != 'password') {
+            if (in_array($field->validation, $this->starred) && $field->type != 'password' && $field->type != 'file' && $field->type != 'photo') {
                 $title .= '*';
             }
             if ($field->type == 'relationship') {

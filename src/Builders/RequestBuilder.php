@@ -116,20 +116,38 @@ class RequestBuilder
                             break;
                     }
                 } elseif ($field->type == 'file' || $field->type == 'photo') {
-                    switch ($field->validation) {
-                        case 'required':
-                            $rules .= "'$field->title' => 'max:$field->size|$field->validation', \r\n            ";
-                            break;
-                        case 'required|unique':
-                            $camelName = Str::camel($this->name);
-                            // Insert table names
-                            $tableName = strtolower($camelName);
-                            $rules .= "'$field->title' => 'max:$field->size|$field->validation:$tableName,$field->title,'." . '$this->' . $this->request . ", \r\n            ";
-                            break;
-                        default:
-                            // We got a file field which has a bit different validation
-                            $rules .= "'$field->title' => 'max:$field->size', \r\n            ";
-                            break;
+                    if ($type == 0) {
+                        switch ($field->validation) {
+                            case 'required':
+                                $rules .= "'$field->title' => 'max:$field->size|$field->validation', \r\n            ";
+                                break;
+                            case 'required|unique':
+                                $camelName = Str::camel($this->name);
+                                // Insert table names
+                                $tableName = strtolower($camelName);
+                                $rules .= "'$field->title' => 'max:$field->size|$field->validation:$tableName,$field->title,'." . '$this->' . $this->request . ", \r\n            ";
+                                break;
+                            default:
+                                // We got a file field which has a bit different validation
+                                $rules .= "'$field->title' => 'max:$field->size', \r\n            ";
+                                break;
+                        }
+                    } else {
+                        switch ($field->validation) {
+                            case 'required':
+                                $rules .= "'$field->title' => 'max:$field->size', \r\n            ";
+                                break;
+                            case 'required|unique':
+                                $camelName = Str::camel($this->name);
+                                // Insert table names
+                                $tableName = strtolower($camelName);
+                                $rules .= "'$field->title' => 'max:$field->size|$field->validation:$tableName,$field->title,'." . '$this->' . $this->request . ", \r\n            ";
+                                break;
+                            default:
+                                // We got a file field which has a bit different validation
+                                $rules .= "'$field->title' => 'max:$field->size', \r\n            ";
+                                break;
+                        }
                     }
 
                 } elseif ($field->type == 'money') {
