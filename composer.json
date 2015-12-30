@@ -11,9 +11,9 @@
       "email": "povilas@webcoderpro.com"
     }
   ],
-  "version": "0.4.6",
+  "version": "0.5.0",
   "require": {
-    "illuminate/html": "5.0.*@dev",
+    "laravelcollective/html": "5.2.*",
     "intervention/image": "^2.3",
     "yajra/laravel-datatables-oracle": "~5.0"
   },

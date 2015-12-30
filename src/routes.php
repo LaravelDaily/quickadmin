@@ -19,11 +19,11 @@ if (Schema::hasTable('menus')) {
             foreach ($menus as $menu) {
                 switch ($menu->menu_type) {
                     case 1:
-                        post(strtolower($menu->name) . '/massDelete', [
+                        Route::post(strtolower($menu->name) . '/massDelete', [
                             'as'   => config('quickadmin.route') . '.' . strtolower($menu->name) . '.massDelete',
                             'uses' => 'Admin\\' . ucfirst(camel_case($menu->name)) . 'Controller@massDelete'
                         ]);
-                        resource(strtolower($menu->name), 'Admin\\' . ucfirst(camel_case($menu->name)) . 'Controller');
+                        Route::resource(strtolower($menu->name), 'Admin\\' . ucfirst(camel_case($menu->name)) . 'Controller');
                         break;
                     case 3:
                         Route::controller(strtolower($menu->name),
@@ -109,7 +109,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::group([
         'middleware' => 'role'
     ], function () {
-        resource('users', 'UsersController');
+        Route::resource('users', 'UsersController');
     });
     // Authentication routes...
     Route::get('auth/login', 'Auth\AuthController@getLogin');
