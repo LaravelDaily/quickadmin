@@ -1,6 +1,7 @@
 {
   "name": "laraveldaily/quickadmin",
   "description": "Package for creating adminpanel in Laravel 5",
+  "license": "MIT",
   "authors": [
     {
       "name": "ModestasV",
