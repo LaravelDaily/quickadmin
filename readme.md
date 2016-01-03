@@ -1,5 +1,8 @@
 ## Requirements
-* Laravel `^5.1.11` - Because of ACL authorization engine: http://laravel.com/docs/5.1/authorization#introduction
+* Laravel `^5.2` - Because of changed routing middleware and unsupported package `illuminate/html`
+
+### Laravel 5.1.11 users info!
+To use Quickadmin with Laravel Laravel 5.1.11 use branch `0.4.x`
 
 ## Quick Admin installation
 
