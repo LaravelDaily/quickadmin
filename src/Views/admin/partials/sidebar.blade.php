@@ -62,7 +62,7 @@
                 @endif
             @endforeach
             <li>
-                <a href="{{ url('auth/logout') }}">
+                <a href="{{ url('logout') }}">
                     <i class="fa fa-sign-out fa-fw"></i>
                     <span class="title">Logout</span>
                 </a>

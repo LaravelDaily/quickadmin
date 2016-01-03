@@ -12,18 +12,18 @@ if (Schema::hasTable('menus')) {
     View::share('menus', $menus);
     if (!empty($menus)) {
         Route::group([
-            'middleware' => ['auth', 'role'],
+            'middleware' => ['auth', 'role', 'web'],
             'prefix'     => config('quickadmin.route'),
             'namespace'  => 'App\Http\Controllers',
         ], function () use ($menus) {
             foreach ($menus as $menu) {
                 switch ($menu->menu_type) {
                     case 1:
-                        post(strtolower($menu->name) . '/massDelete', [
+                        Route::post(strtolower($menu->name) . '/massDelete', [
                             'as'   => config('quickadmin.route') . '.' . strtolower($menu->name) . '.massDelete',
                             'uses' => 'Admin\\' . ucfirst(camel_case($menu->name)) . 'Controller@massDelete'
                         ]);
-                        resource(strtolower($menu->name), 'Admin\\' . ucfirst(camel_case($menu->name)) . 'Controller');
+                        Route::resource(strtolower($menu->name), 'Admin\\' . ucfirst(camel_case($menu->name)) . 'Controller');
                         break;
                     case 3:
                         Route::controller(strtolower($menu->name),
@@ -39,7 +39,7 @@ if (Schema::hasTable('menus')) {
 
 Route::group([
     'namespace'  => 'Laraveldaily\Quickadmin\Controllers',
-    'middleware' => 'auth'
+    'middleware' => ['web', 'auth']
 ], function () {
     // Dashboard home page route
     Route::get(config('quickadmin.homeRoute'), 'QuickadminController@index');
@@ -104,21 +104,24 @@ Route::group([
 });
 
 // @todo move to default routes.php
-Route::group(['namespace' => 'App\Http\Controllers'], function () {
+Route::group([
+    'namespace' => 'App\Http\Controllers',
+    'middleware' => ['web']
+], function () {
     // Point to App\Http\Controllers\UsersController as a resource
     Route::group([
         'middleware' => 'role'
     ], function () {
-        resource('users', 'UsersController');
+        Route::resource('users', 'UsersController');
     });
     // Authentication routes...
-    Route::get('auth/login', 'Auth\AuthController@getLogin');
-    Route::post('auth/login', 'Auth\AuthController@postLogin');
-    Route::get('auth/logout', 'Auth\AuthController@getLogout');
+    Route::get('login', 'Auth\AuthController@getLogin');
+    Route::post('login', 'Auth\AuthController@postLogin');
+    Route::get('logout', 'Auth\AuthController@getLogout');
 
     // Registration routes...
-    Route::get('auth/register', 'Auth\AuthController@getRegister');
-    Route::post('auth/register', 'Auth\AuthController@postRegister');
+    Route::get('register', 'Auth\AuthController@getRegister');
+    Route::post('register', 'Auth\AuthController@postRegister');
 
     // Password reset link request routes...
     Route::get('password/email', 'Auth\PasswordController@getEmail');
