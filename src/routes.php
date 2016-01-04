@@ -12,7 +12,7 @@ if (Schema::hasTable('menus')) {
     View::share('menus', $menus);
     if (!empty($menus)) {
         Route::group([
-            'middleware' => ['auth', 'role', 'web'],
+            'middleware' => ['web', 'auth', 'role'],
             'prefix'     => config('quickadmin.route'),
             'namespace'  => 'App\Http\Controllers',
         ], function () use ($menus) {
@@ -23,7 +23,8 @@ if (Schema::hasTable('menus')) {
                             'as'   => config('quickadmin.route') . '.' . strtolower($menu->name) . '.massDelete',
                             'uses' => 'Admin\\' . ucfirst(camel_case($menu->name)) . 'Controller@massDelete'
                         ]);
-                        Route::resource(strtolower($menu->name), 'Admin\\' . ucfirst(camel_case($menu->name)) . 'Controller');
+                        Route::resource(strtolower($menu->name),
+                            'Admin\\' . ucfirst(camel_case($menu->name)) . 'Controller');
                         break;
                     case 3:
                         Route::controller(strtolower($menu->name),
@@ -105,7 +106,7 @@ Route::group([
 
 // @todo move to default routes.php
 Route::group([
-    'namespace' => 'App\Http\Controllers',
+    'namespace'  => 'App\Http\Controllers',
     'middleware' => ['web']
 ], function () {
     // Point to App\Http\Controllers\UsersController as a resource
