@@ -103,7 +103,7 @@ class QuickadminMenuController extends Controller
     public function insertCrud(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'name'  => 'required',
+            'name'  => 'required|unique:menus,name',
             'title' => 'required',
             'soft'  => 'required',
         ]);
@@ -232,6 +232,12 @@ class QuickadminMenuController extends Controller
      */
     public function insertParent(Request $request)
     {
+        $validation = Validator::make($request->all(), [
+            'title' => 'required',
+        ]);
+        if ($validation->fails()) {
+            return redirect()->back()->withInput()->withErrors($validation);
+        }
         $roles       = Role::all();
         $rolesInsert = '';
         $first       = true;
@@ -278,6 +284,13 @@ class QuickadminMenuController extends Controller
      */
     public function insertCustom(Request $request)
     {
+        $validation = Validator::make($request->all(), [
+            'name'  => 'required|unique:menus,name',
+            'title' => 'required'
+        ]);
+        if ($validation->fails()) {
+            return redirect()->back()->withInput()->withErrors($validation);
+        }
         // Create controller
         $controllerBuilder = new ControllerBuilder();
         $controllerBuilder->buildCustom($request->name);
@@ -304,7 +317,7 @@ class QuickadminMenuController extends Controller
             'icon'      => $request->icon != '' ? $request->icon : 'fa-database',
             'name'      => $request->name,
             'title'     => $request->title,
-            'parent_id' => $request->parent_id,
+            'parent_id' => $request->parent_id != 0 ? $request->parent_id : null,
             'roles'     => $rolesInsert
         ]);
 

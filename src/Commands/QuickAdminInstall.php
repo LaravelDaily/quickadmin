@@ -45,7 +45,7 @@ class QuickAdminInstall extends Command
         $this->createRole();
         $this->info('3. Create first user');
         $this->createUser();
-        $this->info('4. Copy master template to resource\views');
+        $this->info('4. Copying master template to resource\views....');
         $this->copyMasterTemplate();
         $this->info('Installation was successful. Visit your_domain.com/admin to access admin panel');
     }

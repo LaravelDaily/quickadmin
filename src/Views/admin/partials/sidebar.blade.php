@@ -5,7 +5,7 @@
             data-auto-scroll="true"
             data-slide-speed="200">
             @if(Auth::user()->role_id == config('quickadmin.defaultRole'))
-                <li @if(Request::path() == 'menu') class="active" @endif>
+                <li @if(Request::path() == config('quickadmin.route').'/menu') class="active" @endif>
                     <a href="{{ url(config('quickadmin.route').'/menu') }}">
                         <i class="fa fa-list"></i>
                         <span class="title">Menu</span>
@@ -17,7 +17,7 @@
                         <span class="title">Users</span>
                     </a>
                 </li>
-                <li @if(Request::path() == 'actions') class="active" @endif>
+                <li @if(Request::path() == config('quickadmin.route').'/actions') class="active" @endif>
                     <a href="{{ url(config('quickadmin.route').'/actions') }}">
                         <i class="fa fa-users"></i>
                         <span class="title">User actions</span>
