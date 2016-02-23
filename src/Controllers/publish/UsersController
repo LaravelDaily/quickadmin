@@ -44,7 +44,7 @@ class UsersController extends Controller
         $input['password'] = Hash::make($input['password']);
         $user = User::create($input);
 
-        return redirect()->route('users.index')->withMessage('User was successfully created!');
+        return redirect()->route('users.index')->withMessage(trans('quickadmin::admin.users-controller-successfully_created'));
     }
 
     /**
@@ -77,7 +77,7 @@ class UsersController extends Controller
         $input['password'] = Hash::make($input['password']);
         $user->update($input);
 
-        return redirect()->route('users.index')->withMessage('User was successfully updated!');
+        return redirect()->route('users.index')->withMessage(trans('quickadmin::admin.users-controller-successfully_updated'));
     }
 
     /**
@@ -92,6 +92,6 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
         User::destroy($id);
 
-        return redirect()->route('users.index')->withMessage('User was successfully deleted!');
+        return redirect()->route('users.index')->withMessage(trans('quickadmin::admin.users-controller-successfully_deleted'));
     }
 }

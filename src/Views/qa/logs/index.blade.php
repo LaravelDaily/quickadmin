@@ -4,16 +4,16 @@
 
     <div class="portlet box green">
         <div class="portlet-title">
-            <div class="caption">List</div>
+            <div class="caption">{{ trans('quickadmin::qa.logs-index-list') }}</div>
         </div>
         <div class="portlet-body">
             <table class="table table-striped table-hover table-responsive" id="ajaxtable">
                 <thead>
-                <th>User</th>
-                <th>Action</th>
-                <th>Action model</th>
-                <th>Action id</th>
-                <th>Time</th>
+                <th>{{ trans('quickadmin::qa.logs-index-user') }}</th>
+                <th>{{ trans('quickadmin::qa.logs-index-action') }}</th>
+                <th>{{ trans('quickadmin::qa.logs-index-action_model') }}</th>
+                <th>{{ trans('quickadmin::qa.logs-index-action_id') }}</th>
+                <th>{{ trans('quickadmin::qa.logs-index-time') }}</th>
                 </thead>
 
                 <tbody>
@@ -31,6 +31,9 @@
             processing: true,
             serverSide: true,
             ajax: '{{ route('actions.ajax') }}',
+            language: {
+                url: "{{ trans('quickadmin::strings.datatable_url_language') }}"
+            },            
             columns: [
                 {data: 'users.name', name: 'user_id'},
                 {data: 'action', name: 'action'},

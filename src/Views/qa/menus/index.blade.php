@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-xs-6 col-md-4">
                 <div class="alert alert-info">
-                    No menu items found
+                    {{ trans('quickadmin::qa.menus-index-no_menu_items_found') }}
                 </div>
             </div>
         </div>
@@ -29,9 +29,9 @@
 
     <div class="row">
         <div class="col-xs-12 form-group">
-            <a href="{{ route('menu.crud') }}" class="btn btn-primary">Create new CRUD Controller</a>
-            <a href="{{ route('menu.custom') }}" class="btn btn-primary">Create new Custom Controller</a>
-            <a href="{{ route('menu.parent') }}" class="btn btn-primary">Create new Parent Menu Item</a>
+            <a href="{{ route('menu.crud') }}" class="btn btn-primary">{{ trans('quickadmin::qa.menus-index-new_crud') }}</a>
+            <a href="{{ route('menu.custom') }}" class="btn btn-primary">{{ trans('quickadmin::qa.menus-index-new_custom') }}</a>
+            <a href="{{ route('menu.parent') }}" class="btn btn-primary">{{ trans('quickadmin::qa.menus-index-new_parent') }}</a>
         </div>
     </div>
 
@@ -41,7 +41,7 @@
         <div class="row">
             <div class="col-xs-6 col-md-4">
                 <div class="alert alert-danger">
-                    You can change menu positions with drag-drop
+                    {{ trans('quickadmin::qa.menus-index-positions_drag_drop') }}
                 </div>
             </div>
         </div>
@@ -105,13 +105,13 @@
         <div class="row" id="dragMessage" style="display: none;">
             <div class="col-xs-6 col-md-4">
                 <div class="alert alert-danger">
-                    Changes will be saved when you click Save positions
+                    {{ trans('quickadmin::qa.menus-index-click_save_positions') }}
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12">
-                {!! Form::submit('Save positions',['class' => 'btn btn-danger']) !!}
+                {!! Form::submit(trans('quickadmin::qa.menus-index-save_positions'),['class' => 'btn btn-danger']) !!}
             </div>
         </div>
     @endif
