@@ -16,7 +16,7 @@ class QuickadminServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Register vendor translations ( Aom Solucoes - Traducao )
+        // Register vendor translations
         $this->loadTranslationsFrom(__DIR__ . DIRECTORY_SEPARATOR . 'Translations' . DIRECTORY_SEPARATOR , 'quickadmin');
         // Register vendor views
         $this->loadViewsFrom(__DIR__ . DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR . 'qa', 'qa');
