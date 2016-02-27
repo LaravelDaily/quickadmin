@@ -12,28 +12,28 @@
         </select>
     <td>
         <input type="text" name="f_title[]" value="{{ old('f_title.'.$index) }}" class="form-control title"
-               required="required" placeholder="Field DB name">
+               required="required" placeholder="{{ trans('quickadmin::templates.templates-menu_field_line-field_db_name') }}">
 
         <!-- File size limit -->
-        <label class="size">File size limit (in MB):</label>
+        <label class="size">{{ trans('quickadmin::templates.templates-menu_field_line-size_limit') }}</label>
         <input type="text" name="f_size[]" value="{{ old('f_size.'.$index, '2') }}" class="form-control size"
-               placeholder="File size limit (in MB)" style="display: none;">
+               placeholder="{{ trans('quickadmin::templates.templates-menu_field_line-size_limit_placeholder') }}" style="display: none;">
         <!-- /File size limit -->
 
         <!-- File dimensions limit -->
-        <label class="dimensions">File maximum width:</label>
+        <label class="dimensions">{{ trans('quickadmin::templates.templates-menu_field_line-maximum_width') }}</label>
         <input type="text" name="f_dimension_w[]" value="{{ old('f_dimension_w.'.$index, '4096') }}"
                class="form-control dimensions"
-               placeholder="File maximum width" style="display: none;">
-        <label class="dimensions">File maximum height:</label>
+               placeholder="{{ trans('quickadmin::templates.templates-menu_field_line-maximum_width_placeholder') }}" style="display: none;">
+        <label class="dimensions">{{ trans('quickadmin::templates.templates-menu_field_line-maximum_height') }}</label>
         <input type="text" name="f_dimension_h[]" value="{{ old('f_dimension_h.'.$index, '4096') }}"
                class="form-control dimensions"
-               placeholder="File maximum height" style="display: none;">
+               placeholder="{{ trans('quickadmin::templates.templates-menu_field_line-maximum_height_placeholder') }}" style="display: none;">
         <!-- /File dimensions limit -->
 
         <!-- Value for radio button -->
         <input type="text" name="f_value[]" value="{{ old('f_value.'.$index) }}" class="form-control value"
-               placeholder="Value" style="display: none;">
+               placeholder="{{ trans('quickadmin::templates.templates-menu_field_line-value') }}" style="display: none;">
         <!-- /Value for radio button -->
 
         <!-- Default value of a checkbox -->
@@ -48,17 +48,17 @@
         <!-- Use ckeditor on textarea field -->
         <select name="f_texteditor[]" class="form-control texteditor" style="display: none;">
             <option value="0"
-                    @if($key == old('f_texteditor.'.$index)) selected @endif>Don't use CKEDITOR
+                    @if($key == old('f_texteditor.'.$index)) selected @endif>{{ trans('quickadmin::templates.templates-menu_field_line-dont_use_ckeditor') }}
             </option>
             <option value="1"
-                    @if($key == old('f_texteditor.'.$index)) selected @endif>Use CKEDITOR
+                    @if($key == old('f_texteditor.'.$index)) selected @endif>{{ trans('quickadmin::templates.templates-menu_field_line-use_ckeditor') }}
             </option>
         </select>
         <!-- /Use ckeditor on textarea field -->
 
         <!-- Select for relationship -->
         <select name="f_relationship[]" class="form-control relationship" style="display: none;">
-            <option value="">Select relationship</option>
+            <option value="">{{ trans('quickadmin::templates.templates-menu_field_line-select_relationship') }}</option>
             @foreach($menusSelect as $key => $option)
                 <option value="{{ $key }}"
                         @if($key == old('f_relationship.'.$index)) selected @endif>{{ $option }}</option>
@@ -68,16 +68,16 @@
         <div class="relationship-holder"></div>
 
         <!-- ENUM values -->
-        <label class="enum">ENUM values: (comma separated)</label>
+        <label class="enum">{{ trans('quickadmin::templates.templates-menu_field_line-enum_values') }}</label>
         <input type="text" name="f_enum[]" value="{{ old('f_enum.'.$index) }}" class="form-control enum tags"
-               placeholder="ENUM values (comma separated)" style="display: none;">
+               placeholder="{{ trans('quickadmin::templates.templates-menu_field_line-enum_values_placeholder') }}" style="display: none;">
         <!-- /ENUM values -->
     </td>
     <td>
         <input type="text" name="f_label[]" value="{{ old('f_label.'.$index) }}" class="form-control"
-               required="required" placeholder="Field visual title">
+               required="required" placeholder="{{ trans('quickadmin::templates.templates-menu_field_line-field_visual_title_placeholder') }}">
         <input type="text" name="f_helper[]" value="{{ old('f_helper.'.$index) }}" class="form-control"
-               placeholder="Optional additional comment below the field">
+               placeholder="{{ trans('quickadmin::templates.templates-menu_field_line-comment_below_placeholder') }}">
     </td>
     <td>
         <select name="f_validation[]" class="form-control" required="required">

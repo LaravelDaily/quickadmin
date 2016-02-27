@@ -2,6 +2,6 @@
 
 @section('content')
 
-    Welcome to your project dashboard
+    {{ trans('quickadmin::admin.dashboard-title') }}
 
 @endsection

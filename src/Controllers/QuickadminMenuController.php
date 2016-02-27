@@ -348,7 +348,7 @@ class QuickadminMenuController extends Controller
             }
         }
         $requestArray = $request->all();
-        if ( ! isset($requestArray['parent_id'])) {
+        if (!isset($requestArray['parent_id'])) {
             $requestArray['parent_id'] = null;
         }
         $requestArray['roles'] = $rolesInsert;

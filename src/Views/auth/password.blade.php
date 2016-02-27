@@ -4,11 +4,11 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Reset password</div>
+                <div class="panel-heading">{{ trans('quickadmin::auth.password-reset_password') }}</div>
                 <div class="panel-body">
                     @if (count($errors) > 0)
                         <div class="alert alert-danger">
-                            <strong>Whoops!</strong> there are some problems with input!
+                            <strong>{{ trans('quickadmin::auth.whoops') }}</strong> {{ trans('quickadmin::auth.some_problems_with_input') }}
                             <br><br>
                             <ul>
                                 @foreach ($errors->all() as $error)
@@ -27,7 +27,7 @@
                                value="{{ csrf_token() }}">
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">Email</label>
+                            <label class="col-md-4 control-label">{{ trans('quickadmin::auth.password-email') }}</label>
 
                             <div class="col-md-6">
                                 <input type="email"
@@ -42,7 +42,7 @@
                                 <button type="submit"
                                         class="btn btn-primary"
                                         style="margin-right: 15px;">
-                                    Send Password Reset Link
+                                    {{ trans('quickadmin::auth.password-btnsend_password') }}
                                 </button>
                             </div>
                         </div>

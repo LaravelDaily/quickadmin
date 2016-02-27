@@ -4,10 +4,10 @@
 
     <div class="portlet box green">
         <div class="portlet-title">
-            <div class="caption">List</div>
+            <div class="caption">{{ trans('quickadmin::templates.templates-customView_index-list') }}</div>
         </div>
         <div class="portlet-body">
-            Welcome to your custom view
+            {{ trans('quickadmin::templates.templates-customView_index-welcome_custom_view') }}
         </div>
 	</div>
 
