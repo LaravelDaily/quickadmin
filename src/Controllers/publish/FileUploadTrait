@@ -5,6 +5,7 @@ use Intervention\Image\Facades\Image;
 
 trait FileUploadTrait
 {
+
     /**
      * File upload trait used in controllers to upload files
      */
@@ -36,15 +37,15 @@ trait FileUploadTrait
                         });
                     }
                     $image->save(public_path('uploads') . '/' . $filename);
-                    $request->replace(array_merge($request->all(), [$key => $filename]));
-                    $request->files->remove($key);
+                    $request = new Request(array_merge($request->all(), [$key => $filename]));
                 } else {
                     $filename = time() . '-' . $request->file($key)->getClientOriginalName();
                     $request->file($key)->move(public_path('uploads'), $filename);
-                    $request->replace(array_merge($request->all(), [$key => $filename]));
-                    $request->files->remove($key);
+                    $request = new Request(array_merge($request->all(), [$key => $filename]));
                 }
             }
         }
+
+        return $request;
     }
 }
