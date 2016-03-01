@@ -99,7 +99,7 @@ class ControllerBuilder
             $this->compactEditBuilder(),
             $this->relationshipsNamespaces(),
             $this->files > 0 ? 'use App\Http\Controllers\Traits\FileUploadTrait;' : '',
-            $this->files > 0 ? '$this->saveFiles($request);' : '',
+            $this->files > 0 ? '$request = $this->saveFiles($request);' : '',
             $this->enum > 0 ? $this->enum() : '',
         ], $template);
 
