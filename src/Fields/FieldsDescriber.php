@@ -33,9 +33,9 @@ class FieldsDescriber
     public static function validation()
     {
         return [
-            'optional'        => 'Optional',
-            'required'        => 'Required',
-            'required|unique' => 'Required unique'
+            'optional'        => trans('quickadmin::strings.optional'),
+            'required'        => trans('quickadmin::strings.required'),
+            'required|unique' => trans('quickadmin::strings.required_unique')
         ];
     }
 
@@ -80,8 +80,8 @@ class FieldsDescriber
     public static function default_cbox()
     {
         return [
-            'false' => 'Default unchecked',
-            'true'  => 'Default checked'
+            'false' => trans('quickadmin::strings.default_unchecked'),
+            'true'  => trans('quickadmin::strings.default_checked'),
         ];
     }
 }

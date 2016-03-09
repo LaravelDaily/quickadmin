@@ -8,19 +8,19 @@
                 <li @if(Request::path() == config('quickadmin.route').'/menu') class="active" @endif>
                     <a href="{{ url(config('quickadmin.route').'/menu') }}">
                         <i class="fa fa-list"></i>
-                        <span class="title">Menu</span>
+                        <span class="title">{{ trans('quickadmin::admin.partials-sidebar-menu') }}</span>
                     </a>
                 </li>
                 <li @if(Request::path() == 'users') class="active" @endif>
                     <a href="{{ url('users') }}">
                         <i class="fa fa-users"></i>
-                        <span class="title">Users</span>
+                        <span class="title">{{ trans('quickadmin::admin.partials-sidebar-users') }}</span>
                     </a>
                 </li>
                 <li @if(Request::path() == config('quickadmin.route').'/actions') class="active" @endif>
                     <a href="{{ url(config('quickadmin.route').'/actions') }}">
                         <i class="fa fa-users"></i>
-                        <span class="title">User actions</span>
+                        <span class="title">{{ trans('quickadmin::admin.partials-sidebar-user-actions') }}</span>
                     </a>
                 </li>
             @endif
@@ -64,7 +64,7 @@
             <li>
                 <a href="{{ url('logout') }}">
                     <i class="fa fa-sign-out fa-fw"></i>
-                    <span class="title">Logout</span>
+                    <span class="title">{{ trans('quickadmin::admin.partials-sidebar-logout') }}</span>
                 </a>
             </li>
         </ul>

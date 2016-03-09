@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-md-10 col-md-offset-2">
-        <h1Add new</h1>
+        <h1>{{ trans('quickadmin::templates.templates-view_create-add_new') }}</h1>
 
         @if ($errors->any())
         	<div class="alert alert-danger">
@@ -23,7 +23,7 @@ $FORMFIELDS$
 <div class="form-group">
     <label class="col-sm-2 control-label">&nbsp;</label>
     <div class="col-sm-10">
-      {!! Form::submit('Create', array('class' => 'btn btn-primary')) !!}
+      {!! Form::submit( trans('quickadmin::templates.templates-view_create-create') , array('class' => 'btn btn-primary')) !!}
     </div>
 </div>
 

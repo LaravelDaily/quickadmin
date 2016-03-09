@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col-md-10 col-md-offset-2">
-            <h1>Create new CRUD menu item</h1>
+            <h1>{{ trans('quickadmin::qa.menus-createCrud-create_new_crud') }}</h1>
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -21,28 +21,28 @@
     {!! Form::open(['class' => 'form-horizontal']) !!}
 
     <div class="form-group">
-        {!! Form::label('parent_id', 'CRUD parent', ['class'=>'col-md-2 control-label']) !!}
+        {!! Form::label('parent_id', trans('quickadmin::qa.menus-createCrud-crud_parent'), ['class'=>'col-md-2 control-label']) !!}
         <div class="col-sm-10">
             {!! Form::select('parent_id', $parentsSelect, old('parent_id'), ['class'=>'form-control']) !!}
         </div>
     </div>
 
     <div class="form-group">
-        {!! Form::label('name', 'CRUD name', ['class'=>'col-md-2 control-label']) !!}
+        {!! Form::label('name', trans('quickadmin::qa.menus-createCrud-crud_name'), ['class'=>'col-md-2 control-label']) !!}
         <div class="col-sm-10">
-            {!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=> 'ex. Books or Products (used to generate DB table and all back-end files)']) !!}
+            {!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=> trans('quickadmin::qa.menus-createCrud-crud_name_placeholder')]) !!}
         </div>
     </div>
 
     <div class="form-group">
-        {!! Form::label('title', 'CRUD title', ['class'=>'col-md-2 control-label']) !!}
+        {!! Form::label('title', trans('quickadmin::qa.menus-createCrud-crud_title'), ['class'=>'col-md-2 control-label']) !!}
         <div class="col-sm-10">
-            {!! Form::text('title', old('title'), ['class'=>'form-control', 'placeholder'=> 'Menu title (used for menu item)']) !!}
+            {!! Form::text('title', old('title'), ['class'=>'form-control', 'placeholder'=> trans('quickadmin::qa.menus-createCrud-crud_title_placeholder')]) !!}
         </div>
     </div>
 
     <div class="form-group">
-        {!! Form::label('roles', 'Roles', ['class'=>'col-md-2 control-label']) !!}
+        {!! Form::label('roles', trans('quickadmin::qa.menus-createCrud-roles'), ['class'=>'col-md-2 control-label']) !!}
         <div class="col-sm-10">
             @foreach($roles as $role)
                 <div class="col-xs-12">  {!! Form::hidden('role-'.$role->id,0) !!}
@@ -54,27 +54,27 @@
 
 
     <div class="form-group">
-        {!! Form::label('soft', 'Use soft delete?', ['class'=>'col-md-2 control-label']) !!}
+        {!! Form::label('soft', trans('quickadmin::qa.menus-createCrud-soft_delete'), ['class'=>'col-md-2 control-label']) !!}
         <div class="col-sm-10">
-            {!! Form::select('soft', [1 => 'Yes', 0 => 'No'], old('soft'), ['class' => 'form-control']) !!}
+            {!! Form::select('soft', [1 => trans('quickadmin::strings.yes'), 0 => trans('quickadmin::strings.no')], old('soft'), ['class' => 'form-control']) !!}
         </div>
     </div>
 
     <div class="form-group">
-        {!! Form::label('icon', 'Icon (font-awesome)', ['class'=>'col-md-2 control-label']) !!}
+        {!! Form::label('icon', trans('quickadmin::qa.menus-createCrud-icon'), ['class'=>'col-md-2 control-label']) !!}
         <div class="col-sm-10">
-            {!! Form::text('icon', old('icon','fa-database'), ['class'=>'form-control', 'placeholder'=> 'Font awesome']) !!}
+            {!! Form::text('icon', old('icon','fa-database'), ['class'=>'form-control', 'placeholder'=> trans('quickadmin::qa.menus-createCrud-icon_placeholder')]) !!}
         </div>
     </div>
 
     <hr/>
 
-    <h3>Add fields</h3>
+    <h3>{{ trans('quickadmin::qa.menus-createCrud-add_fields') }}</h3>
 
     <table class="table">
         <tbody id="generator">
         <tr>
-            <td>Show in list</td>
+            <td>{{ trans('quickadmin::qa.menus-createCrud-show_in_list') }}</td>
             <td></td>
             <td></td>
             <td></td>
@@ -93,7 +93,7 @@
 
     <div class="form-group">
         <div class="col-md-12">
-            <button type="button" id="addField" class="btn btn-success"><i class="fa fa-plus"></i> Add one more field
+            <button type="button" id="addField" class="btn btn-success"><i class="fa fa-plus"></i> {{ trans('quickadmin::qa.menus-createCrud-add_field') }}
             </button>
         </div>
     </div>
@@ -102,7 +102,7 @@
 
     <div class="form-group">
         <div class="col-md-12">
-            {!! Form::submit('Create CRUD', ['class' => 'btn btn-primary']) !!}
+            {!! Form::submit(trans('quickadmin::qa.menus-createCrud-create_crud'), ['class' => 'btn btn-primary']) !!}
         </div>
     </div>
 
@@ -118,7 +118,7 @@
         <!-- Select for relationship column-->
         @foreach($models as $key => $model)
             <select name="f_relationship_field[{{ $key }}]" class="form-control relationship-field rf-{{ $key }}">
-                <option value="">Select display field</option>
+                <option value="">{{ trans('quickadmin::qa.menus-createCrud-select_display_field') }}</option>
                 @foreach($model as $key2 => $option)
                     <option value="{{ $option }}"
                             @if($option == old('f_relationship_field.'.$key)) selected @endif>{{ $option }}</option>
