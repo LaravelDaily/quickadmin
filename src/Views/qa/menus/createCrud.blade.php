@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-10 col-md-offset-2">
+        <div class="col-sm-10 col-sm-offset-2">
             <h1>{{ trans('quickadmin::qa.menus-createCrud-create_new_crud') }}</h1>
 
             @if ($errors->any())
@@ -21,47 +21,50 @@
     {!! Form::open(['class' => 'form-horizontal']) !!}
 
     <div class="form-group">
-        {!! Form::label('parent_id', trans('quickadmin::qa.menus-createCrud-crud_parent'), ['class'=>'col-md-2 control-label']) !!}
+        {!! Form::label('parent_id', trans('quickadmin::qa.menus-createCrud-crud_parent'), ['class'=>'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
             {!! Form::select('parent_id', $parentsSelect, old('parent_id'), ['class'=>'form-control']) !!}
         </div>
     </div>
 
     <div class="form-group">
-        {!! Form::label('name', trans('quickadmin::qa.menus-createCrud-crud_name'), ['class'=>'col-md-2 control-label']) !!}
+        {!! Form::label('name', trans('quickadmin::qa.menus-createCrud-crud_name'), ['class'=>'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
             {!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=> trans('quickadmin::qa.menus-createCrud-crud_name_placeholder')]) !!}
         </div>
     </div>
 
     <div class="form-group">
-        {!! Form::label('title', trans('quickadmin::qa.menus-createCrud-crud_title'), ['class'=>'col-md-2 control-label']) !!}
+        {!! Form::label('title', trans('quickadmin::qa.menus-createCrud-crud_title'), ['class'=>'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
             {!! Form::text('title', old('title'), ['class'=>'form-control', 'placeholder'=> trans('quickadmin::qa.menus-createCrud-crud_title_placeholder')]) !!}
         </div>
     </div>
 
     <div class="form-group">
-        {!! Form::label('roles', trans('quickadmin::qa.menus-createCrud-roles'), ['class'=>'col-md-2 control-label']) !!}
+        {!! Form::label('roles', trans('quickadmin::qa.menus-createCrud-roles'), ['class'=>'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
             @foreach($roles as $role)
-                <div class="col-xs-12">  {!! Form::hidden('role-'.$role->id,0) !!}
-                    {!! Form::checkbox('role-'.$role->id,1,false) !!}
-                    {!! $role->title !!}</div>
+                <div>
+                    <label>
+                        {!! Form::checkbox('roles['.$role->id.']',$role->id,old('roles.'.$role->id)) !!}
+                        {!! $role->title !!}
+                    </label>
+                </div>
             @endforeach
         </div>
     </div>
 
 
     <div class="form-group">
-        {!! Form::label('soft', trans('quickadmin::qa.menus-createCrud-soft_delete'), ['class'=>'col-md-2 control-label']) !!}
+        {!! Form::label('soft', trans('quickadmin::qa.menus-createCrud-soft_delete'), ['class'=>'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
             {!! Form::select('soft', [1 => trans('quickadmin::strings.yes'), 0 => trans('quickadmin::strings.no')], old('soft'), ['class' => 'form-control']) !!}
         </div>
     </div>
 
     <div class="form-group">
-        {!! Form::label('icon', trans('quickadmin::qa.menus-createCrud-icon'), ['class'=>'col-md-2 control-label']) !!}
+        {!! Form::label('icon', trans('quickadmin::qa.menus-createCrud-icon'), ['class'=>'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
             {!! Form::text('icon', old('icon','fa-database'), ['class'=>'form-control', 'placeholder'=> trans('quickadmin::qa.menus-createCrud-icon_placeholder')]) !!}
         </div>
@@ -73,27 +76,28 @@
 
     <table class="table">
         <tbody id="generator">
-        <tr>
-            <td>{{ trans('quickadmin::qa.menus-createCrud-show_in_list') }}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        @if(old('f_type'))
-            @foreach(old('f_type') as $index => $fieldName)
-                @include('tpl::menu_field_line', ['index' => $index])
-            @endforeach
-        @else
-            @include('tpl::menu_field_line', ['index' => ''])
-        @endif
+            <tr>
+                <td>{{ trans('quickadmin::qa.menus-createCrud-show_in_list') }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            @if(old('f_type'))
+                @foreach(old('f_type') as $index => $fieldName)
+                    @include('tpl::menu_field_line', ['index' => $index])
+                @endforeach
+            @else
+                @include('tpl::menu_field_line', ['index' => ''])
+            @endif
         </tbody>
     </table>
 
     <div class="form-group">
         <div class="col-md-12">
-            <button type="button" id="addField" class="btn btn-success"><i class="fa fa-plus"></i> {{ trans('quickadmin::qa.menus-createCrud-add_field') }}
+            <button type="button" id="addField" class="btn btn-success"><i
+                        class="fa fa-plus"></i> {{ trans('quickadmin::qa.menus-createCrud-add_field') }}
             </button>
         </div>
     </div>
@@ -111,7 +115,7 @@
     <div style="display: none;">
         <table>
             <tbody id="line">
-            @include('tpl::menu_field_line', ['index' => ''])
+                @include('tpl::menu_field_line', ['index' => ''])
             </tbody>
         </table>
 

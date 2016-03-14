@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-10 col-md-offset-2">
+        <div class="col-sm-10 col-sm-offset-2">
             <h1>{{ trans('quickadmin::qa.menus-createParent-create_new_parent') }}</h1>
 
             @if ($errors->any())
@@ -21,32 +21,35 @@
     {!! Form::open(['class' => 'form-horizontal']) !!}
 
     <div class="form-group">
-        {!! Form::label('title', trans('quickadmin::qa.menus-createParent-parent_title'), ['class'=>'col-md-2 control-label']) !!}
+        {!! Form::label('title', trans('quickadmin::qa.menus-createParent-parent_title'), ['class'=>'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
             {!! Form::text('title', old('title'), ['class'=>'form-control', 'placeholder'=> trans('quickadmin::qa.menus-createParent-parent_title_placeholder')]) !!}
         </div>
     </div>
 
     <div class="form-group">
-        {!! Form::label('roles', trans('quickadmin::qa.menus-createParent-roles') , ['class'=>'col-md-2 control-label']) !!}
+        {!! Form::label('roles', trans('quickadmin::qa.menus-createParent-roles') , ['class'=>'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
             @foreach($roles as $role)
-                <div class="col-xs-12">  {!! Form::hidden('role-'.$role->id,0) !!}
-                    {!! Form::checkbox('role-'.$role->id,1,false) !!}
-                    {!! $role->title !!}</div>
+                <div>
+                    <label>
+                        {!! Form::checkbox('roles['.$role->id.']',$role->id,old('roles.'.$role->id)) !!}
+                        {!! $role->title !!}
+                    </label>
+                </div>
             @endforeach
         </div>
     </div>
 
     <div class="form-group">
-        {!! Form::label('icon', trans('quickadmin::qa.menus-createParent-icon') , ['class'=>'col-md-2 control-label']) !!}
+        {!! Form::label('icon', trans('quickadmin::qa.menus-createParent-icon') , ['class'=>'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
             {!! Form::text('icon', old('icon','fa-database'), ['class'=>'form-control', 'placeholder'=> trans('quickadmin::qa.menus-createParent-icon_placeholder')]) !!}
         </div>
     </div>
 
     <div class="form-group">
-        <div class="col-md-12">
+        <div class="col-sm-10 col-sm-offset-2">
             {!! Form::submit( trans('quickadmin::qa.menus-createParent-create_parent') , ['class' => 'btn btn-primary']) !!}
         </div>
     </div>
