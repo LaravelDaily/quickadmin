@@ -17,7 +17,7 @@ class QuickadminServiceProvider extends ServiceProvider
     public function boot()
     {
         // Register vendor translations
-        $this->loadTranslationsFrom(__DIR__ . DIRECTORY_SEPARATOR . 'Translations' . DIRECTORY_SEPARATOR , 'quickadmin');
+        $this->loadTranslationsFrom(base_path('resources' . DIRECTORY_SEPARATOR . 'lang'  . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'laraveldaily' . DIRECTORY_SEPARATOR) , 'quickadmin');
         // Register vendor views
         $this->loadViewsFrom(__DIR__ . DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR . 'qa', 'qa');
         $this->loadViewsFrom(__DIR__ . DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR . 'templates', 'tpl');
