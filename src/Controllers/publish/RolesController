@@ -18,7 +18,7 @@ class RolesController extends Controller
     }
 
     /**
-     * Show a list of users
+     * Show a list of roles
      * @return \Illuminate\View\View
      */
     public function index()
@@ -38,7 +38,7 @@ class RolesController extends Controller
     }
 
     /**
-     * Insert new user into the system
+     * Insert new role into the system
      *
      * @param Request $request
      *
@@ -52,7 +52,7 @@ class RolesController extends Controller
     }
 
     /**
-     * Show a user edit page
+     * Show a role edit page
      *
      * @param $id
      *
@@ -66,7 +66,7 @@ class RolesController extends Controller
     }
 
     /**
-     * Update our user information
+     * Update our role information
      *
      * @param Request $request
      * @param         $id
@@ -81,7 +81,7 @@ class RolesController extends Controller
     }
 
     /**
-     * Destroy specific user
+     * Destroy specific role
      *
      * @param $id
      *
