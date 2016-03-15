@@ -75,7 +75,7 @@ class QuickadminMenuController extends Controller
         $defaultValuesCbox = FieldsDescriber::default_cbox();
         $menusSelect       = Menu::whereNotIn('menu_type', [2, 3])->lists('title', 'id');
         $roles             = Role::all();
-        $parentsSelect     = Menu::where('menu_type', 2)->lists('title', 'id')->prepend('-- no parent --', 'null');
+        $parentsSelect     = Menu::where('menu_type', 2)->lists('title', 'id')->prepend('-- no parent --', null);
         // Get columns for relationship
         $models = [];
         foreach (Menu::whereNotIn('menu_type', [2, 3])->get() as $menu) {
@@ -166,27 +166,15 @@ class QuickadminMenuController extends Controller
         $cached['name']        = $request->name;
         $cached['soft_delete'] = $request->soft;
         $cache->put('fieldsinfo', $cached);
-        $roles       = Role::all();
-        $rolesInsert = '';
-        $first       = true;
-        foreach ($roles as $role) {
-            if ($request->{'role-' . $role->id} == 1) {
-                if ($first != true) {
-                    $rolesInsert .= ',';
-                }
-                $rolesInsert .= $role->id;
-                $first = false;
-            }
-        }
         // Create menu entry
-        Menu::create([
+        $menu = Menu::create([
             'position'  => 0,
             'icon'      => $request->icon != '' ? $request->icon : 'fa-database',
             'name'      => $request->name,
             'title'     => $request->title,
-            'parent_id' => $request->parent_id != 0 ? $request->parent_id : null,
-            'roles'     => $rolesInsert
+            'parent_id' => $request->parent_id ? : null,
         ]);
+        $menu->roles()->sync($request->input('roles', []));
         // Create migrations
         $migrationBuilder = new MigrationBuilder();
         $migrationBuilder->build();
@@ -238,27 +226,15 @@ class QuickadminMenuController extends Controller
         if ($validation->fails()) {
             return redirect()->back()->withInput()->withErrors($validation);
         }
-        $roles       = Role::all();
-        $rolesInsert = '';
-        $first       = true;
-        foreach ($roles as $role) {
-            if ($request->{'role-' . $role->id} == 1) {
-                if ($first != true) {
-                    $rolesInsert .= ',';
-                }
-                $rolesInsert .= $role->id;
-                $first = false;
-            }
-        }
-        Menu::create([
+        $menu = Menu::create([
             'position'  => 0,
             'menu_type' => 2,
             'icon'      => $request->icon != '' ? $request->icon : 'fa-database',
             'name'      => ucfirst(camel_case($request->title)),
             'title'     => $request->title,
             'parent_id' => null,
-            'roles'     => $rolesInsert
         ]);
+        $menu->roles()->sync($request->input('roles', []));
 
         return redirect()->route('menu');
     }
@@ -269,7 +245,7 @@ class QuickadminMenuController extends Controller
      */
     public function createCustom()
     {
-        $parentsSelect = Menu::where('menu_type', 2)->lists('title', 'id')->prepend('-- no parent --', 'null');
+        $parentsSelect = Menu::where('menu_type', 2)->lists('title', 'id')->prepend('-- no parent --', null);
         $roles         = Role::all();
 
         return view('qa::menus.createCustom', compact('parentsSelect', 'roles'));
@@ -299,27 +275,15 @@ class QuickadminMenuController extends Controller
         $viewsBuilder = new ViewsBuilder();
         $viewsBuilder->buildCustom($request->name);
 
-        $roles       = Role::all();
-        $rolesInsert = '';
-        $first       = true;
-        foreach ($roles as $role) {
-            if ($request->{'role-' . $role->id} == 1) {
-                if ($first != true) {
-                    $rolesInsert .= ',';
-                }
-                $rolesInsert .= $role->id;
-                $first = false;
-            }
-        }
-        Menu::create([
+        $menu = Menu::create([
             'position'  => 0,
             'menu_type' => 3,
             'icon'      => $request->icon != '' ? $request->icon : 'fa-database',
             'name'      => $request->name,
             'title'     => $request->title,
-            'parent_id' => $request->parent_id != 0 ? $request->parent_id : null,
-            'roles'     => $rolesInsert
+            'parent_id' => $request->parent_id ? : null,
         ]);
+        $menu->roles()->sync($request->input('roles', []));
 
         return redirect()->route('menu');
     }
@@ -327,7 +291,7 @@ class QuickadminMenuController extends Controller
     public function edit($id)
     {
         $menu          = Menu::findOrFail($id);
-        $parentsSelect = Menu::where('menu_type', 2)->lists('title', 'id')->prepend('-- no parent --', 'null');
+        $parentsSelect = Menu::where('menu_type', 2)->lists('title', 'id')->prepend('-- no parent --', null);
         $roles         = Role::all();
 
         return view('qa::menus.edit', compact('menu', 'parentsSelect', 'roles'));
@@ -335,26 +299,14 @@ class QuickadminMenuController extends Controller
 
     public function update(Request $request, $id)
     {
-        $roles       = Role::all();
-        $rolesInsert = '';
-        $first       = true;
-        foreach ($roles as $role) {
-            if ($request->{'role-' . $role->id} == 1) {
-                if ($first != true) {
-                    $rolesInsert .= ',';
-                }
-                $rolesInsert .= $role->id;
-                $first = false;
-            }
-        }
-        $requestArray = $request->all();
-        if (!isset($requestArray['parent_id'])) {
-            $requestArray['parent_id'] = null;
-        }
-        $requestArray['roles'] = $rolesInsert;
-        $menu                  = Menu::findOrFail($id);
+        $requestArray              = $request->all();
+        $requestArray['parent_id'] = $requestArray['parent_id'] ? : null;
+        $menu                      = Menu::findOrFail($id);
         $menu->update($requestArray);
+        $menu->roles()->sync($request->input('roles', []));
 
         return redirect()->route('menu');
     }
 }
+
+

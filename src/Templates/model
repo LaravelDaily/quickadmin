@@ -1,4 +1,6 @@
-<?php namespace $NAMESPACE$;
+<?php
+
+namespace $NAMESPACE$;
 
 use Illuminate\Database\Eloquent\Model;
 use Laraveldaily\Quickadmin\Observers\UserActionsObserver;

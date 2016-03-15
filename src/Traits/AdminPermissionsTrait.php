@@ -1,4 +1,6 @@
-<?php namespace Laraveldaily\Quickadmin\Traits;
+<?php
+
+namespace Laraveldaily\Quickadmin\Traits;
 
 use Laraveldaily\Quickadmin\Models\Menu;
 
@@ -11,11 +13,12 @@ trait AdminPermissionsTrait
             return true;
         }
         list($role, $menu) = $this->parseData($request);
-        if (in_array($role, explode(',', $menu->roles))) {
-            return true;
+
+        if (is_int($menu)) {
+            return $role == $menu;
         }
 
-        return false;
+        return $menu->availableForRole($role);
     }
 
     /**
@@ -30,10 +33,11 @@ trait AdminPermissionsTrait
         $official = [
             'menu',
             'users',
+            'roles',
             'actions'
         ];
         if (in_array($route[0], $official)) {
-            return [$role, (object) ['roles' => config('quickadmin.defaultRole') . ',']];
+            return [$role, config('quickadmin.defaultRole')];
         } else {
             $menuName = $route[1];
         }
@@ -42,3 +46,4 @@ trait AdminPermissionsTrait
         return [$role, $menu];
     }
 }
+

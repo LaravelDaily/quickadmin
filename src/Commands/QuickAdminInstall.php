@@ -63,6 +63,8 @@ class QuickAdminInstall extends Command
             database_path('migrations' . DIRECTORY_SEPARATOR . '2015_10_10_000000_create_menus_table.php'));
         copy(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Migrations' . DIRECTORY_SEPARATOR . '2015_12_11_000000_create_users_logs_table',
             database_path('migrations' . DIRECTORY_SEPARATOR . '2015_12_11_000000_create_users_logs_table.php'));
+        copy(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Migrations' . DIRECTORY_SEPARATOR . '2016_03_14_000000_update_menus_table',
+            database_path('migrations' . DIRECTORY_SEPARATOR . '2016_03_14_000000_update_menus_table.php'));
         copy(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Models' . DIRECTORY_SEPARATOR . 'publish' . DIRECTORY_SEPARATOR . 'User',
             app_path('User.php'));
         $this->info('Migrations were transferred successfully');
@@ -99,10 +101,17 @@ class QuickAdminInstall extends Command
      */
     public function copyMasterTemplate()
     {
-        Menu::create([
-            'name'      => 'User',
-            'title'     => 'User',
-            'menu_type' => 0
+        Menu::insert([
+            [
+                'name'      => 'User',
+                'title'     => 'User',
+                'menu_type' => 0
+            ],
+            [
+                'name'      => 'Role',
+                'title'     => 'Role',
+                'menu_type' => 0
+            ]
         ]);
         $this->callSilent('vendor:publish', [
             '--tag'   => ['quickadmin'],
@@ -111,3 +120,4 @@ class QuickAdminInstall extends Command
         $this->info('Master template was transferred successfully');
     }
 }
+
