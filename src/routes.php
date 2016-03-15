@@ -114,6 +114,7 @@ Route::group([
         'middleware' => 'role'
     ], function () {
         Route::resource('users', 'UsersController');
+        Route::resource('roles', 'RolesController');
     });
     // Authentication routes...
     Route::get('login', 'Auth\AuthController@getLogin');

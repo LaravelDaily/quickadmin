@@ -49,12 +49,10 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox"
-                                               name="remember">{{ trans('quickadmin::auth.login-remember_me') }}
-                                    </label>
-                                </div>
+                                <label>
+                                    <input type="checkbox"
+                                           name="remember">{{ trans('quickadmin::auth.login-remember_me') }}
+                                </label>
                             </div>
                         </div>
 

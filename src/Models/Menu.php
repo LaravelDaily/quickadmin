@@ -1,4 +1,5 @@
 <?php
+
 namespace Laraveldaily\Quickadmin\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -13,8 +14,9 @@ class Menu extends Model
         'name',
         'title',
         'parent_id',
-        'roles'
     ];
+
+    public $relation_ids = [];
 
     /**
      * Convert name to ucfirst() and camelCase
@@ -33,5 +35,23 @@ class Menu extends Model
     public function children()
     {
         return $this->hasMany('Laraveldaily\Quickadmin\Models\Menu', 'parent_id', 'id')->orderBy('position');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function availableForRole($role)
+    {
+        if ($role instanceof Role) {
+            $role = $role->id;
+        }
+
+        if (! isset($this->relation_ids['roles'])) {
+            $this->relation_ids['roles'] = $this->roles()->pluck('id')->flip()->all();
+        }
+
+        return isset($this->relation_ids['roles'][$role]);
     }
 }
