@@ -24,8 +24,8 @@
                                 <td>{{ $role->title }}</td>
                                 <td>
                                     {!! link_to_route('roles.edit', trans('quickadmin::admin.roles-index-edit'), [$role->id], ['class' => 'btn btn-xs btn-info']) !!}
-                                    {!! Form::open(['style' => 'display: inline-block;', 'method' => 'DELETE', 'onsubmit' => 'return confirm(\'' . trans('quickadmin::admin.roles-index-are_you_sure') . '\');',  'route' => ['roles.destroy', $role->id]]) !!}
-                                    {!! Form::submit(trans('quickadmin::admin.roles-index-delete'), ['class' => 'btn btn-xs btn-danger']) !!}
+                                    {!! Form::open(['style' => 'display: inline-block;', 'method' => 'DELETE', 'route' => ['roles.destroy', $role->id]]) !!}
+                                    {!! Form::submit(trans('quickadmin::admin.roles-index-delete'), ['class' => 'btn btn-xs btn-danger confirm-delete']) !!}
                                     {!! Form::close() !!}
                                 </td>
                             </tr>
