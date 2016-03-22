@@ -75,7 +75,7 @@ class QuickadminMenuController extends Controller
         $defaultValuesCbox = FieldsDescriber::default_cbox();
         $menusSelect       = Menu::whereNotIn('menu_type', [2, 3])->lists('title', 'id');
         $roles             = Role::all();
-        $parentsSelect     = Menu::where('menu_type', 2)->lists('title', 'id')->prepend('-- no parent --', null);
+        $parentsSelect     = Menu::where('menu_type', 2)->lists('title', 'id')->prepend('-- no parent --', '');
         // Get columns for relationship
         $models = [];
         foreach (Menu::whereNotIn('menu_type', [2, 3])->get() as $menu) {
@@ -172,7 +172,7 @@ class QuickadminMenuController extends Controller
             'icon'      => $request->icon != '' ? $request->icon : 'fa-database',
             'name'      => $request->name,
             'title'     => $request->title,
-            'parent_id' => $request->parent_id ? : null,
+            'parent_id' => $request->parent_id ?: null,
         ]);
         $menu->roles()->sync($request->input('roles', []));
         // Create migrations
@@ -245,7 +245,7 @@ class QuickadminMenuController extends Controller
      */
     public function createCustom()
     {
-        $parentsSelect = Menu::where('menu_type', 2)->lists('title', 'id')->prepend('-- no parent --', null);
+        $parentsSelect = Menu::where('menu_type', 2)->lists('title', 'id')->prepend('-- no parent --', '');
         $roles         = Role::all();
 
         return view('qa::menus.createCustom', compact('parentsSelect', 'roles'));
@@ -281,7 +281,7 @@ class QuickadminMenuController extends Controller
             'icon'      => $request->icon != '' ? $request->icon : 'fa-database',
             'name'      => $request->name,
             'title'     => $request->title,
-            'parent_id' => $request->parent_id ? : null,
+            'parent_id' => $request->parent_id ?: null,
         ]);
         $menu->roles()->sync($request->input('roles', []));
 
@@ -300,7 +300,7 @@ class QuickadminMenuController extends Controller
     public function update(Request $request, $id)
     {
         $requestArray              = $request->all();
-        $requestArray['parent_id'] = $requestArray['parent_id'] ? : null;
+        $requestArray['parent_id'] = $requestArray['parent_id'] ?: null;
         $menu                      = Menu::findOrFail($id);
         $menu->update($requestArray);
         $menu->roles()->sync($request->input('roles', []));
