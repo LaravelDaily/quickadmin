@@ -24,8 +24,8 @@
                             <td>{{ $user->name }}</td>
                             <td>
                                 {!! link_to_route('users.edit', trans('quickadmin::admin.users-index-edit'), [$user->id], ['class' => 'btn btn-xs btn-info']) !!}
-                                {!! Form::open(['style' => 'display: inline-block;', 'method' => 'DELETE', 'onsubmit' => 'return confirm(\'' . trans('quickadmin::admin.users-index-are_you_sure') . '\');',  'route' => array('users.destroy', $user->id)]) !!}
-                                {!! Form::submit(trans('quickadmin::admin.users-index-delete'), array('class' => 'btn btn-xs btn-danger')) !!}
+                                {!! Form::open(['style' => 'display: inline-block;', 'method' => 'DELETE', 'route' => array('users.destroy', $user->id)]) !!}
+                                {!! Form::submit(trans('quickadmin::admin.users-index-delete'), array('class' => 'btn btn-xs btn-danger confirm-delete')) !!}
                                 {!! Form::close() !!}
                             </td>
                         </tr>

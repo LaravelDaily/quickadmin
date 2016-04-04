@@ -28,6 +28,8 @@
     <link rel="stylesheet"
           href="{{ url('quickadmin/css') }}/quickadmin-theme-default.css"/>
     <link rel="stylesheet"
+          href="{{ url('quickadmin/css') }}/sweetalert.css"/>          
+    <link rel="stylesheet"
           href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet"
           href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css"/>

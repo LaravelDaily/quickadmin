@@ -30,8 +30,8 @@
                             $FIELDS$
                             <td>
                                 {!! link_to_route('admin.$ROUTE$.edit', trans('quickadmin::templates.templates-view_index-edit'), array($row->id), array('class' => 'btn btn-xs btn-info')) !!}
-                                {!! Form::open(array('style' => 'display: inline-block;', 'method' => 'DELETE', 'onsubmit' => "return confirm('".trans("quickadmin::templates.templates-view_index-are_you_sure")."');",  'route' => array('admin.$ROUTE$.destroy', $row->id))) !!}
-                                {!! Form::submit(trans('quickadmin::templates.templates-view_index-delete'), array('class' => 'btn btn-xs btn-danger')) !!}
+                                {!! Form::open(array('style' => 'display: inline-block;', 'method' => 'DELETE', 'route' => array('admin.$ROUTE$.destroy', $row->id))) !!}
+                                {!! Form::submit(trans('quickadmin::templates.templates-view_index-delete'), array('class' => 'btn btn-xs btn-danger confirm-delete')) !!}
                                 {!! Form::close() !!}
                             </td>
                         </tr>
@@ -60,7 +60,18 @@
     <script>
         $(document).ready(function () {
             $('#delete').click(function () {
-                if (window.confirm('{{ trans('quickadmin::templates.templates-view_index-are_you_sure') }}')) {
+                swal({
+                  title: "{{ trans("quickadmin::strings.delete_are_you_sure") }}",
+                  text: "{{ trans("quickadmin::strings.delete_not_able_recover") }}",
+                  type: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "{{ trans("quickadmin::strings.delete_confirm_button") }}",
+                  cancelButtonText: "{{ trans("quickadmin::strings.delete_cancel_button") }}",
+                  closeOnConfirm: false
+                },
+                function (isConfirm) {
+                  if (isConfirm) {
                     var send = $('#send');
                     var mass = $('.mass').is(":checked");
                     if (mass == true) {
@@ -75,7 +86,8 @@
                         send.val(JSON.stringify(toDelete));
                     }
                     $('#massDelete').submit();
-                }
+                  }
+                });
             });
         });
     </script>
