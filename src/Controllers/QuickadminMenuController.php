@@ -291,7 +291,7 @@ class QuickadminMenuController extends Controller
     public function edit($id)
     {
         $menu          = Menu::findOrFail($id);
-        $parentsSelect = Menu::where('menu_type', 2)->lists('title', 'id')->prepend('-- no parent --', null);
+        $parentsSelect = Menu::where('menu_type', 2)->lists('title', 'id')->prepend('-- no parent --', '');
         $roles         = Role::all();
 
         return view('qa::menus.edit', compact('menu', 'parentsSelect', 'roles'));
