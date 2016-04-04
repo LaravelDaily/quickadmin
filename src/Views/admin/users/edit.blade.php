@@ -44,7 +44,7 @@
     <div class="form-group">
         {!! Form::label('role_id', trans('quickadmin::admin.users-edit-role'), ['class'=>'col-sm-2 control-label']) !!}
         <div class="col-sm-10">
-            {!! Form::select('role_id', $roles, old('role_id', $user->role), ['class'=>'form-control']) !!}
+            {!! Form::select('role_id', $roles, old('role_id', $user->role_id), ['class'=>'form-control']) !!}
         </div>
     </div>
 
