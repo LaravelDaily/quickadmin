@@ -71,7 +71,7 @@ class QuickadminServiceProvider extends ServiceProvider
         // Register dependency packages
         $this->app->register('Collective\Html\HtmlServiceProvider');
         $this->app->register('Intervention\Image\ImageServiceProvider');
-        $this->app->register('yajra\Datatables\DatatablesServiceProvider');
+        $this->app->register('Yajra\Datatables\DatatablesServiceProvider');
         // Register dependancy aliases
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('HTML', 'Collective\Html\HtmlFacade');
