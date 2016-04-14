@@ -44,7 +44,7 @@ class ModelBuilder
         $this->datetime = $cached['datetime'];
         $this->enum     = $cached['enum'];
         $this->names();
-        $template = (string) $this->loadTemplate();
+        $template = (string)$this->loadTemplate();
         $template = $this->buildParts($template);
         $this->publish($template);
     }
@@ -133,7 +133,7 @@ class ModelBuilder
         }
         foreach ($this->fields as $key => $field) {
             // Check if there is no duplication for radio and checkbox
-            if (!in_array($field->title, $used)) {
+            if (! in_array($field->title, $used)) {
                 if ($count > 1) {
                     $fillables .= '          '; // Add formatting space to the model
                 }
@@ -148,10 +148,12 @@ class ModelBuilder
                 if ($count != 1) {
                     if ($key != $count - 1) {
                         $fillables .= ",\r\n";
-                    } else if ($key == $count - 1) {
-                        $fillables .= "\r\n    ";
                     } else {
-                        $fillables .= "\r\n";
+                        if ($key == $count - 1) {
+                            $fillables .= "\r\n    ";
+                        } else {
+                            $fillables .= "\r\n";
+                        }
                     }
                 }
             }
@@ -170,7 +172,7 @@ class ModelBuilder
         $used          = [];
         $relationships = '';
         foreach ($this->fields as $key => $field) {
-            if (!in_array($field->title, $used) && $field->type == 'relationship') {
+            if (! in_array($field->title, $used) && $field->type == 'relationship') {
                 $menu    = $menus[$field->relationship_id];
                 $relLine = '
     public function $RELATIONSHIP$()
@@ -242,7 +244,11 @@ class ModelBuilder
      */
     public function set' . $camel . 'Attribute($input)
     {
-        $this->attributes[\'' . $field->title . '\'] = Carbon::createFromFormat(config(\'quickadmin.date_format\'), $input)->format(\'Y-m-d\');
+        if($input != \'\') {
+            $this->attributes[\'' . $field->title . '\'] = Carbon::createFromFormat(config(\'quickadmin.date_format\'), $input)->format(\'Y-m-d\');
+        }else{
+            $this->attributes[\'' . $field->title . '\'] = \'\';
+        }
     }
 
     /**
@@ -253,7 +259,11 @@ class ModelBuilder
      */
     public function get' . $camel . 'Attribute($input)
     {
-        return Carbon::createFromFormat(\'Y-m-d\', $input)->format(config(\'quickadmin.date_format\'));
+        if($input != \'\') {
+            return Carbon::createFromFormat(\'Y-m-d\', $input)->format(config(\'quickadmin.date_format\'));
+        }else{
+            return \'\';
+        }
     }' . "\r\n\r\n";
             }
         }
