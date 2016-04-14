@@ -77,7 +77,7 @@ class QuickadminServiceProvider extends ServiceProvider
         $loader->alias('HTML', 'Collective\Html\HtmlFacade');
         $loader->alias('Form', 'Collective\Html\FormFacade');
         $loader->alias('Image', 'Intervention\Image\Facades\Image');
-        $loader->alias('Datatables', 'yajra\Datatables\Datatables');
+        $loader->alias('Datatables', 'Yajra\Datatables\Datatables');
     }
 
 }

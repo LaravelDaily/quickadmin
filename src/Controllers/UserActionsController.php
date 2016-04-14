@@ -3,7 +3,7 @@ namespace Laraveldaily\Quickadmin\Controllers;
 
 use App\Http\Controllers\Controller;
 use Laraveldaily\Quickadmin\Models\UsersLogs;
-use yajra\Datatables\Datatables;
+use Yajra\Datatables\Datatables;
 
 class UserActionsController extends Controller
 {
