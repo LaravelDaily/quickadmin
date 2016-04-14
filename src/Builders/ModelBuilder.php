@@ -259,7 +259,7 @@ class ModelBuilder
      */
     public function get' . $camel . 'Attribute($input)
     {
-        if($input != \'\') {
+        if($input != \'0000-00-00\') {
             return Carbon::createFromFormat(\'Y-m-d\', $input)->format(config(\'quickadmin.date_format\'));
         }else{
             return \'\';
