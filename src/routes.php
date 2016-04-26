@@ -24,7 +24,7 @@ if (Schema::hasTable('menus')) {
                             'uses' => 'Admin\\' . ucfirst(camel_case($menu->name)) . 'Controller@massDelete'
                         ]);
                         Route::resource(strtolower($menu->name),
-                            'Admin\\' . ucfirst(camel_case($menu->name)) . 'Controller');
+                            'Admin\\' . ucfirst(camel_case($menu->name)) . 'Controller', ['except' => 'show']);
                         break;
                     case 3:
                         Route::controller(strtolower($menu->name),
