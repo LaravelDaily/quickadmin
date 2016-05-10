@@ -42,7 +42,7 @@ class ViewsBuilder
         $this->fields   = $cached['fields'];
         $this->files    = $cached['files'];
         $this->names();
-        $template = (array) $this->loadTemplate();
+        $template = (array)$this->loadTemplate();
         $template = $this->buildParts($template);
         $this->publish($template);
     }
@@ -56,7 +56,7 @@ class ViewsBuilder
             2 => ''
         ];
         $this->names();
-        $template = (array) $this->loadTemplate();
+        $template = (array)$this->loadTemplate();
         $this->publishCustom($template);
 
     }
@@ -141,7 +141,7 @@ class ViewsBuilder
         foreach ($this->fields as $field) {
             // Check if there is no duplication for radio and checkbox.
             // Password fields are excluded from the table too.
-            if (!in_array($field->title, $used)
+            if (! in_array($field->title, $used)
                 && $field->type != 'password'
                 && $field->type != 'textarea'
                 && $field->show == 1
@@ -173,11 +173,16 @@ class ViewsBuilder
         foreach ($this->fields as $field) {
             $title = $field->label;
             $label = $field->title;
-            if (in_array($field->validation, $this->starred) && $field->type != 'password' && $field->type != 'file' && $field->type != 'photo') {
+            if (in_array($field->validation,
+                    $this->starred) && $field->type != 'password' && $field->type != 'file' && $field->type != 'photo'
+            ) {
                 $title .= '*';
             }
             if ($field->type == 'relationship') {
                 $label = $field->relationship_name . '_id';
+            }
+            if ($field->type == 'checkbox') {
+                $field->default = '$' . $this->model . '->' . $label . ' == 1';
             }
             $temp = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . 'fields' . DIRECTORY_SEPARATOR . $field->type);
             $temp = str_replace([
@@ -195,7 +200,9 @@ class ViewsBuilder
                 'old(\'$LABEL$\',$' . $this->resource . '->' . $label . ')',
                 $label,
                 $title,
-                $field->value != '' ? ', "' . $field->value . '"' : '',
+                $field->type != 'radio' ?
+                    $field->value != '' ? ', "' . $field->value . '"' : ''
+                    : "'$field->value'",
                 $field->default,
                 '$' . $field->relationship_name,
                 $field->texteditor == 1 ? ' ckeditor' : '',
@@ -237,7 +244,9 @@ class ViewsBuilder
             ], [
                 $key,
                 $title,
-                $field->value != '' ? ', ' . $field->value : '',
+                $field->type != 'radio' ?
+                    $field->value != '' ? ', ' . $field->value : ''
+                    : "'$field->value'",
                 $field->default,
                 '$' . $field->relationship_name,
                 $field->texteditor == 1 ? ' ckeditor' : '',
@@ -283,7 +292,7 @@ class ViewsBuilder
      */
     private function publish($template)
     {
-        if (!file_exists(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . $this->path))) {
+        if (! file_exists(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . $this->path))) {
             mkdir(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . $this->path));
             chmod(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin'), 0777);
         }
@@ -297,7 +306,7 @@ class ViewsBuilder
 
     private function publishCustom($template)
     {
-        if (!file_exists(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . $this->path))) {
+        if (! file_exists(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . $this->path))) {
             mkdir(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . $this->path));
             chmod(base_path('resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin'), 0777);
         }
