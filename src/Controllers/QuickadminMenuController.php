@@ -300,7 +300,7 @@ class QuickadminMenuController extends Controller
     public function update(Request $request, $id)
     {
         $requestArray              = $request->all();
-        $requestArray['parent_id'] = isset($requestArray['parent_id']) ? $requestArray['parent_id'] : null;
+        $requestArray['parent_id'] = (isset($requestArray['parent_id']) && !empty($requestArray['parent_id'])) ? $requestArray['parent_id'] : null;
         $menu                      = Menu::findOrFail($id);
         $menu->update($requestArray);
         $menu->roles()->sync($request->input('roles', []));
