@@ -12,7 +12,7 @@ return [
   'no' => 'No',
   'optional' => 'Opcional',
   'required' => 'Requerido',
-  'required_unique' => 'Required como único',
+  'required_unique' => 'Requerido como único',
   'default_unchecked' => 'Destildado por defecto',
   'default_checked' => 'Tildado por defecto'  
   

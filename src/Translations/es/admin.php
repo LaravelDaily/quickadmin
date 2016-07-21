@@ -12,7 +12,7 @@ return [
     'partials-sidebar-menu'                 => 'Menú',
     'partials-sidebar-users'                => 'Usuarios',
     'partials-sidebar-roles'                => 'Roles',
-    'partials-sidebar-user-actions'         => 'Acciones de usuario',
+    'partials-sidebar-user-actions'         => 'Registros de usuarios',
     'partials-sidebar-logout'               => 'Salir',
 
     // partials-topbar
@@ -67,7 +67,7 @@ return [
     'roles-create-create_role'              => 'Nuevo rol',
     'roles-create-title'                    => 'Título',
     'roles-create-title_placeholder'        => 'Título',
-    'roles-create-btncreate'                => 'Create',
+    'roles-create-btncreate'                => 'Crear',
 
     // roles-edit
     'roles-edit-edit_role'                  => 'Editar rol',

@@ -27,7 +27,7 @@ return [
   'menus-createCrud-select_display_field' => 'Seleccionar campo para mostrar',
 
   // menus-createCustom
-  'menus-createCustom-create_new_custom_controller' => 'Crear nuevo controlador personalizado',
+  'menus-createCustom-create_new_custom_controller' => 'Nuevo controlador personalizado',
   'menus-createCustom-menu_parent' => 'Menú padre',
   'menus-createCustom-controller_name' => 'Nombre del controllador',
   'menus-createCustom-controller_name_placeholder' => 'ej: Libros o Productos (se usa para generar la talba en la BD y los archivos en el servidor)',
@@ -60,10 +60,10 @@ return [
 
   // menus-index
   'menus-index-no_menu_items_found' => 'No hay elementos del menú',
-  'menus-index-new_crud' => 'Crear nuevo controlador ABM',
-  'menus-index-new_custom' => 'Crear nuevo controlador personalizado',
+  'menus-index-new_crud' => 'Nuevo controlador ABM',
+  'menus-index-new_custom' => 'Nuevo controlador personalizado',
   'menus-index-new_parent' => 'Crear nuevo elemento padre del menú',
-  'menus-index-positions_drag_drop' => 'Puedes cambiar la posición del menú arrastrando los elementos',
+  'menus-index-positions_drag_drop' => 'Cambia el orden del menú arrastrando los elementos',
   'menus-index-click_save_positions' => 'Los cambios se guardan cuando aprietas Guardar posiciones',
   'menus-index-save_positions' => 'Guardar posiciones',
 
