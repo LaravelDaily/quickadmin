@@ -1,12 +1,16 @@
-## Requirements
+## New
+Check out online adminpanel generator version - no packages required there, no syntax to learn, it generates Laravel project for you: [QuickAdminPanel.com](https://quickadminpanel.com)
+
+
+## Package Requirements
 * Laravel `^5.2` - Because of changed routing middleware and unsupported package `illuminate/html`
 
 ### Laravel 5.1.11 users info!
 To use Quickadmin with Laravel Laravel 5.1.11 use branch `0.4.x`
 
-## Quick Admin installation
+## QuickAdmin installation
 
-###Please note: QuickAdmin requires fresh Laravel installation
+### Please note: QuickAdmin requires fresh Laravel installation and is not suitable for use on already existing project.
 
 1. Install the package via `composer require laraveldaily/quickadmin`.
 2. Add `Laraveldaily\Quickadmin\QuickadminServiceProvider::class,` to your `\config\app.php` providers **after `App\Providers\RouteServiceProvider::class,`** otherwise you will not be able to add new ones to freshly generated controllers.
