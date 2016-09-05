@@ -37,7 +37,7 @@ class ControllerBuilder
         $this->files         = $cached['files'];
         $this->enum          = $cached['enum'];
         $this->names();
-        $template = (string) $this->loadTemplate();
+        $template = (string)$this->loadTemplate();
         $template = $this->buildParts($template);
         $this->publish($template);
     }
@@ -47,7 +47,7 @@ class ControllerBuilder
         $this->template = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . 'customController';
         $this->name     = $name;
         $this->names();
-        $template = (string) $this->loadTemplate();
+        $template = (string)$this->loadTemplate();
         $template = $this->buildParts($template);
         $this->publish($template);
     }
@@ -165,18 +165,18 @@ class ControllerBuilder
             foreach ($this->fields as $field) {
                 if ($field->type == 'relationship') {
                     // Formatting fix if the relationship is not first
-                    if (!$first) {
+                    if (! $first) {
                         $relationships .= '        ';
                     }
                     $menu = $menus[$field->relationship_id];
                     $relationships .= '$'
-                        . $field->relationship_name
-                        . ' = '
-                        . ucfirst(Str::camel($menu->name))
-                        . '::lists("'
-                        . $field->relationship_field
-                        . '", "id")->prepend(\'Please select\', \'\');'
-                        . "\r\n";
+                                      . $field->relationship_name
+                                      . ' = '
+                                      . ucfirst(Str::camel($menu->name))
+                                      . '::pluck("'
+                                      . $field->relationship_field
+                                      . '", "id")->prepend(\'Please select\', null);'
+                                      . "\r\n";
                 }
             }
 
@@ -210,7 +210,7 @@ class ControllerBuilder
                 }
             }
             if ($this->enum > 0) {
-                if (!isset($first)) {
+                if (! isset($first)) {
                     $first = true;
                 }
                 foreach ($this->fields as $field) {
@@ -281,7 +281,7 @@ class ControllerBuilder
      */
     private function publish($template)
     {
-        if (!file_exists(app_path('Http' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'Admin'))) {
+        if (! file_exists(app_path('Http' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'Admin'))) {
             mkdir(app_path('Http' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'Admin'));
             chmod(app_path('Http' . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . 'Admin'), 0777);
         }

@@ -73,9 +73,9 @@ class QuickadminMenuController extends Controller
         $fieldTypes        = FieldsDescriber::types();
         $fieldValidation   = FieldsDescriber::validation();
         $defaultValuesCbox = FieldsDescriber::default_cbox();
-        $menusSelect       = Menu::whereNotIn('menu_type', [2, 3])->lists('title', 'id');
+        $menusSelect       = Menu::whereNotIn('menu_type', [2, 3])->pluck('title', 'id');
         $roles             = Role::all();
-        $parentsSelect     = Menu::where('menu_type', 2)->lists('title', 'id')->prepend('-- no parent --', '');
+        $parentsSelect     = Menu::where('menu_type', 2)->pluck('title', 'id')->prepend('-- no parent --', '');
         // Get columns for relationship
         $models = [];
         foreach (Menu::whereNotIn('menu_type', [2, 3])->get() as $menu) {
@@ -245,7 +245,7 @@ class QuickadminMenuController extends Controller
      */
     public function createCustom()
     {
-        $parentsSelect = Menu::where('menu_type', 2)->lists('title', 'id')->prepend('-- no parent --', '');
+        $parentsSelect = Menu::where('menu_type', 2)->pluck('title', 'id')->prepend('-- no parent --', '');
         $roles         = Role::all();
 
         return view('qa::menus.createCustom', compact('parentsSelect', 'roles'));
@@ -291,7 +291,7 @@ class QuickadminMenuController extends Controller
     public function edit($id)
     {
         $menu          = Menu::findOrFail($id);
-        $parentsSelect = Menu::where('menu_type', 2)->lists('title', 'id')->prepend('-- no parent --', '');
+        $parentsSelect = Menu::where('menu_type', 2)->pluck('title', 'id')->prepend('-- no parent --', '');
         $roles         = Role::all();
 
         return view('qa::menus.edit', compact('menu', 'parentsSelect', 'roles'));

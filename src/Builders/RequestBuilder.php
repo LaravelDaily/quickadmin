@@ -88,7 +88,7 @@ class RequestBuilder
         $rules = '';
         foreach ($this->fields as $field) {
             // Check if there is no duplication for radio and checkbox
-            if (!in_array($field->title, $used)) {
+            if (! in_array($field->title, $used)) {
                 if ($field->type != 'file' && $field->type != 'relationship' && $field->type != 'money') {
                     if ($type == 0 || $field->type != 'password') {
                         switch ($field->validation) {
@@ -192,6 +192,9 @@ class RequestBuilder
      */
     private function publish($template)
     {
+        if (! file_exists(app_path('Http' . DIRECTORY_SEPARATOR . 'Requests'))) {
+            mkdir(app_path('Http' . DIRECTORY_SEPARATOR . 'Requests'), 0777, true);
+        }
         file_put_contents(app_path('Http' . DIRECTORY_SEPARATOR . 'Requests' . DIRECTORY_SEPARATOR . 'Create' . $this->fileName),
             $template[0]);
         file_put_contents(app_path('Http' . DIRECTORY_SEPARATOR . 'Requests' . DIRECTORY_SEPARATOR . 'Update' . $this->fileName),

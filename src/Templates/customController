@@ -13,7 +13,7 @@ class $CLASS$ extends Controller {
      *
      * @return \Illuminate\View\View
 	 */
-	public function getIndex()
+	public function index()
     {
 		return view('admin.$COLLECTION$.index');
 	}

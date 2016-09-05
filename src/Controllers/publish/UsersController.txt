@@ -26,7 +26,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        $roles = Role::lists('title', 'id');
+        $roles = Role::pluck('title', 'id');
 
         return view('admin.users.create', compact('roles'));
     }
@@ -57,7 +57,7 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user  = User::findOrFail($id);
-        $roles = Role::lists('title', 'id');
+        $roles = Role::pluck('title', 'id');
 
         return view('admin.users.edit', compact('user', 'roles'));
     }
