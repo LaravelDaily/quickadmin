@@ -6,7 +6,7 @@ Check out online adminpanel generator version - no packages required there, no s
 * Laravel `^5.3`
 
 ### Laravel 5.2 users info!
-To use Quickadmin with Laravel Laravel 5.2 use branch `0.5.x`
+To use Quickadmin with Laravel Laravel 5.2 use branch `1.x.x`
 
 ### Laravel 5.1.11 users info!
 To use Quickadmin with Laravel Laravel 5.1.11 use branch `0.4.x`
