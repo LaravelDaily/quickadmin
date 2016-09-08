@@ -21,19 +21,13 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login / registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
     {
+        $this->redirectTo = config('quickadmin.route');
         $this->middleware('guest', ['except' => 'logout']);
     }
 }

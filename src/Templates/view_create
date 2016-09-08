@@ -16,7 +16,7 @@
     </div>
 </div>
 
-{!! Form::open(array($FILES$'route' => '$ROUTE$.store', 'id' => 'form-with-validation', 'class' => 'form-horizontal')) !!}
+{!! Form::open(array($FILES$'route' => config('quickadmin.route').'.$ROUTE$.store', 'id' => 'form-with-validation', 'class' => 'form-horizontal')) !!}
 
 $FORMFIELDS$
 

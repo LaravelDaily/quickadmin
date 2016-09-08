@@ -34,7 +34,7 @@
                 @if($menu->menu_type != 2 && is_null($menu->parent_id))
                     @if(Auth::user()->role->canAccessMenu($menu))
                         <li @if(isset(explode('/',Request::path())[1]) && explode('/',Request::path())[1] == strtolower($menu->name)) class="active" @endif>
-                            <a href="{{ route(strtolower($menu->name).'.index') }}">
+                            <a href="{{ route(config('quickadmin.route').'.'.strtolower($menu->name).'.index') }}">
                                 <i class="fa {{ $menu->icon }}"></i>
                                 <span class="title">{{ $menu->title }}</span>
                             </a>
@@ -53,7 +53,7 @@
                                     @if(Auth::user()->role->canAccessMenu($child))
                                         <li
                                                 @if(isset(explode('/',Request::path())[1]) && explode('/',Request::path())[1] == strtolower($child->name)) class="active active-sub" @endif>
-                                            <a href="{{ route(strtolower($child->name).'.index') }}">
+                                            <a href="{{ route(strtolower(config('quickadmin.route').'.'.$child->name).'.index') }}">
                                                 <i class="fa {{ $child->icon }}"></i>
                                                 <span class="title">
                                                     {{ $child->title  }}
@@ -68,10 +68,12 @@
                 @endif
             @endforeach
             <li>
-                <a href="{{ url('logout') }}">
+                {!! Form::open(['url' => 'logout']) !!}
+                <button type="submit" class="logout">
                     <i class="fa fa-sign-out fa-fw"></i>
                     <span class="title">{{ trans('quickadmin::admin.partials-sidebar-logout') }}</span>
-                </a>
+                </button>
+                {!! Form::close() !!}
             </li>
         </ul>
     </div>

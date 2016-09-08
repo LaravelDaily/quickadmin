@@ -3102,3 +3102,22 @@ table {
     padding: 10px 5px;
     margin-bottom: 5px;
 }
+
+.logout {
+    padding: 10px 15px;
+    border: none;
+    border-top: 1px solid #484848;
+    color: #d9d9d9;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.logout > i {
+    font-size: 16px;
+    margin-right: 5px;
+    text-shadow: none;
+    color: #888888;
+}

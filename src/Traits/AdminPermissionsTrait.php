@@ -39,7 +39,7 @@ trait AdminPermissionsTrait
         if (in_array($route[0], $official)) {
             return [$role, config('quickadmin.defaultRole')];
         } else {
-            $menuName = $route[0];
+            $menuName = $route[1];
         }
         $menu = Menu::where('name', ucfirst($menuName))->firstOrFail();
 

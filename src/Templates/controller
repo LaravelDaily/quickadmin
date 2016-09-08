@@ -50,7 +50,7 @@ class $CLASS$ extends Controller {
 	    $FILESAVING$
 		$MODEL$::create($request->all());
 
-		return redirect()->route('$COLLECTION$.index');
+		return redirect()->route(config('quickadmin.route').'.$COLLECTION$.index');
 	}
 
 	/**
@@ -81,7 +81,7 @@ class $CLASS$ extends Controller {
 
 		$$RESOURCE$->update($request->all());
 
-		return redirect()->route('$COLLECTION$.index');
+		return redirect()->route(config('quickadmin.route').'.$COLLECTION$.index');
 	}
 
 	/**
@@ -93,7 +93,7 @@ class $CLASS$ extends Controller {
 	{
 		$MODEL$::destroy($id);
 
-		return redirect()->route('$COLLECTION$.index');
+		return redirect()->route(config('quickadmin.route').'.$COLLECTION$.index');
 	}
 
     /**
@@ -111,7 +111,7 @@ class $CLASS$ extends Controller {
             $MODEL$::whereNotNull('id')->delete();
         }
 
-        return redirect()->route('$COLLECTION$.index');
+        return redirect()->route(config('quickadmin.route').'.$COLLECTION$.index');
     }
 
 }
