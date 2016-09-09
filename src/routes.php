@@ -14,7 +14,7 @@ if (Schema::hasTable('menus')) {
         Route::group([
             'middleware' => ['web', 'auth', 'role'],
             'prefix'     => config('quickadmin.route'),
-            'as'         => config('quickadmin.route'),
+            'as'         => config('quickadmin.route') . '.',
             'namespace'  => 'App\Http\Controllers',
         ], function () use ($menus) {
             foreach ($menus as $menu) {
