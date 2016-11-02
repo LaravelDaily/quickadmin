@@ -171,7 +171,7 @@ class ViewsBuilder
     {
         $form = '';
         foreach ($this->fields as $field) {
-            $title = $field->label;
+            $title = addslashes($field->label);
             $label = $field->title;
             if (in_array($field->validation,
                     $this->starred) && $field->type != 'password' && $field->type != 'file' && $field->type != 'photo'
@@ -222,7 +222,7 @@ class ViewsBuilder
     {
         $form = '';
         foreach ($this->fields as $field) {
-            $title = $field->label;
+            $title = addslashes($field->label);
             $key   = $field->title;
             if (in_array($field->validation, $this->starred)) {
                 $title .= '*';
