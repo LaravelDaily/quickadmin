@@ -112,7 +112,7 @@ class RequestBuilder
                             $camelName = Str::camel($this->name);
                             // Insert table names
                             $tableName = strtolower($camelName);
-                            $rules .= "'" . $field->relationship_name . "_id' => '$field->validation:$tableName,$field->relationship_name_id,'." . '$this->' . $this->request . ", \r\n            ";
+                            $rules .= "'" . $field->relationship_name . "_id' => '$field->validation:$tableName,$field->relationship_name,'." . '$this->' . $this->request . ", \r\n            ";
                             break;
                     }
                 } elseif ($field->type == 'file' || $field->type == 'photo') {
