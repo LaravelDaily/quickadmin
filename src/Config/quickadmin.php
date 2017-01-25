@@ -19,6 +19,9 @@ return [
     'route'              => 'admin',
     // Default home route
     'homeRoute'          => 'admin',
+
+    //Default home action
+    // 'homeAction' => '\App\Http\Controllers\MyOwnController@index',
     // Default role to access users and CRUD
     'defaultRole'        => 1
 
