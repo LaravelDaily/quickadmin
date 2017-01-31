@@ -12,7 +12,7 @@
       "email": "povilas@webcoderpro.com"
     }
   ],
-  "version": "2.0.3",
+  "version": "2.1.0",
   "require": {
     "laravel/framework": "5.3.*",
     "laravelcollective/html": "^5.3",
