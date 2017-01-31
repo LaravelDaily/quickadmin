@@ -9,13 +9,13 @@
     },
     {
       "name": "PovilasKorop",
-      "email": "povilas@webcoderpro.com"
+      "email": "povilas@laraveldaily.com"
     }
   ],
-  "version": "2.1.0",
+  "version": "2.1.1",
   "require": {
     "laravel/framework": "5.4.*",
-    "laravelcollective/html": "^5.3",
+    "laravelcollective/html": "^5.4",
     "intervention/image": "^2.3",
     "yajra/laravel-datatables-oracle": "^6.18"
   },
