@@ -175,7 +175,9 @@ class ControllerBuilder
                                       . ucfirst(Str::camel($menu->name))
                                       . '::pluck("'
                                       . $field->relationship_field
-                                      . '", "id")->prepend(\'Please select\', null);'
+                                        //null list select values like array_values so, if you 
+                                        //want delete one row it will not match the value with the actual id.
+                                      . '", "id")->prepend(\'Please select\', 0);'
                                       . "\r\n";
                 }
             }
