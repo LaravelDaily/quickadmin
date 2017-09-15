@@ -138,7 +138,7 @@ class QuickadminMenuController extends Controller
                 'value'              => $request->f_value[$index],
                 'default'            => $request->f_default[$index],
                 'relationship_id'    => $request->has('f_relationship.' . $index) ? $request->f_relationship[$index] : '',
-                'relationship_name'  => $request->has('f_relationship.' . $index) ? $models[$request->f_relationship[$index]] : '',
+                'relationship_name'  => $request->has('f_relationship.' . $index) ? isset($models[$request->f_relationship[$index]]) ? $models[$request->f_relationship[$index]] : '' : '',
                 'relationship_field' => $request->has('f_relationship_field.' . $request->f_relationship[$index]) ? $request->f_relationship_field[$request->f_relationship[$index]] : '',
                 'texteditor'         => $request->f_texteditor[$index],
                 'size'               => $request->f_size[$index] * 1024,
