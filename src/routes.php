@@ -7,6 +7,10 @@
 use Illuminate\Support\Facades\View;
 use Laraveldaily\Quickadmin\Models\Menu;
 
+if (config('quickadmin.standaloneRoutes')) {
+    return;
+}
+
 if (Schema::hasTable('menus')) {
     $menus = Menu::with('children')->where('menu_type', '!=', 0)->orderBy('position')->get();
     View::share('menus', $menus);
@@ -105,7 +109,6 @@ Route::group([
     });
 });
 
-// @todo move to default routes.php
 Route::group([
     'namespace'  => 'App\Http\Controllers',
     'middleware' => ['web']
