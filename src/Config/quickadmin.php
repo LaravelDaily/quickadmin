@@ -27,6 +27,9 @@ return [
 
     // If set to true, you'll need to copy the routes
     // from vendor/laraveldaily/quickadmin/src/routes.php into your own /routes folder
-    'standaloneRoutes'   => false
+    'standaloneRoutes'   => false,
+
+    // Used to define relationship with UserLogs
+    'userModel' => \App\User::class
 
 ];

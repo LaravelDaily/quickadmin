@@ -14,6 +14,6 @@ class UsersLogs extends Model
 
     public function users()
     {
-        return $this->hasOne('App\User', 'id', 'user_id');
+        return $this->hasOne(config('quickadmin.userModel'), 'id', 'user_id');
     }
 }
