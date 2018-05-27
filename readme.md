@@ -1,5 +1,12 @@
-## New
-Check out online adminpanel generator version - no packages required there, no syntax to learn, it generates Laravel project for you: [QuickAdminPanel.com](https://quickadminpanel.com)
+## Current state
+
+This package is not actively maintained and no new features should be expected, extept for bugfixes (mostly by accepting PR) and compatibility with newer Laravel versions as they are released.
+
+Alternatively, check out premium online adminpanel generator version - no packages required there, no syntax to learn, it generates Laravel project for you: [QuickAdminPanel.com](https://quickadminpanel.com)
+
+We've also recently released Vue.js+Laravel version of generator: [Vue.QuickAdminPanel.com](https://vue.quickadminpanel.com)
+
+Finally, see free alternatives in our article on Laravel News: [13 Laravel Admin Panel Generators](https://laravel-news.com/13-laravel-admin-panel-generators)
 
 
 ## Package Requirements
