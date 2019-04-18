@@ -1,37 +1,13 @@
 ## Current state
 
-This package is not actively maintained and no new features should be expected, extept for bugfixes (mostly by accepting PR) and compatibility with newer Laravel versions as they are released.
+__IMPORTANT__: This package is not actively maintained and probably won't work with newest Laravel versions.
 
-Alternatively, check out premium online adminpanel generator version - no packages required there, no syntax to learn, it generates Laravel project for you: [QuickAdminPanel.com](https://quickadminpanel.com)
+Our focused switched to __online__ adminpanel generator version - no packages required there, no syntax to learn, it generates Laravel project for you: [QuickAdminPanel.com](https://quickadminpanel.com)
 
 We've also recently released Vue.js+Laravel version of generator: [Vue.QuickAdminPanel.com](https://vue.quickadminpanel.com)
 
 Finally, see free alternatives in our article on Laravel News: [13 Laravel Admin Panel Generators](https://laravel-news.com/13-laravel-admin-panel-generators)
 
-
-## Package Requirements
-* Laravel `^5.8`
-
-### Laravel 5.7 users info!
-To use Quickadmin with Laravel Laravel 5.6 use branch `5.0.0`
-
-### Laravel 5.6 users info!
-To use Quickadmin with Laravel Laravel 5.6 use branch `4.0.1`
-
-### Laravel 5.5 users info!
-To use Quickadmin with Laravel Laravel 5.5 use branch `3.0.2`
-
-### Laravel 5.4 users info!
-To use Quickadmin with Laravel Laravel 5.4 use branch `2.1.1`
-
-### Laravel 5.3 users info!
-To use Quickadmin with Laravel Laravel 5.3 use branch `2.0.x`
-
-### Laravel 5.2 users info!
-To use Quickadmin with Laravel Laravel 5.2 use branch `1.x.x`
-
-### Laravel 5.1.11 users info!
-To use Quickadmin with Laravel Laravel 5.1.11 use branch `0.4.x`
 
 ## QuickAdmin installation
 
