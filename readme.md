@@ -2,7 +2,7 @@
 
 __IMPORTANT__: This package is not actively maintained and probably won't work with newest Laravel versions.
 
-Our focused switched to __online__ adminpanel generator version - no packages required there, no syntax to learn, it generates Laravel project for you: [QuickAdminPanel.com](https://quickadminpanel.com)
+Our focus switched to __online__ adminpanel generator version - no packages required there, no syntax to learn, it generates Laravel project for you: [QuickAdminPanel.com](https://quickadminpanel.com)
 
 We've also recently released Vue.js+Laravel version of generator: [Vue.QuickAdminPanel.com](https://vue.quickadminpanel.com)
 
