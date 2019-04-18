@@ -12,9 +12,9 @@
       "email": "povilas@laraveldaily.com"
     }
   ],
-  "version": "5.0.0",
+  "version": "6.0.0",
   "require": {
-    "laravel/framework": "5.7.*",
+    "laravel/framework": "5.8.*",
     "laravelcollective/html": "^5.4",
     "intervention/image": "^2.3",
     "yajra/laravel-datatables-oracle": "^6.18"

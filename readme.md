@@ -10,7 +10,10 @@ Finally, see free alternatives in our article on Laravel News: [13 Laravel Admin
 
 
 ## Package Requirements
-* Laravel `^5.7`
+* Laravel `^5.8`
+
+### Laravel 5.7 users info!
+To use Quickadmin with Laravel Laravel 5.6 use branch `5.0.0`
 
 ### Laravel 5.6 users info!
 To use Quickadmin with Laravel Laravel 5.6 use branch `4.0.1`
